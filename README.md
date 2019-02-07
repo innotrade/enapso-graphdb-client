@@ -1,5 +1,5 @@
 # enapso-graphdb-client
-Enapso Ontotext GraphDB 8.5 Client for JavaScript
+Enapso Ontotext GraphDB 8.x Client for JavaScript
 
 # Creating a GraphDB endpoint
 
