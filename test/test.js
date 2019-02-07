@@ -1,7 +1,7 @@
 const chai = require('chai'); 
 const should = require('chai').should; 
 const expect = require('chai').expect; 
-const EnapsoGraphDBClient = require("../client");
+const EnapsoGraphDBClient = require("../enapso-graphdb-client");
 const testConfig = require("./config");
 
 
@@ -25,5 +25,5 @@ describe("Query test", () => {
             done();
         })
     });
-    
+
 });

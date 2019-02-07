@@ -1,10 +1,10 @@
 # enapso-graphdb-client
 Enapso Ontotext GraphDB 8.x Client for JavaScript
 
-# Creating a GraphDB endpoint
+# Creating a GraphDB Endpoint
 
 ```javascript
-var endpoint = new GraphDBClient.Endpoint({
+var endpoint = new EnapsoGraphDBClient.Endpoint({
     queryURL: [QueryURL], 
     updateURL: [UpdateURL],
     username: [Username],
@@ -14,6 +14,8 @@ var endpoint = new GraphDBClient.Endpoint({
 ```
 
 # Example
+
+## Querying GraphDB
 
 ```javascript
 const EnapsoGraphDBClient = require("../client");

@@ -1,4 +1,4 @@
-const EnapsoGraphDBClient = require("../client");
+const EnapsoGraphDBClient = require("../enapso-graphdb-client");
 
 let lQuery = `
     select * 
