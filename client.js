@@ -1,9 +1,11 @@
-// GraphDB Client
+// Innotrade Enapso GraphDB Client
+// (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
 
 const SparqlClient = require('sparql-client-2');
 const SPARQL = SparqlClient.SPARQL;
+const _ = require("underscore");
 
-const GraphDBClient = {
+const EnapsoGraphDBClient = {
 
     PREFIX_OWL: {
         "prefix": 'owl',
@@ -124,7 +126,7 @@ const GraphDBClient = {
 
 };
 
-GraphDBClient.Endpoint.prototype = {
+EnapsoGraphDBClient.Endpoint.prototype = {
 
     query: async function (aQuery) {
         let me = this;
@@ -170,4 +172,4 @@ GraphDBClient.Endpoint.prototype = {
 
 }
 
-module.exports = GraphDBClient;
+module.exports = EnapsoGraphDBClient;

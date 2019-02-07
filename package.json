@@ -1,10 +1,10 @@
 {
   "name": "enapso-graphdb-client",
   "version": "1.0.0",
-  "description": "Enapso Ontotext GraphDB 8.5 Client for JavaScript",
+  "description": "Enapso Ontotext GraphDB 8.x Client for JavaScript",
   "main": "client.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha --reporter spec test/test.js --exit"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,9 @@
   },
   "homepage": "https://github.com/innotrade/enapso-graphdb-client#readme",
   "dependencies": {
-    "sparql-client-2": "^0.6.2"
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "sparql-client-2": "^0.6.3",
+    "underscore": "^1.9.1"
   }
 }
