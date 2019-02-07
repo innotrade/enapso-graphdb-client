@@ -1,21 +1,3 @@
-# enapso-graphdb-client
-Enapso Ontotext GraphDB 8.5 Client for JavaScript
-
-# Creating a GraphDB endpoint
-
-```javascript
-var endpoint = new GraphDBClient.Endpoint({
-    queryURL: [QueryURL], 
-    updateURL: [UpdateURL],
-    username: [Username],
-    password: [Password],
-    prefixes: [Prefixes]
-});
-```
-
-# Example
-
-```javascript
 const EnapsoGraphDBClient = require("../client");
 
 let lQuery = `
@@ -55,4 +37,3 @@ var mEndPoint = new EnapsoGraphDBClient.Endpoint({
     console.log("\nBinding:\n" + JSON.stringify(lBinding, null, 2));
     console.log("\nResultset:\n" + JSON.stringify(lRes, null, 2));
 })();
-```
