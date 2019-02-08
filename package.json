@@ -1,6 +1,6 @@
 {
   "name": "enapso-graphdb-client",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Enapso Ontotext GraphDB 8.x Client for JavaScript",
   "main": "client.js",
   "scripts": {
@@ -12,9 +12,13 @@
   },
   "keywords": [
     "enapso",
+    "innotrade",
     "graphdb",
     "ontotext",
-    "client"
+    "client",
+    "sparql",
+    "rdf",
+    "owl"
   ],
   "author": "Alexander Schulze",
   "license": "Apache-2.0",
