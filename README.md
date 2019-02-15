@@ -1,16 +1,14 @@
 # enapso-graphdb-client
 Enapso Ontotext GraphDB 8.x Client for JavaScript
 
-Client for Ontotext GraphDB to easily perform SPARQL queries and update statements in node.js.
-The client implements the authentication, the handling of prefixes and the transformation of the SPARQL results
-into a result set that can easily be parsed in JavaScript. 
+Client for Ontotext GraphDB to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in node.js applications. The client implements the authentication, the handling of prefixes and the optional transformation of the SPARQL results into a resultset that can easily be processed in JavaScript. 
 Future versions will implement further convenience methods on SPARQL level.
 Any questions and suggestions are welcome.
 
 # Creating a GraphDB Endpoint
 
 ```javascript
-var endpoint = new EnapsoGraphDBClient.Endpoint({
+var graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     queryURL: [QueryURL], 
     updateURL: [UpdateURL],
     username: [Username],
@@ -27,44 +25,56 @@ This demo requires a running GraphDB instance on localhost at port 7200.
 The automated tests require a repository "Test" and user "Test" with the password "Test".
 
 ```javascript
-const EnapsoGraphDBClient = require("../client");
+// require the Enapso GraphDB Client package
+const EnapsoGraphDBClient = require("../enapso-graphdb-client");
 
-let lQuery = `
+// demo SPARQL query
+let query = `
     select * 
     where {?s ?p ?o}
     limit 2
     `;
 
-var lQueryURL = 'http://localhost:7200/repositories/Test';
-var lUpdateURL = 'http://localhost:7200/repositories/Test/statements';
-var lUsername = 'Test';
-var lPassword = 'Test';
+// connection data to the running GraphDB instance
+const
+    GRAPHDB_QUERY_URL = 'http://localhost:7200/repositories/Test',
+    GRAPHDB_UPDATE_URL = 'http://localhost:7200/repositories/Test/statements',
+    GRAPHDB_USERNAME = 'Test',
+    GRAPHDB_PASSWORD = 'Test';
 
-let lPrefixes = [
+// the default prefixes for all SPARQL queries
+const DEFAULT_PREFIXES = [
     EnapsoGraphDBClient.PREFIX_OWL,
     EnapsoGraphDBClient.PREFIX_RDF,
     EnapsoGraphDBClient.PREFIX_RDFS
 ];
 
-var mEndPoint = new EnapsoGraphDBClient.Endpoint({
-    queryURL: lQueryURL,
-    updateURL: lUpdateURL,
-    username: lUsername,
-    password: lPassword,
-    prefixes: lPrefixes
+// instantiate the GraphDB endpoint
+var graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
+    queryURL: GRAPHDB_QUERY_URL,
+    updateURL: GRAPHDB_UPDATE_URL,
+    username: GRAPHDB_USERNAME,
+    password: GRAPHDB_PASSWORD,
+    prefixes: DEFAULT_PREFIXES
 });
 
+// demonstrate a SPARQL query against GraphDB
 (async () => {
-    let lRes, lBinding = await mEndPoint.query(lQuery);
+    // execute the SPARQL query against the GraphDB endpoint 
+    let resultset, binding = await graphDBEndpoint.query(query);
 
-    if (lBinding.success) {
-        // transform the bindings into a more convenient result format
-        lRes = EnapsoGraphDBClient.transformBindingsToResultSet(lBinding, {
+    // if a result was successfully returned
+    if (binding.success) {
+        // transform the bindings into a more convenient result format (optional)
+        resultset = EnapsoGraphDBClient.transformBindingsToResultSet(binding, {
+            // drop the prefixes for easier resultset readability (optional)
             dropPrefixes: true
         });
     }
-    console.log("\nBinding:\n" + JSON.stringify(lBinding, null, 2));
-    console.log("\nResultset:\n" + JSON.stringify(lRes, null, 2));
+
+    // log original SPARQL result and beautified result set to the console
+    console.log("\nBinding:\n" + JSON.stringify(binding, null, 2));
+    console.log("\nResultset:\n" + JSON.stringify(resultset, null, 2));
 })();
 ```
 

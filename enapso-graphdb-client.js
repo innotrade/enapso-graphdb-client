@@ -32,7 +32,7 @@ const EnapsoGraphDBClient = {
         "iri": 'http://www.w3.org/ns/sparql#'
     },
 
-    // this is class
+    // this is the GraphDB SPARQL endpoint class
     Endpoint: function (aOptions) {
         aOptions = aOptions || {};
 
@@ -43,6 +43,7 @@ const EnapsoGraphDBClient = {
                 'Accept': 'application/sparql-results+json,application/json',
             }
         };
+
         // set authentication header if user name and password is provided
         if (aOptions.username && aOptions.password) {
             lRequestDefaults.headers.Authorization =
@@ -128,6 +129,7 @@ const EnapsoGraphDBClient = {
 
 EnapsoGraphDBClient.Endpoint.prototype = {
 
+    // query executes a SPARQL update statement against the update URL of GraphDB
     query: async function (aQuery) {
         let me = this;
         return new Promise(function (resolve) {
@@ -144,6 +146,7 @@ EnapsoGraphDBClient.Endpoint.prototype = {
         });
     },
 
+    // query executes a SPARQL update statement against the update URL of GraphDB
     update: async function (aQuery) {
         let me = this;
         return new Promise(function (resolve) {
@@ -163,7 +166,7 @@ EnapsoGraphDBClient.Endpoint.prototype = {
         });
     },
 
-    // clears the entire repository, be careful with this function, the operation cannot be undone!
+    // clears the entire repository, be careful with this function, this operation cannot be undone!
     clearRepository: async function () {
         return this.update(`
             CLEAR ALL

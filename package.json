@@ -1,8 +1,8 @@
 {
   "name": "enapso-graphdb-client",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Enapso Ontotext GraphDB 8.x Client for JavaScript",
-  "main": "client.js",
+  "main": "examples/demo1.js",
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --reporter spec test/test.js --exit"
   },
@@ -14,13 +14,16 @@
     "enapso",
     "innotrade",
     "graphdb",
+    "graphdatabase",
     "ontotext",
     "client",
+    "ontology",
+    "knowledgegraph",
     "sparql",
     "rdf",
     "owl"
   ],
-  "author": "Alexander Schulze",
+  "author": "Innotrade GmbH, Alexander Schulze",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/innotrade/enapso-graphdb-client/issues"
