@@ -26,7 +26,7 @@ The automated tests require a repository "Test" and user "Test" with the passwor
 
 ```javascript
 // require the Enapso GraphDB Client package
-const EnapsoGraphDBClient = require("../enapso-graphdb-client");
+const EnapsoGraphDBClient = require("enapso-graphdb-client");
 
 // demo SPARQL query
 let query = `
