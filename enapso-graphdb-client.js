@@ -7,11 +7,56 @@ const _ = require("underscore");
 
 const EnapsoGraphDBClient = {
 
-    FORMAT_RDF_XML: 'application/rdf+xml',
-    FORMAT_TEXT_PLAIN: 'text/plain',
-    FORMAT_TURTLE: 'text/turtle',
-    FORMAT_N3: 'text/rdf+n3',
-    FORMAT_JSON: 'application/json',
+    FORMAT_JSON : {
+        name: 'JSON',
+        type: 'application/rdf+json',
+        extension: '.json'
+    },
+    FORMAT_JSON_LD: {
+        name: 'JSON-LD',
+        type: 'application/ld+json',
+        extension: '.jsonld'
+    },
+    FORMAT_RDF_XML: {
+        name: 'RDF-XML',
+        type: 'application/rdf+xml',
+        extension: '.rdf'
+    },
+    FORMAT_N3: {
+        name: 'N3',
+        type: 'text/rdf+n3',
+        extension: '.n3'
+    },
+    FORMAT_N_TRIPLES: {
+        name: 'N-Triples',
+        type: 'text/plain',
+        extension: '.nt'
+    },
+    FORMAT_N_QUADS: {
+        name: 'N-Quads',
+        type: 'text/x-nquads',
+        extension: '.nq'
+    },
+    FORMAT_TURTLE: {
+        name: 'Turtle',
+        type: 'text/turtle',
+        extension: '.ttl'
+    },
+    FORMAT_TRIX: {
+        name: 'TriX',
+        type: 'application/trix',
+        extension: '.trix'
+    },
+    FORMAT_TRIG: {
+        name: 'TriG',
+        type: 'application/x-trig',
+        extension: '.trig'
+    },
+    FORMAT_BINARY_RDF: {
+        name: 'Binary RDF',
+        type: 'application/x-binary-rdf',
+        extension: '.brf'
+    },
 
     PREFIX_OWL: {
         "prefix": 'owl',
