@@ -5,6 +5,8 @@ Client for Ontotext GraphDB to easily perform SPARQL queries and update statemen
 Future versions will implement further convenience methods on SPARQL level.
 Any questions and suggestions are welcome.
 
+**The following demos require a running GraphDB 8.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.**
+
 # Creating a GraphDB Endpoint
 
 ```javascript
@@ -21,9 +23,6 @@ var graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 
 ## Querying GraphDB
 
-This demo requires a running GraphDB instance on localhost at port 7200.
-The automated tests require a repository "Test" and user "Test" with the password "Test".
-
 ```javascript
 // require the Enapso GraphDB Client package
 const EnapsoGraphDBClient = require("enapso-graphdb-client");
@@ -37,8 +36,10 @@ let query = `
 
 // connection data to the running GraphDB instance
 const
-    GRAPHDB_QUERY_URL = 'http://localhost:7200/repositories/Test',
-    GRAPHDB_UPDATE_URL = 'http://localhost:7200/repositories/Test/statements',
+    GRAPHDB_QUERY_URL = 
+      'http://localhost:7200/repositories/Test',
+    GRAPHDB_UPDATE_URL = 
+      'http://localhost:7200/repositories/Test/statements',
     GRAPHDB_USERNAME = 'Test',
     GRAPHDB_PASSWORD = 'Test';
 
@@ -65,11 +66,15 @@ var graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 
     // if a result was successfully returned
     if (binding.success) {
-        // transform the bindings into a more convenient result format (optional)
-        resultset = EnapsoGraphDBClient.transformBindingsToResultSet(binding, {
-            // drop the prefixes for easier resultset readability (optional)
-            dropPrefixes: true
-        });
+        // transform the bindings into a more convenient result format
+        // (optional)
+        resultset = EnapsoGraphDBClient.transformBindingsToResultSet(
+            binding, {
+              // drop the prefixes for easier resultset readability 
+              // (optional)
+              dropPrefixes: true
+            }
+        );
     }
 
     // log original SPARQL result and beautified result set to the console
@@ -78,7 +83,7 @@ var graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 })();
 ```
 
-Standard SPARQL Result Structure:
+Standard SPARQL JSON binding:
 ```json
 {
   "head": {
@@ -124,7 +129,7 @@ Standard SPARQL Result Structure:
 }
 ```
 
-Beautified Resultset Structure:
+Beautified Enapso JSON Resultset:
 ```json
 {
   "total": 2,

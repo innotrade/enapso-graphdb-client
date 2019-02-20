@@ -7,6 +7,12 @@ const _ = require("underscore");
 
 const EnapsoGraphDBClient = {
 
+    FORMAT_RDF_XML: 'application/rdf+xml',
+    FORMAT_TEXT_PLAIN: 'text/plain',
+    FORMAT_TURTLE: 'text/turtle',
+    FORMAT_N3: 'text/rdf+n3',
+    FORMAT_JSON: 'application/json',
+
     PREFIX_OWL: {
         "prefix": 'owl',
         "iri": 'http://www.w3.org/2002/07/owl#'

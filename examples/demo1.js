@@ -2,7 +2,7 @@
 // (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
 
 // require the Enapso GraphDB Client package
-const EnapsoGraphDBClient = require("../enapso-graphdb-client");
+const EnapsoGraphDBClient = require("enapso-graphdb-client");
 
 // demo SPARQL query
 let query = `
