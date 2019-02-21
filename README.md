@@ -7,6 +7,8 @@ Any questions and suggestions are welcome.
 
 **The following demos require a running GraphDB 8.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.**
 
+To discuss questions and suggestions with the GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
+
 # Creating a GraphDB Endpoint
 
 ```javascript
@@ -147,4 +149,61 @@ Beautified Enapso JSON Resultset:
     }
   ]
 }
+```
+
+# Formats
+
+GraphDB supports the import and export of graphs in numerous formats. The EnapsoGraphDBClient provides the available formats as constants. You can use them in your application by EnapsoGraphDBClient.FORMAT_TURTLE.
+
+```json
+    FORMAT_JSON : {
+        name: 'JSON',
+        type: 'application/rdf+json',
+        extension: '.json'
+    },
+    FORMAT_JSON_LD: {
+        name: 'JSON-LD',
+        type: 'application/ld+json',
+        extension: '.jsonld'
+    },
+    FORMAT_RDF_XML: {
+        name: 'RDF-XML',
+        type: 'application/rdf+xml',
+        extension: '.rdf'
+    },
+    FORMAT_N3: {
+        name: 'N3',
+        type: 'text/rdf+n3',
+        extension: '.n3'
+    },
+    FORMAT_N_TRIPLES: {
+        name: 'N-Triples',
+        type: 'text/plain',
+        extension: '.nt'
+    },
+    FORMAT_N_QUADS: {
+        name: 'N-Quads',
+        type: 'text/x-nquads',
+        extension: '.nq'
+    },
+    FORMAT_TURTLE: {
+        name: 'Turtle',
+        type: 'text/turtle',
+        extension: '.ttl'
+    },
+    FORMAT_TRIX: {
+        name: 'TriX',
+        type: 'application/trix',
+        extension: '.trix'
+    },
+    FORMAT_TRIG: {
+        name: 'TriG',
+        type: 'application/x-trig',
+        extension: '.trig'
+    },
+    FORMAT_BINARY_RDF: {
+        name: 'Binary RDF',
+        type: 'application/x-binary-rdf',
+        extension: '.brf'
+    }
 ```
