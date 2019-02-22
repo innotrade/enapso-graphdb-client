@@ -1,7 +1,7 @@
 # enapso-graphdb-client
 Enapso Ontotext GraphDB 8.x Client for JavaScript
 
-Client for Ontotext GraphDB to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in node.js applications. The client implements the authentication, the handling of prefixes and the optional transformation of the SPARQL results into a resultset that can easily be processed in JavaScript. 
+Client for Ontotext GraphDB to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in node.js applications. The client implements the authentication (Basic and JWT), the handling of prefixes and the optional transformation of the SPARQL results into a resultset that can easily be processed in JavaScript.
 Future versions will implement further convenience methods on SPARQL level.
 Any questions and suggestions are welcome.
 
@@ -9,25 +9,13 @@ Any questions and suggestions are welcome.
 
 To discuss questions and suggestions with the GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
 
-# Creating a GraphDB Endpoint
-
-```javascript
-var graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
-    queryURL: [QueryURL], 
-    updateURL: [UpdateURL],
-    username: [Username],
-    password: [Password],
-    prefixes: [Prefixes]
-});
-```
-
-# Example
+# Examples
 
 ## Querying GraphDB
 
 ```javascript
 // require the Enapso GraphDB Client package
-const EnapsoGraphDBClient = require("../enapso-graphdb-client");
+const EnapsoGraphDBClient = require("enapso-graphdb-client");
 
 // demo SPARQL query
 let query = `
@@ -39,9 +27,8 @@ let query = `
 // connection data to the running GraphDB instance
 const
     GRAPHDB_BASE_URL = 'http://localhost:7200';
-const    
-    GRAPHDB_QUERY_URL = GRAPHDB_BASE_URL + '/repositories/Test',
-    GRAPHDB_UPDATE_URL = GRAPHDB_BASE_URL + '/repositories/Test/statements',
+const
+    GRAPHDB_REPOSITORY = 'Test';
     GRAPHDB_USERNAME = 'Test',
     GRAPHDB_PASSWORD = 'Test';
 
@@ -57,8 +44,7 @@ const DEFAULT_PREFIXES = [
     // instantiate the GraphDB endpoint
     var graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
         baseURL: GRAPHDB_BASE_URL,
-        queryURL: GRAPHDB_QUERY_URL,
-        updateURL: GRAPHDB_UPDATE_URL,
+        repository: GRAPHDB_REPOSITORY,
         // username and password are required here only 
         // if you want to use basic authentication
         // however, for security reasons it is recommended to use JWT
@@ -82,8 +68,8 @@ const DEFAULT_PREFIXES = [
         // transform the bindings into a more convenient result format (optional)
         resultset = EnapsoGraphDBClient.transformBindingsToResultSet(
             binding, {
-              // drop the prefixes for easier resultset readability (optional)
-              dropPrefixes: true
+                // drop the prefixes for easier resultset readability (optional)
+                dropPrefixes: true
             }
         );
     }

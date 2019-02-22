@@ -14,9 +14,8 @@ let query = `
 // connection data to the running GraphDB instance
 const
     GRAPHDB_BASE_URL = 'http://localhost:7200';
-const    
-    GRAPHDB_QUERY_URL = GRAPHDB_BASE_URL + '/repositories/Test',
-    GRAPHDB_UPDATE_URL = GRAPHDB_BASE_URL + '/repositories/Test/statements',
+const
+    GRAPHDB_REPOSITORY = 'Test';
     GRAPHDB_USERNAME = 'Test',
     GRAPHDB_PASSWORD = 'Test';
 
@@ -32,8 +31,7 @@ const DEFAULT_PREFIXES = [
     // instantiate the GraphDB endpoint
     var graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
         baseURL: GRAPHDB_BASE_URL,
-        queryURL: GRAPHDB_QUERY_URL,
-        updateURL: GRAPHDB_UPDATE_URL,
+        repository: GRAPHDB_REPOSITORY,
         // username and password are required here only 
         // if you want to use basic authentication
         // however, for security reasons it is recommended to use JWT

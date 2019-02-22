@@ -91,7 +91,11 @@ const EnapsoGraphDBClient = {
     Endpoint: function (aOptions) {
         aOptions = aOptions || {};
 
-        // these are the default headers required for the client
+        this.mBaseURL = aOptions.baseURL;
+        this.mQueryURL = aOptions.baseURL + '/repositories/' + aOptions.repository;
+        this.mUpdateURL = aOptions.baseURL + '/repositories/' + aOptions.repository + '/statements';
+
+        // these are the default headers required for the mClient
         let lRequestDefaults = {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -100,11 +104,12 @@ const EnapsoGraphDBClient = {
         };
 
         // set authentication header if user name and password is provided
-        if (this.accessToken) {
-            lRequestDefaults.headers.Authorization = this.accessToken;
+        if (this.mAuthenticationHeader) {
+            lRequestDefaults.headers.Authorization = this.mAuthenticationHeader;
         } else if (aOptions.username && aOptions.password) {
             lRequestDefaults.headers.Authorization =
-                'Basic ' + Buffer.from(aOptions.username + ':' + aOptions.password).toString('base64');
+                'Basic ' + Buffer.from(aOptions.username + 
+                    ':' + aOptions.password).toString('base64');
         }
 
         let lPrefixes = {};
@@ -113,9 +118,8 @@ const EnapsoGraphDBClient = {
                 lPrefixes[item.prefix] = item.iri;
             });
         }
-        this.baseURL = aOptions.baseURL;
-        this.client = new SparqlClient(aOptions.queryURL, {
-            updateEndpoint: aOptions.updateURL,
+        this.mClient = new SparqlClient(this.mQueryURL, {
+            updateEndpoint: this.mUpdateURL,
             requestDefaults: lRequestDefaults
         }).register(lPrefixes);
 
@@ -189,10 +193,10 @@ EnapsoGraphDBClient.Endpoint.prototype = {
     query: async function (aQuery) {
         let me = this;
         return new Promise(function (resolve) {
-            if(me.accessToken && me.client.requestDefaults && me.client.requestDefaults.headers) {
-                me.client.requestDefaults.headers.Authorization =  me.accessToken;
+            if(me.mAuthenticationHeader && me.mClient.requestDefaults && me.mClient.requestDefaults.headers) {
+                me.mClient.requestDefaults.headers.Authorization =  me.mAuthenticationHeader;
             }
-            me.client.query(aQuery)
+            me.mClient.query(aQuery)
                 .execute()
                 .then(function (aBindings) {
                     aBindings.success = true;
@@ -209,10 +213,10 @@ EnapsoGraphDBClient.Endpoint.prototype = {
     update: async function (aQuery) {
         let me = this;
         return new Promise(function (resolve) {
-            if(me.accessToken && me.client.requestDefaults && me.client.requestDefaults.headers) {
-                me.client.requestDefaults.headers.Authorization =  me.accessToken;
+            if(me.mAuthenticationHeader && me.mClient.requestDefaults && me.mClient.requestDefaults.headers) {
+                me.mClient.requestDefaults.headers.Authorization =  me.mAuthenticationHeader;
             }
-            me.client.query(aQuery)
+            me.mClient.query(aQuery)
                 .execute()
                 .then(function (aResponse) {
                     if (null === aResponse) {
@@ -232,15 +236,15 @@ EnapsoGraphDBClient.Endpoint.prototype = {
         let lHeaders = {
             "X-GraphDB-Password": aPassword
         };
-        let options = {
+        let lOptions = {
             method: 'POST',
-            uri: this.baseURL + "/rest/login/" + aUsername,
+            uri: this.mBaseURL + "/rest/login/" + aUsername,
             headers: lHeaders,
             resolveWithFullResponse: true,
             json: true
         };
-        var lRes = await request(options);
-        this.accessToken = lRes.headers.authorization;
+        var lRes = await request(lOptions);
+        this.mAuthenticationHeader = lRes.headers.authorization;
         return lRes;
     },
 
@@ -248,12 +252,12 @@ EnapsoGraphDBClient.Endpoint.prototype = {
 
     },
 
-    getAccessToken: function() {
-        return (this.accessToken ? this.accessToken : null);
+    getAuthenticationHeader: function() {
+        return (this.mAuthenticationHeader ? this.mAuthenticationHeader : null);
     },
 
     getBaseURL: function() {
-        return (this.baseURL ? this.baseURL : null);
+        return (this.mBaseURL ? this.mBaseURL : null);
     },
 
     // clears the entire repository, be careful with this function, this operation cannot be undone!
