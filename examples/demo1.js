@@ -43,7 +43,9 @@ const DEFAULT_PREFIXES = [
     });
     
     // use the preferred way to login via JWT and return an access token
-    let lRes = await graphDBEndpoint.login(GRAPHDB_USERNAME, GRAPHDB_PASSWORD);
+    let lRes = await graphDBEndpoint.login(
+        GRAPHDB_USERNAME, GRAPHDB_PASSWORD
+    );
     // console.log(JSON.stringify(lRes, null, 2));
 
     // execute the SPARQL query against the GraphDB endpoint
@@ -53,10 +55,12 @@ const DEFAULT_PREFIXES = [
     // if a result was successfully returned
     if (binding.success) {
         // transform the bindings into a more convenient result format (optional)
-        resultset = EnapsoGraphDBClient.transformBindingsToResultSet(binding, {
-            // drop the prefixes for easier resultset readability (optional)
-            dropPrefixes: true
-        });
+        resultset = EnapsoGraphDBClient.transformBindingsToResultSet(
+            binding, {
+                // drop the prefixes for easier resultset readability (optional)
+                dropPrefixes: true
+            }
+        );
     }
 
     // log original SPARQL result and beautified result set to the console
