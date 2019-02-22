@@ -1,86 +1,90 @@
 // Innotrade Enapso GraphDB Client
 // (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
 
+// For details regarding the GraphDB API please refer to the following links:
+// Authentication: http://graphdb.ontotext.com/documentation/standard/authentication.html
+
+const request = require('request-promise');
 const SparqlClient = require('sparql-client-2');
 const SPARQL = SparqlClient.SPARQL;
-const _ = require("underscore");
+const _ = require('underscore');
 
 const EnapsoGraphDBClient = {
 
-    FORMAT_JSON : {
-        name: 'JSON',
-        type: 'application/rdf+json',
-        extension: '.json'
+    FORMAT_JSON: {
+        name: "JSON",
+        type: "application/rdf+json",
+        extension: ".json"
     },
     FORMAT_JSON_LD: {
-        name: 'JSON-LD',
-        type: 'application/ld+json',
-        extension: '.jsonld'
+        name: "JSON-LD",
+        type: "application/ld+json",
+        extension: ".jsonld"
     },
     FORMAT_RDF_XML: {
-        name: 'RDF-XML',
-        type: 'application/rdf+xml',
-        extension: '.rdf'
+        name: "RDF-XML",
+        type: "application/rdf+xml",
+        extension: ".rdf"
     },
     FORMAT_N3: {
-        name: 'N3',
-        type: 'text/rdf+n3',
-        extension: '.n3'
+        name: "N3",
+        type: "text/rdf+n3",
+        extension: ".n3"
     },
     FORMAT_N_TRIPLES: {
-        name: 'N-Triples',
-        type: 'text/plain',
-        extension: '.nt'
+        name: "N-Triples",
+        type: "text/plain",
+        extension: ".nt"
     },
     FORMAT_N_QUADS: {
-        name: 'N-Quads',
-        type: 'text/x-nquads',
-        extension: '.nq'
+        name: "N-Quads",
+        type: "text/x-nquads",
+        extension: ".nq"
     },
     FORMAT_TURTLE: {
-        name: 'Turtle',
-        type: 'text/turtle',
-        extension: '.ttl'
+        name: "Turtle",
+        type: "text/turtle",
+        extension: ".ttl"
     },
     FORMAT_TRIX: {
-        name: 'TriX',
-        type: 'application/trix',
-        extension: '.trix'
+        name: "TriX",
+        type: "application/trix",
+        extension: ".trix"
     },
     FORMAT_TRIG: {
-        name: 'TriG',
-        type: 'application/x-trig',
-        extension: '.trig'
+        name: "TriG",
+        type: "application/x-trig",
+        extension: ".trig"
     },
     FORMAT_BINARY_RDF: {
-        name: 'Binary RDF',
-        type: 'application/x-binary-rdf',
-        extension: '.brf'
+        name: "Binary RDF",
+        type: "application/x-binary-rdf",
+        extension: ".brf"
     },
 
     PREFIX_OWL: {
-        "prefix": 'owl',
-        "iri": 'http://www.w3.org/2002/07/owl#'
+        "prefix": "owl",
+        "iri": "http://www.w3.org/2002/07/owl#"
     },
     PREFIX_RDF: {
-        "prefix": 'rdf',
-        "iri": 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
+        "prefix": "rdf",
+        "iri": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     },
     PREFIX_RDFS: {
-        "prefix": 'rdfs',
-        "iri": 'http://www.w3.org/2000/01/rdf-schema#'
+        "prefix": "rdfs",
+        "iri": "http://www.w3.org/2000/01/rdf-schema#"
     },
     PREFIX_XSD: {
-        "prefix": 'xsd',
-        "iri": 'http://www.w3.org/2001/XMLSchema#'
+        "prefix": "xsd",
+        "iri": "http://www.w3.org/2001/XMLSchema#"
     },
     PREFIX_FN: {
-        "prefix": 'fn',
-        "iri": 'http://www.w3.org/2005/xpath-functions#'
+        "prefix": "fn",
+        "iri": "http://www.w3.org/2005/xpath-functions#"
     },
     PREFIX_SFN: {
-        "prefix": 'sfn',
-        "iri": 'http://www.w3.org/ns/sparql#'
+        "prefix": "sfn",
+        "iri": "http://www.w3.org/ns/sparql#"
     },
 
     // this is the GraphDB SPARQL endpoint class
@@ -90,13 +94,15 @@ const EnapsoGraphDBClient = {
         // these are the default headers required for the client
         let lRequestDefaults = {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Accept': 'application/sparql-results+json,application/json',
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Accept": "application/sparql-results+json,application/json",
             }
         };
 
         // set authentication header if user name and password is provided
-        if (aOptions.username && aOptions.password) {
+        if (this.accessToken) {
+            lRequestDefaults.headers.Authorization = this.accessToken;
+        } else if (aOptions.username && aOptions.password) {
             lRequestDefaults.headers.Authorization =
                 'Basic ' + Buffer.from(aOptions.username + ':' + aOptions.password).toString('base64');
         }
@@ -107,7 +113,7 @@ const EnapsoGraphDBClient = {
                 lPrefixes[item.prefix] = item.iri;
             });
         }
-
+        this.baseURL = aOptions.baseURL;
         this.client = new SparqlClient(aOptions.queryURL, {
             updateEndpoint: aOptions.updateURL,
             requestDefaults: lRequestDefaults
@@ -175,7 +181,6 @@ const EnapsoGraphDBClient = {
             return aMap[key] ? aMap[key] : key;
         });
     }
-
 };
 
 EnapsoGraphDBClient.Endpoint.prototype = {
@@ -184,6 +189,9 @@ EnapsoGraphDBClient.Endpoint.prototype = {
     query: async function (aQuery) {
         let me = this;
         return new Promise(function (resolve) {
+            if(me.accessToken && me.client.requestDefaults && me.client.requestDefaults.headers) {
+                me.client.requestDefaults.headers.Authorization =  me.accessToken;
+            }
             me.client.query(aQuery)
                 .execute()
                 .then(function (aBindings) {
@@ -201,6 +209,9 @@ EnapsoGraphDBClient.Endpoint.prototype = {
     update: async function (aQuery) {
         let me = this;
         return new Promise(function (resolve) {
+            if(me.accessToken && me.client.requestDefaults && me.client.requestDefaults.headers) {
+                me.client.requestDefaults.headers.Authorization =  me.accessToken;
+            }
             me.client.query(aQuery)
                 .execute()
                 .then(function (aResponse) {
@@ -215,6 +226,34 @@ EnapsoGraphDBClient.Endpoint.prototype = {
                     resolve(aError);
                 });
         });
+    },
+
+    login: async function (aUsername, aPassword) {
+        let lHeaders = {
+            "X-GraphDB-Password": aPassword
+        };
+        let options = {
+            method: 'POST',
+            uri: this.baseURL + "/rest/login/" + aUsername,
+            headers: lHeaders,
+            resolveWithFullResponse: true,
+            json: true
+        };
+        var lRes = await request(options);
+        this.accessToken = lRes.headers.authorization;
+        return lRes;
+    },
+
+    logout: async function () {
+
+    },
+
+    getAccessToken: function() {
+        return (this.accessToken ? this.accessToken : null);
+    },
+
+    getBaseURL: function() {
+        return (this.baseURL ? this.baseURL : null);
     },
 
     // clears the entire repository, be careful with this function, this operation cannot be undone!

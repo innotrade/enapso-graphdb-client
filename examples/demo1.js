@@ -13,8 +13,10 @@ let query = `
 
 // connection data to the running GraphDB instance
 const
-    GRAPHDB_QUERY_URL = 'http://localhost:7200/repositories/Test',
-    GRAPHDB_UPDATE_URL = 'http://localhost:7200/repositories/Test/statements',
+    GRAPHDB_BASE_URL = 'http://localhost:7200';
+const    
+    GRAPHDB_QUERY_URL = GRAPHDB_BASE_URL + '/repositories/Test',
+    GRAPHDB_UPDATE_URL = GRAPHDB_BASE_URL + '/repositories/Test/statements',
     GRAPHDB_USERNAME = 'Test',
     GRAPHDB_PASSWORD = 'Test';
 
@@ -25,18 +27,27 @@ const DEFAULT_PREFIXES = [
     EnapsoGraphDBClient.PREFIX_RDFS
 ];
 
-// instantiate the GraphDB endpoint
-var graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
-    queryURL: GRAPHDB_QUERY_URL,
-    updateURL: GRAPHDB_UPDATE_URL,
-    username: GRAPHDB_USERNAME,
-    password: GRAPHDB_PASSWORD,
-    prefixes: DEFAULT_PREFIXES
-});
-
 // demonstrate a SPARQL query against GraphDB
 (async () => {
-    // execute the SPARQL query against the GraphDB endpoint 
+    // instantiate the GraphDB endpoint
+    var graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
+        baseURL: GRAPHDB_BASE_URL,
+        queryURL: GRAPHDB_QUERY_URL,
+        updateURL: GRAPHDB_UPDATE_URL,
+        // username and password are required here only 
+        // if you want to use basic authentication
+        // however, for security reasons it is recommended to use JWT
+        // username: GRAPHDB_USERNAME,
+        // password: GRAPHDB_PASSWORD,
+        prefixes: DEFAULT_PREFIXES
+    });
+    
+    // use the preferred way to login via JWT and return an access token
+    let lRes = await graphDBEndpoint.login(GRAPHDB_USERNAME, GRAPHDB_PASSWORD);
+    // console.log(JSON.stringify(lRes, null, 2));
+
+    // execute the SPARQL query against the GraphDB endpoint
+    // the access token is used to authorize the request
     let resultset, binding = await graphDBEndpoint.query(query);
 
     // if a result was successfully returned
