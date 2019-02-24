@@ -18,7 +18,7 @@ To discuss questions and suggestions with the GraphDB community, we'll be happy 
 const EnapsoGraphDBClient = require("enapso-graphdb-client");
 
 // demo SPARQL query
-let query = `
+let TEST_QUERY = `
     select * 
     where {?s ?p ?o}
     limit 2
@@ -28,7 +28,7 @@ let query = `
 const
     GRAPHDB_BASE_URL = 'http://localhost:7200';
 const
-    GRAPHDB_REPOSITORY = 'Test';
+    GRAPHDB_REPOSITORY = 'Test',
     GRAPHDB_USERNAME = 'Test',
     GRAPHDB_PASSWORD = 'Test';
 
@@ -47,40 +47,53 @@ const DEFAULT_PREFIXES = [
         repository: GRAPHDB_REPOSITORY,
         // username and password are required here only 
         // if you want to use basic authentication
-        // however, for security reasons it is recommended to use JWT
+        // however, for security reasons it is 
+        // strongly recommended to use JWT
         // username: GRAPHDB_USERNAME,
         // password: GRAPHDB_PASSWORD,
         prefixes: DEFAULT_PREFIXES
     });
-    
-    // use the preferred way to login via JWT and return an access token
-    let lRes = await graphDBEndpoint.login(
+
+    // use the preferred way to login via JWT
+    // and persist returned access token internally
+    // for future requests using this endpoint
+    let login = await graphDBEndpoint.login(
         GRAPHDB_USERNAME, GRAPHDB_PASSWORD
     );
-    // console.log(JSON.stringify(lRes, null, 2));
+    if (!login.success) {
+        // if login was not successful, exit
+        console.log("Login failed: " + JSON.stringify(login, null, 2));
+        return;
+    }
+    console.log("Login successful: " +
+        JSON.stringify(login, null, 2)
+    );
 
     // execute the SPARQL query against the GraphDB endpoint
     // the access token is used to authorize the request
-    let resultset, binding = await graphDBEndpoint.query(query);
+    let resultset = graphDBEndpoint.createResultset();
+    let query = await graphDBEndpoint.query(TEST_QUERY);
 
     // if a result was successfully returned
-    if (binding.success) {
+    if (query.success) {
         // transform the bindings into a more convenient result format (optional)
         resultset = EnapsoGraphDBClient.transformBindingsToResultSet(
-            binding, {
+            query, {
                 // drop the prefixes for easier resultset readability (optional)
                 dropPrefixes: true
             }
         );
+        // log original SPARQL result and beautified result set to the console
+        console.log("\nBinding:\n" + JSON.stringify(query, null, 2));
+        console.log("\nResultset:\n" + JSON.stringify(resultset, null, 2));
+    } else {
+        console.log("Query failed: " + JSON.stringify(query, null, 2));
     }
 
-    // log original SPARQL result and beautified result set to the console
-    console.log("\nBinding:\n" + JSON.stringify(binding, null, 2));
-    console.log("\nResultset:\n" + JSON.stringify(resultset, null, 2));
 })();
 ```
 
-Standard SPARQL JSON binding:
+### Standard SPARQL JSON binding:
 ```json
 {
   "head": {
@@ -126,7 +139,7 @@ Standard SPARQL JSON binding:
 }
 ```
 
-Beautified Enapso JSON Resultset:
+### Beautified Enapso JSON Resultset:
 ```json
 {
   "total": 2,
@@ -146,57 +159,83 @@ Beautified Enapso JSON Resultset:
 }
 ```
 
+### Error Handling
+In case the login cannot be performed, because no connection to the GraphDB instance can be established, the following error will be returned:
+```json
+{
+  "success": false,
+  "code": "ECONNREFUSED",
+  "message": "Error: connect ECONNREFUSED 127.0.0.1:7200",
+  "statusCode": -1
+}
+```
+In case of invalid credentials, the following error will be returned:
+```json
+{
+  "success": false,
+  "message": "401 - Bad credentials",
+  "statusCode": -1
+}
+```In case of errors during the execution of the query, the following error will be returned:
+```json
+{
+  "success": false,
+  "statusCode": 400,
+  "message": "HTTP Error: 400 Bad Request"
+}
+```
+
 # Formats
 
 GraphDB supports the import and export of graphs in numerous formats. The EnapsoGraphDBClient provides the available formats as constants. You can use them in your application, for instance, by EnapsoGraphDBClient.FORMAT_TURTLE.
 
 ```json
-FORMAT_JSON: {
+"FORMAT_JSON": {
     "name": "JSON",
     "type": "application/rdf+json",
     "extension": ".json"
 },
-FORMAT_JSON_LD: {
+"FORMAT_JSON_LD": {
     "name": "JSON-LD",
     "type": "application/ld+json",
     "extension": ".jsonld"
 },
-FORMAT_RDF_XML: {
+"FORMAT_RDF_XML": {
     "name": "RDF-XML",
     "type": "application/rdf+xml",
     "extension": ".rdf"
 },
-FORMAT_N3: {
+"FORMAT_N3": {
     "name": "N3",
     "type": "text/rdf+n3",
     "extension": ".n3"
 },
-FORMAT_N_TRIPLES: {
+"FORMAT_N_TRIPLES": {
     "name": "N-Triples",
     "type": "text/plain",
     "extension": ".nt"
 },
-FORMAT_N_QUADS: {
+"FORMAT_N_QUADS": {
     "name": "N-Quads",
     "type": "text/x-nquads",
     "extension": ".nq"
 },
-FORMAT_TURTLE: {
+"FORMAT_TURTLE": {
     "name": "Turtle",
     "type": "text/turtle",
     "extension": ".ttl"
 },
-FORMAT_TRIX: {
+"FORMAT_TRIX": {
     "name": "TriX",
     "type": "application/trix",
     "extension": ".trix"
 },
-FORMAT_TRIG: {
+"FORMAT_TRIG": {
     "name": "TriG",
     "type": "application/x-trig",
     "extension": ".trig"
 },
-FORMAT_BINARY_RDF: {
+"FORMAT_BINARY_RDF": {
     "name": "Binary RDF",
     "type": "application/x-binary-rdf",
     "extension": ".brf"

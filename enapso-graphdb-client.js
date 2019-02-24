@@ -16,7 +16,7 @@ const EnapsoGraphDBClient = {
         "type": "application/rdf+json",
         "extension": ".json"
     },
-    "FORMAT_JSON_LD" : {
+    "FORMAT_JSON_LD": {
         "name": "JSON-LD",
         "type": "application/ld+json",
         "extension": ".jsonld"
@@ -104,11 +104,11 @@ const EnapsoGraphDBClient = {
         };
 
         // set authentication header if user name and password is provided
-        if (this.mAuthenticationHeader) {
-            lRequestDefaults.headers.Authorization = this.mAuthenticationHeader;
+        if (this.mAuthorization) {
+            lRequestDefaults.headers.Authorization = this.mAuthorization;
         } else if (aOptions.username && aOptions.password) {
             lRequestDefaults.headers.Authorization =
-                'Basic ' + Buffer.from(aOptions.username + 
+                'Basic ' + Buffer.from(aOptions.username +
                     ':' + aOptions.password).toString('base64');
         }
 
@@ -193,8 +193,8 @@ EnapsoGraphDBClient.Endpoint.prototype = {
     query: async function (aQuery) {
         let me = this;
         return new Promise(function (resolve) {
-            if(me.mAuthenticationHeader && me.mClient.requestDefaults && me.mClient.requestDefaults.headers) {
-                me.mClient.requestDefaults.headers.Authorization =  me.mAuthenticationHeader;
+            if (me.mAuthorization && me.mClient.requestDefaults && me.mClient.requestDefaults.headers) {
+                me.mClient.requestDefaults.headers.Authorization = me.mAuthorization;
             }
             me.mClient.query(aQuery)
                 .execute()
@@ -203,8 +203,12 @@ EnapsoGraphDBClient.Endpoint.prototype = {
                     resolve(aBindings);
                 })
                 .catch(function (aError) {
-                    aError.success = false;
-                    resolve(aError);
+                    let lError = {
+                        statusCode: aError.httpStatus,
+                        message: aError.message,
+                        success: false
+                    };
+                    resolve(lError);
                 });
         });
     },
@@ -213,8 +217,8 @@ EnapsoGraphDBClient.Endpoint.prototype = {
     update: async function (aQuery) {
         let me = this;
         return new Promise(function (resolve) {
-            if(me.mAuthenticationHeader && me.mClient.requestDefaults && me.mClient.requestDefaults.headers) {
-                me.mClient.requestDefaults.headers.Authorization =  me.mAuthenticationHeader;
+            if (me.mAuthorization && me.mClient.requestDefaults && me.mClient.requestDefaults.headers) {
+                me.mClient.requestDefaults.headers.Authorization = me.mAuthorization;
             }
             me.mClient.query(aQuery)
                 .execute()
@@ -227,7 +231,12 @@ EnapsoGraphDBClient.Endpoint.prototype = {
                     resolve(aResponse);
                 })
                 .catch(function (aError) {
-                    resolve(aError);
+                    let lError = {
+                        statusCode: aError.httpStatus,
+                        message: aError.message,
+                        success: false
+                    };
+                    resolve(lError);
                 });
         });
     },
@@ -246,17 +255,18 @@ EnapsoGraphDBClient.Endpoint.prototype = {
         var lRes;
         try {
             lRes = await request(lOptions);
-            this.mAuthenticationHeader = lRes.headers.authorization;
+            this.mAuthorization = lRes.headers.authorization;
             lRes.success = true;
-            lRes.message = "Login successful",
-            lRes.code = "OK"
-        } catch(lErr) {
+            lRes.code = "OK";
+            lRes.message = "Login successful";
+        } catch (lErr) {
             lRes = {
-                success: false,
-                code: lErr.error.code,
-                message: lErr.message
+                "success": false,
+                "code": lErr.error.code,
+                "message": lErr.message,
+                "statusCode": -1
             }
-            this.mAuthenticationHeader = null;
+            this.mAuthorization = null;
         }
         return lRes;
     },
@@ -265,7 +275,7 @@ EnapsoGraphDBClient.Endpoint.prototype = {
 
     },
 
-    createResultset: function() {
+    createResultset: function () {
         return {
             success: false,
             code: "OK",
@@ -275,11 +285,11 @@ EnapsoGraphDBClient.Endpoint.prototype = {
         };
     },
 
-    getAuthenticationHeader: function() {
-        return (this.mAuthenticationHeader ? this.mAuthenticationHeader : null);
+    getAuthorization: function () {
+        return (this.mAuthorization ? this.mAuthorization : null);
     },
 
-    getBaseURL: function() {
+    getBaseURL: function () {
         return (this.mBaseURL ? this.mBaseURL : null);
     },
 

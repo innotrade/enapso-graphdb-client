@@ -5,8 +5,8 @@
 const EnapsoGraphDBClient = require("../enapso-graphdb-client");
 
 // demo SPARQL query
-let QUERY = `
-    selectxx * 
+let TEST_QUERY = `
+    select * 
     where {?s ?p ?o}
     limit 2
     `;
@@ -15,8 +15,8 @@ let QUERY = `
 const
     GRAPHDB_BASE_URL = 'http://localhost:7200';
 const
-    GRAPHDB_REPOSITORY = 'Test';
-GRAPHDB_USERNAME = 'Test',
+    GRAPHDB_REPOSITORY = 'Test',
+    GRAPHDB_USERNAME = 'Test',
     GRAPHDB_PASSWORD = 'Test';
 
 // the default prefixes for all SPARQL queries
@@ -34,13 +34,16 @@ const DEFAULT_PREFIXES = [
         repository: GRAPHDB_REPOSITORY,
         // username and password are required here only 
         // if you want to use basic authentication
-        // however, for security reasons it is recommended to use JWT
+        // however, for security reasons it is 
+        // strongly recommended to use JWT
         // username: GRAPHDB_USERNAME,
         // password: GRAPHDB_PASSWORD,
         prefixes: DEFAULT_PREFIXES
     });
 
-    // use the preferred way to login via JWT and return an access token
+    // use the preferred way to login via JWT
+    // and persist returned access token internally
+    // for future requests using this endpoint
     let login = await graphDBEndpoint.login(
         GRAPHDB_USERNAME, GRAPHDB_PASSWORD
     );
@@ -56,7 +59,7 @@ const DEFAULT_PREFIXES = [
     // execute the SPARQL query against the GraphDB endpoint
     // the access token is used to authorize the request
     let resultset = graphDBEndpoint.createResultset();
-    let query = await graphDBEndpoint.query(QUERY);
+    let query = await graphDBEndpoint.query(TEST_QUERY);
 
     // if a result was successfully returned
     if (query.success) {
@@ -73,6 +76,5 @@ const DEFAULT_PREFIXES = [
     } else {
         console.log("Query failed: " + JSON.stringify(query, null, 2));
     }
-
 
 })();
