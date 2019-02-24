@@ -11,78 +11,78 @@ const _ = require('underscore');
 
 const EnapsoGraphDBClient = {
 
-    FORMAT_JSON: {
+    "FORMAT_JSON": {
         "name": "JSON",
         "type": "application/rdf+json",
         "extension": ".json"
     },
-    FORMAT_JSON_LD : {
+    "FORMAT_JSON_LD" : {
         "name": "JSON-LD",
         "type": "application/ld+json",
         "extension": ".jsonld"
     },
-    FORMAT_RDF_XML: {
+    "FORMAT_RDF_XML": {
         "name": "RDF-XML",
         "type": "application/rdf+xml",
         "extension": ".rdf"
     },
-    FORMAT_N3: {
+    "FORMAT_N3": {
         "name": "N3",
         "type": "text/rdf+n3",
         "extension": ".n3"
     },
-    FORMAT_N_TRIPLES: {
+    "FORMAT_N_TRIPLES": {
         "name": "N-Triples",
         "type": "text/plain",
         "extension": ".nt"
     },
-    FORMAT_N_QUADS: {
+    "FORMAT_N_QUADS": {
         "name": "N-Quads",
         "type": "text/x-nquads",
         "extension": ".nq"
     },
-    FORMAT_TURTLE: {
+    "FORMAT_TURTLE": {
         "name": "Turtle",
         "type": "text/turtle",
         "extension": ".ttl"
     },
-    FORMAT_TRIX: {
+    "FORMAT_TRIX": {
         "name": "TriX",
         "type": "application/trix",
         "extension": ".trix"
     },
-    FORMAT_TRIG: {
+    "FORMAT_TRIG": {
         "name": "TriG",
         "type": "application/x-trig",
         "extension": ".trig"
     },
-    FORMAT_BINARY_RDF: {
+    "FORMAT_BINARY_RDF": {
         "name": "Binary RDF",
         "type": "application/x-binary-rdf",
         "extension": ".brf"
     },
 
-    PREFIX_OWL: {
+    "PREFIX_OWL": {
         "prefix": "owl",
         "iri": "http://www.w3.org/2002/07/owl#"
     },
-    PREFIX_RDF: {
+    "PREFIX_RDF": {
         "prefix": "rdf",
         "iri": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     },
-    PREFIX_RDFS: {
+    "PREFIX_RDFS": {
         "prefix": "rdfs",
         "iri": "http://www.w3.org/2000/01/rdf-schema#"
     },
-    PREFIX_XSD: {
+    "PREFIX_XSD": {
         "prefix": "xsd",
         "iri": "http://www.w3.org/2001/XMLSchema#"
     },
-    PREFIX_FN: {
+    "PREFIX_FN": {
         "prefix": "fn",
         "iri": "http://www.w3.org/2005/xpath-functions#"
     },
-    PREFIX_SFN: {
+    "PREFIX_SFN": {
         "prefix": "sfn",
         "iri": "http://www.w3.org/ns/sparql#"
     },
@@ -243,13 +243,36 @@ EnapsoGraphDBClient.Endpoint.prototype = {
             resolveWithFullResponse: true,
             json: true
         };
-        var lRes = await request(lOptions);
-        this.mAuthenticationHeader = lRes.headers.authorization;
+        var lRes;
+        try {
+            lRes = await request(lOptions);
+            this.mAuthenticationHeader = lRes.headers.authorization;
+            lRes.success = true;
+            lRes.message = "Login successful",
+            lRes.code = "OK"
+        } catch(lErr) {
+            lRes = {
+                success: false,
+                code: lErr.error.code,
+                message: lErr.message
+            }
+            this.mAuthenticationHeader = null;
+        }
         return lRes;
     },
 
     logout: async function () {
 
+    },
+
+    createResultset: function() {
+        return {
+            success: false,
+            code: "OK",
+            message: "Resultset is empty",
+            total: 0,
+            records: []
+        };
     },
 
     getAuthenticationHeader: function() {
