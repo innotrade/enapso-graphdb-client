@@ -92,6 +92,7 @@ const EnapsoGraphDBClient = {
         aOptions = aOptions || {};
 
         this.mBaseURL = aOptions.baseURL;
+        this.mRepository = aOptions.repository;
         this.mQueryURL = aOptions.baseURL + '/repositories/' + aOptions.repository;
         this.mUpdateURL = aOptions.baseURL + '/repositories/' + aOptions.repository + '/statements';
 
@@ -291,6 +292,10 @@ EnapsoGraphDBClient.Endpoint.prototype = {
 
     getBaseURL: function () {
         return (this.mBaseURL ? this.mBaseURL : null);
+    },
+
+    getRepository: function () {
+        return (this.mRepository ? this.mRepository : null);
     },
 
     // clears the entire repository, be careful with this function, this operation cannot be undone!

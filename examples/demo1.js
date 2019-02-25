@@ -58,7 +58,6 @@ const DEFAULT_PREFIXES = [
 
     // execute the SPARQL query against the GraphDB endpoint
     // the access token is used to authorize the request
-    let resultset = graphDBEndpoint.createResultset();
     let query = await graphDBEndpoint.query(TEST_QUERY);
 
     // if a result was successfully returned
