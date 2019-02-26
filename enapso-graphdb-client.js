@@ -95,6 +95,7 @@ const EnapsoGraphDBClient = {
         this.mRepository = aOptions.repository;
         this.mQueryURL = aOptions.baseURL + '/repositories/' + aOptions.repository;
         this.mUpdateURL = aOptions.baseURL + '/repositories/' + aOptions.repository + '/statements';
+        this.mDefaultContext = aOptions.defaultContext;
 
         // these are the default headers required for the mClient
         let lRequestDefaults = {
@@ -298,11 +299,12 @@ EnapsoGraphDBClient.Endpoint.prototype = {
         return (this.mRepository ? this.mRepository : null);
     },
 
-    // clears the entire repository, be careful with this function, this operation cannot be undone!
-    clearRepository: async function () {
-        return this.update(`
-            CLEAR ALL
-        `);
+    getDefaultContext: function () {
+        return (this.mDefaultContext ? this.mDefaultContext : null);
+    },
+
+    setDefaultContext: function (aDefaultContext) {
+        this.mDefaultContext = aDefaultContext;
     }
 
 }
