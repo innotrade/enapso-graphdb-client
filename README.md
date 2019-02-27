@@ -63,7 +63,8 @@ const DEFAULT_PREFIXES = [
     );
     if (!login.success) {
         // if login was not successful, exit
-        console.log("Login failed: " + JSON.stringify(login, null, 2));
+        console.log("Login failed: " + 
+          JSON.stringify(login, null, 2));
         return;
     }
     console.log("Login successful: " +
@@ -240,5 +241,36 @@ GraphDB supports the import and export of graphs in numerous formats. The Enapso
     "name": "Binary RDF",
     "type": "application/x-binary-rdf",
     "extension": ".brf"
+}
+```
+
+# Prefixes
+
+The following prefixes are already predefined in the Enapso GraphDB Client:
+
+```json
+"PREFIX_OWL": {
+    "prefix": "owl",
+    "iri": "http://www.w3.org/2002/07/owl#"
+},
+"PREFIX_RDF": {
+    "prefix": "rdf",
+    "iri": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+},
+"PREFIX_RDFS": {
+    "prefix": "rdfs",
+    "iri": "http://www.w3.org/2000/01/rdf-schema#"
+},
+"PREFIX_XSD": {
+    "prefix": "xsd",
+    "iri": "http://www.w3.org/2001/XMLSchema#"
+},
+"PREFIX_FN": {
+    "prefix": "fn",
+    "iri": "http://www.w3.org/2005/xpath-functions#"
+},
+"PREFIX_SFN": {
+    "prefix": "sfn",
+    "iri": "http://www.w3.org/ns/sparql#"
 }
 ```

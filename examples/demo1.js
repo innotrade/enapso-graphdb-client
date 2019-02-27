@@ -49,7 +49,8 @@ const DEFAULT_PREFIXES = [
     );
     if (!login.success) {
         // if login was not successful, exit
-        console.log("Login failed: " + JSON.stringify(login, null, 2));
+        console.log("Login failed: " +
+            JSON.stringify(login, null, 2));
         return;
     }
     console.log("Login successful: " +
@@ -62,18 +63,25 @@ const DEFAULT_PREFIXES = [
 
     // if a result was successfully returned
     if (query.success) {
-        // transform the bindings into a more convenient result format (optional)
-        resultset = EnapsoGraphDBClient.transformBindingsToResultSet(
-            query, {
-                // drop the prefixes for easier resultset readability (optional)
-                dropPrefixes: true
-            }
-        );
-        // log original SPARQL result and beautified result set to the console
-        console.log("\nBinding:\n" + JSON.stringify(query, null, 2));
-        console.log("\nResultset:\n" + JSON.stringify(resultset, null, 2));
+        // transform the bindings into a 
+        // more convenient result format (optional)
+        resultset = EnapsoGraphDBClient.
+            transformBindingsToResultSet(
+                query, {
+                    // drop the prefixes for easier 
+                    // resultset readability (optional)
+                    dropPrefixes: true
+                }
+            );
+        // log original SPARQL result and 
+        // beautified result set to the console
+        console.log("\nBinding:\n" +
+            JSON.stringify(query, null, 2));
+        console.log("\nResultset:\n" +
+            JSON.stringify(resultset, null, 2));
     } else {
-        console.log("Query failed: " + JSON.stringify(query, null, 2));
+        console.log("Query failed: " +
+            JSON.stringify(query, null, 2));
     }
 
 })();
