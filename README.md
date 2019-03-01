@@ -10,10 +10,12 @@ Get GraphDB for free at https://www.ontotext.com/free-graphdb-download-copy/.
 
 To discuss questions and suggestions with the Enapso and GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
 
+# Installation 
+```
+npm i enapso-graphdb-admin --save
+```
 # Examples
-
 ## Querying GraphDB
-
 ```javascript
 // require the Enapso GraphDB Client package
 const EnapsoGraphDBClient = require("enapso-graphdb-client");
@@ -93,8 +95,8 @@ const DEFAULT_PREFIXES = [
 
 })();
 ```
-
 ### Standard SPARQL JSON binding:
+In case of a successful query, a SPARQL compliant JSON is returned. For this low level call, the result neither contains a success flag nor a statusCode or message. You can interpret the existance of the head, results and bindings fields as success criteria.
 ```json
 {
   "head": {
@@ -139,7 +141,6 @@ const DEFAULT_PREFIXES = [
   "success": true
 }
 ```
-
 ### Beautified Enapso JSON Resultset:
 ```json
 {
@@ -159,7 +160,6 @@ const DEFAULT_PREFIXES = [
   ]
 }
 ```
-
 ### Error Handling
 In case the login cannot be performed, because no connection to the GraphDB instance can be established, the following error will be returned:
 ```json
@@ -186,11 +186,8 @@ In case of errors during the execution of the query, the following error will be
   "message": "HTTP Error: 400 Bad Request"
 }
 ```
-
 # Formats
-
 GraphDB supports the import and export of graphs in numerous formats. The EnapsoGraphDBClient provides the available formats as constants. You can use them in your application, for instance, by EnapsoGraphDBClient.FORMAT_TURTLE.
-
 ```json
 "FORMAT_JSON": {
     "name": "JSON",
@@ -243,11 +240,8 @@ GraphDB supports the import and export of graphs in numerous formats. The Enapso
     "extension": ".brf"
 }
 ```
-
 # Prefixes
-
 The following prefixes are already predefined in the Enapso GraphDB Client:
-
 ```json
 "PREFIX_OWL": {
     "prefix": "owl",

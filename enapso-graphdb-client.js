@@ -274,7 +274,7 @@ EnapsoGraphDBClient.Endpoint.prototype = {
     },
 
     logout: async function () {
-
+        this.mAuthorization = null;
     },
 
     createResultset: function () {
