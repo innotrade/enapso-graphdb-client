@@ -8,7 +8,7 @@ const EnapsoGraphDBClient = require("../enapso-graphdb-client");
 let TEST_QUERY = `
     select * 
     where {?s ?p ?o}
-    limit 2
+    limit 100
     `;
 
 // connection data to the running GraphDB instance
@@ -63,6 +63,11 @@ const DEFAULT_PREFIXES = [
 
     // if a result was successfully returned
     if (query.success) {
+        // log original SPARQL result and 
+        // beautified result set to the console
+        console.log("\nBinding:\n" +
+            JSON.stringify(query, null, 2));
+
         // transform the bindings into a 
         // more convenient result format (optional)
         resultset = EnapsoGraphDBClient.
@@ -73,12 +78,20 @@ const DEFAULT_PREFIXES = [
                     dropPrefixes: true
                 }
             );
-        // log original SPARQL result and 
-        // beautified result set to the console
-        console.log("\nBinding:\n" +
-            JSON.stringify(query, null, 2));
         console.log("\nResultset:\n" +
             JSON.stringify(resultset, null, 2));
+
+        csv = EnapsoGraphDBClient.
+            transformBindingsToCSV(
+                query, {
+                    // drop the prefixes for easier 
+                    // resultset readability (optional)
+                    dropPrefixes: true,
+                }
+            );
+        console.log("\CSV:\n" +
+            JSON.stringify(csv, null, 2));
+
     } else {
         console.log("Query failed: " +
             JSON.stringify(query, null, 2));

@@ -164,6 +164,56 @@ const EnapsoGraphDBClient = {
         return lRes;
     },
 
+    // transforms the SPARQL bindings into a value separated text format
+    // optionally the IRI's can be dropped or replaced by their prefixes
+    transformBindingsToSeparatedValues: function (aBindings, aOptions) {
+        aOptions = aOptions || {};
+        let lItems = aBindings.results.bindings;
+        // default to an empty result set
+        let lRes = {
+            total: 0,
+            success: false,
+            records: []
+        }
+        let lSeparator = (aOptions.separator ? aOptions.separator : ',');
+        for (let lIdx = 0; lIdx < lItems.length; lIdx++) {
+            let lItem = lItems[lIdx];
+            let lRow = '';
+            for (let lKey in lItem) {
+                let lValue = lItem[lKey].value;
+                if (aOptions.dropPrefixes) {
+                    let lPrefixPos = lValue.indexOf('#');
+                    if (lPrefixPos >= 0) {
+                        lValue = lValue.substr(lPrefixPos + 1);
+                    }
+                } else if (aOptions.replacePrefixes) {
+                    let lPrefixPos = lValue.indexOf('#');
+                    if (lPrefixPos >= 0) {
+                        lPrefix = lValue.substr(0, lPrefixPos);
+                    }
+                }
+                lRow += (lRow.length > 0 ? lSeparator : '') + lValue;
+            }
+            lRes.records.push(lRow);
+        }
+        // set the total amount of row an return the result set
+        lRes.total = lRes.records.length;
+        lRes.success = true;
+        return lRes;
+    },
+
+    transformBindingsToCSV: function (aBindings, aOptions) {
+        aOptions = aOptions || {};
+        aOptions.separator = ',';
+        return this.transformBindingsToSeparatedValues(aBindings, aOptions);
+    },
+
+    transformBindingsToTSV: function (aBindings, aOptions) {
+        aOptions = aOptions || {};
+        aOptions.separator = '\t';
+        return this.transformBindingsToSeparatedValues(aBindings, aOptions);
+    },
+
     groupResultSet: function (aResultSet, aGroupBy) {
         // group results by tag
         let lMap = _.groupBy(aResultSet.records, aGroupBy);
