@@ -432,13 +432,13 @@ EnapsoGraphDBClient.Endpoint.prototype = {
 
 	transformBindingsToCSV: function (aBindings, aOptions) {
 		aOptions = aOptions || {};
-		aOptions.separator = ',';
+		aOptions.separator = aOptions.separator || ',';
 		return this.transformBindingsToSeparatedValues(aBindings, aOptions);
 	},
 
 	transformBindingsToTSV: function (aBindings, aOptions) {
 		aOptions = aOptions || {};
-		aOptions.separator = '\t';
+		aOptions.separator = aOptions.separator || '\t';
 		return this.transformBindingsToSeparatedValues(aBindings, aOptions);
 	}
 

@@ -17,8 +17,10 @@ let DEMO_QUERY =
     select ?iri ?firstName ?lastName
     where {
         ?iri a et:Person
-        optional {?iri et:firstName ?firstName }
-        optional {?iri et:lastName ?lastName }
+        optional {
+            ?iri et:firstName ?firstName .
+            ?iri et:lastName ?lastName .
+        }
     }
     limit 2
     `;
