@@ -3,12 +3,24 @@
 
 // require the Enapso GraphDB Client package
 const EnapsoGraphDBClient = require("../enapso-graphdb-client");
+const fs = require("fs");
 
 // demo SPARQL query
-let TEST_QUERY = `
+let DEMO_QUERY_SIMPLE =
+    `
     select * 
     where {?s ?p ?o}
     limit 100
+    `;
+let DEMO_QUERY =
+    `
+    select ?iri ?firstName ?lastName
+    where {
+        ?iri a et:Person
+        optional {?iri et:firstName ?firstName }
+        optional {?iri et:lastName ?lastName }
+    }
+    limit 2
     `;
 
 // connection data to the running GraphDB instance
@@ -23,7 +35,13 @@ const
 const DEFAULT_PREFIXES = [
     EnapsoGraphDBClient.PREFIX_OWL,
     EnapsoGraphDBClient.PREFIX_RDF,
-    EnapsoGraphDBClient.PREFIX_RDFS
+    EnapsoGraphDBClient.PREFIX_RDFS,
+    EnapsoGraphDBClient.PREFIX_XSD,
+    EnapsoGraphDBClient.PREFIX_PROTONS,
+    {
+        "prefix": "et",
+        "iri": "http://ont.enapso.com/test#"
+    }
 ];
 
 // demonstrate a SPARQL query against GraphDB
@@ -59,7 +77,7 @@ const DEFAULT_PREFIXES = [
 
     // execute the SPARQL query against the GraphDB endpoint
     // the access token is used to authorize the request
-    let query = await graphDBEndpoint.query(TEST_QUERY);
+    let query = await graphDBEndpoint.query(DEMO_QUERY);
 
     // if a result was successfully returned
     if (query.success) {
@@ -70,28 +88,34 @@ const DEFAULT_PREFIXES = [
 
         // transform the bindings into a 
         // more convenient result format (optional)
-        resultset = EnapsoGraphDBClient.
+        resultset = graphDBEndpoint.
             transformBindingsToResultSet(
                 query, {
                     // drop the prefixes for easier 
                     // resultset readability (optional)
-                    dropPrefixes: true
+                    replacePrefixes: true,
+                    // dropPrefixes: true,
                 }
             );
         console.log("\nResultset:\n" +
             JSON.stringify(resultset, null, 2));
 
-        csv = EnapsoGraphDBClient.
-            transformBindingsToCSV(
+        csv = graphDBEndpoint.
+            transformBindingsToSeparatedValues(
                 query, {
                     // drop the prefixes for easier 
                     // resultset readability (optional)
-                    dropPrefixes: true,
+                    replacePrefixes: true,
+                    // dropPrefixes: true,
+                    separator: ',',
+                    separatorEscape: '\\,',
+                    delimiter: '"',
+                    delimiterEscape: '\\"'
                 }
             );
         console.log("\CSV:\n" +
             JSON.stringify(csv, null, 2));
-
+        fs.writeFileSync('examples/examples.csv', csv.records.join('\r\n'));
     } else {
         console.log("Query failed: " +
             JSON.stringify(query, null, 2));
