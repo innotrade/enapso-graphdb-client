@@ -13,7 +13,7 @@ To discuss questions and suggestions with the Enapso and GraphDB community, we'l
 
 # Installation 
 ```
-npm i enapso-graphdb-admin --save
+npm i enapso-graphdb-client --save
 ```
 # Examples
 ## Querying GraphDB
