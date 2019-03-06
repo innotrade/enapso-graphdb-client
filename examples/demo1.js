@@ -6,24 +6,24 @@ const EnapsoGraphDBClient = require("../enapso-graphdb-client");
 const fs = require("fs");
 
 // demo SPARQL query
-let DEMO_QUERY_SIMPLE =
-    `
-    select * 
-    where {?s ?p ?o}
-    limit 100
-    `;
-let DEMO_QUERY =
-    `
-    select ?iri ?firstName ?lastName
-    where {
-        ?iri a et:Person
-        optional {
-            ?iri et:firstName ?firstName .
-            ?iri et:lastName ?lastName .
-        }
+let DEMO_QUERY_SIMPLE = `
+select * 
+where {?s ?p ?o}
+limit 100
+`;
+
+// query to get all individuals of the class Person
+let DEMO_QUERY = `
+select ?iri ?firstName ?lastName
+where {
+    ?iri a et:Person
+    optional {
+        ?iri et:firstName ?firstName .
+        ?iri et:lastName ?lastName .
     }
-    limit 2
-    `;
+}
+limit 2
+`;
 
 // connection data to the running GraphDB instance
 const
@@ -93,10 +93,10 @@ const DEFAULT_PREFIXES = [
         resultset = graphDBEndpoint.
             transformBindingsToResultSet(
                 query, {
-                    // drop the prefixes for easier 
+                    // drop or replace the prefixes for easier 
                     // resultset readability (optional)
-                    replacePrefixes: true,
-                    // dropPrefixes: true,
+                    replacePrefixes: true
+                    // dropPrefixes: true
                 }
             );
         console.log("\nResultset:\n" +
@@ -117,7 +117,13 @@ const DEFAULT_PREFIXES = [
             );
         console.log("\CSV:\n" +
             JSON.stringify(csv, null, 2));
-        fs.writeFileSync('examples/examples.csv', csv.records.join('\r\n'));
+        fs.writeFileSync(
+            'examples/examples.csv',
+            // optionally add headers
+            csv.headers.join('\r\n') + '\r\n' +
+            // add the csv records to the file
+            csv.records.join('\r\n')
+        );
     } else {
         console.log("Query failed: " +
             JSON.stringify(query, null, 2));
