@@ -370,6 +370,7 @@ EnapsoGraphDBClient.Endpoint.prototype = {
 		let lRes = {
 			total: 0,
 			success: false,
+			headers: [],
 			records: []
 		}
 
@@ -413,7 +414,7 @@ EnapsoGraphDBClient.Endpoint.prototype = {
 			let lValue = adjustValue(lHeadVars[lIdx]);
 			lRow += (lRow.length > 0 ? lSeparator : '') + lValue;
 		}
-		lRes.records.push(lRow);
+		lRes.headers.push(lRow);
 
 		for (let lIdx = 0; lIdx < lBindings.length; lIdx++) {
 			let lItem = lBindings[lIdx];
