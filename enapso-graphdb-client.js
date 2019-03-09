@@ -303,6 +303,10 @@ EnapsoGraphDBClient.Endpoint.prototype = {
         return (this.mRepository ? this.mRepository : null);
     },
 
+    getPrefixes: function () {
+        return (this.mPrefixes ? this.mPrefixes : null);
+    },
+
     getDefaultContext: function () {
         return (this.mDefaultContext ? this.mDefaultContext : null);
     },
