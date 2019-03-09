@@ -166,31 +166,8 @@ const EnapsoGraphDBClient = {
         lRes.total = lRes.records.length;
         lRes.success = true;
         return lRes;
-    },
-
-    groupResultSet: function (aResultSet, aGroupBy) {
-        // group results by tag
-        let lMap = _.groupBy(aResultSet.records, aGroupBy);
-        // remove all now obsolete tag fields
-        lMap = _.forEach(
-            lMap,
-            function (col) {
-                _.forEach(
-                    col,
-                    function (field) {
-                        delete field.tag;
-                    }
-                )
-            }
-        );
-        return lMap;
-    },
-
-    mapKeys: function (aGroupedResultSet, aMap) {
-        return _.mapKeys(aGroupedResultSet, function (value, key, object) {
-            return aMap[key] ? aMap[key] : key;
-        });
     }
+
 };
 
 EnapsoGraphDBClient.Endpoint.prototype = {
@@ -348,7 +325,7 @@ EnapsoGraphDBClient.Endpoint.prototype = {
             return lRes;
         }
         let lItems = aBindings.results.bindings;
-        for(let lItem of lItems) {
+        for (let lItem of lItems) {
             let lResItem = {};
             for (let lKey in lItem) {
                 let lValue = lItem[lKey].value;
@@ -457,6 +434,30 @@ EnapsoGraphDBClient.Endpoint.prototype = {
         aOptions.delimiter = aOptions.delimiter || '';
         aOptions.delimiterEscape = aOptions.delimiterEscape || '';
         return this.transformBindingsToSeparatedValues(aBindings, aOptions);
+    },
+
+    groupResultSet: function (aResultSet, aGroupBy) {
+        // group results by tag
+        let lMap = _.groupBy(aResultSet.records, aGroupBy);
+        // remove all now obsolete tag fields
+        lMap = _.forEach(
+            lMap,
+            function (col) {
+                _.forEach(
+                    col,
+                    function (field) {
+                        delete field.tag;
+                    }
+                )
+            }
+        );
+        return lMap;
+    },
+
+    mapKeys: function (aGroupedResultSet, aMap) {
+        return _.mapKeys(aGroupedResultSet, function (value, key, object) {
+            return aMap[key] ? aMap[key] : key;
+        });
     }
 
 }
