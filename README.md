@@ -1,7 +1,8 @@
 # enapso-graphdb-client
 Enapso Ontotext GraphDB 8.x Client for Node.js
 
-Client for Ontotext GraphDB to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in node.js applications. The client implements the authentication (Basic and JWT), the handling of prefixes and the optional transformation of the SPARQL results into a resultset that can easily be processed in JavaScript.
+Client for Ontotext GraphDB to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in node.js applications. The client implements the authentication (Basic and JWT), the handling of prefixes, a convenient error handling and an optional transformation of SPARQL result bindings to CSV and TSV files as well as to JSON resultsets that can easily be processed in JavaScript.
+Please also refer to the enapso-graphdb-admin project. There you'll find also tools to manage GraphDB and to easily upload and download ontolgies to and from your GraphDB repositories.
 Future versions will implement further convenience methods on SPARQL level.
 Any questions and suggestions are welcome.
 
@@ -19,80 +20,141 @@ npm i enapso-graphdb-client --save
 ## Querying GraphDB
 ```javascript
 // require the Enapso GraphDB Client package
-const EnapsoGraphDBClient = require("enapso-graphdb-client");
+const EnapsoGraphDBClient = require("../enapso-graphdb-client");
+const fs = require("fs");
 
 // demo SPARQL query
-let TEST_QUERY = `
-    select * 
-    where {?s ?p ?o}
-    limit 2
-    `;
+let DEMO_QUERY_SIMPLE = `
+select * 
+where {?s ?p ?o}
+limit 100
+`;
+
+// query to get all individuals of the class Person
+let DEMO_QUERY = `
+select ?iri ?firstName ?lastName
+where {
+    ?iri a et:Person
+    optional {
+        ?iri et:firstName ?firstName .
+        ?iri et:lastName ?lastName .
+    }
+}
+limit 2
+`;
 
 // connection data to the running GraphDB instance
 const
-    GRAPHDB_BASE_URL = 'http://localhost:7200';
+	GRAPHDB_BASE_URL = 'http://localhost:7200';
 const
-    GRAPHDB_REPOSITORY = 'Test',
-    GRAPHDB_USERNAME = 'Test',
-    GRAPHDB_PASSWORD = 'Test';
+	GRAPHDB_REPOSITORY = 'Test',
+	GRAPHDB_USERNAME = 'Test',
+	GRAPHDB_PASSWORD = 'Test';
 
 // the default prefixes for all SPARQL queries
 const DEFAULT_PREFIXES = [
-    EnapsoGraphDBClient.PREFIX_OWL,
-    EnapsoGraphDBClient.PREFIX_RDF,
-    EnapsoGraphDBClient.PREFIX_RDFS
+	EnapsoGraphDBClient.PREFIX_OWL,
+	EnapsoGraphDBClient.PREFIX_RDF,
+	EnapsoGraphDBClient.PREFIX_RDFS,
+	EnapsoGraphDBClient.PREFIX_XSD,
+	EnapsoGraphDBClient.PREFIX_PROTONS,
+	{
+		"prefix": "et",
+		"iri": "http://ont.enapso.com/test#"
+	}
 ];
 
 // demonstrate a SPARQL query against GraphDB
 (async () => {
-    // instantiate the GraphDB endpoint
-    var graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
-        baseURL: GRAPHDB_BASE_URL,
-        repository: GRAPHDB_REPOSITORY,
-        // username and password are required here only 
-        // if you want to use basic authentication
-        // however, for security reasons it is 
-        // strongly recommended to use JWT
-        // username: GRAPHDB_USERNAME,
-        // password: GRAPHDB_PASSWORD,
-        prefixes: DEFAULT_PREFIXES
-    });
+	// instantiate the GraphDB endpoint
+	var graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
+		baseURL: GRAPHDB_BASE_URL,
+		repository: GRAPHDB_REPOSITORY,
+		// username and password are required here only 
+		// if you want to use basic authentication
+		// however, for security reasons it is 
+		// strongly recommended to use JWT
+		// username: GRAPHDB_USERNAME,
+		// password: GRAPHDB_PASSWORD,
+		prefixes: DEFAULT_PREFIXES
+	});
 
-    // use the preferred way to login via JWT
-    // and persist returned access token internally
-    // for future requests using this endpoint
-    let login = await graphDBEndpoint.login(
-        GRAPHDB_USERNAME, GRAPHDB_PASSWORD
-    );
-    if (!login.success) {
-        // if login was not successful, exit
-        console.log("Login failed: " + 
-          JSON.stringify(login, null, 2));
-        return;
-    }
-    console.log("Login successful: " +
-        JSON.stringify(login, null, 2)
-    );
+	// use the preferred way to login via JWT
+	// and persist returned access token internally
+	// for future requests using this endpoint
+	let login = await graphDBEndpoint.login(
+		GRAPHDB_USERNAME, GRAPHDB_PASSWORD
+	);
+	if (!login.success) {
+		// if login was not successful, exit
+		let lMsg = login.message;
+		if (500 === login.statusCode) {
+			if ('ECONNREFUSED' === login.code) {
+				lMsg += ', check if GraphDB is running at ' +
+					graphDBEndpoint.getBaseURL();
+			}
+		} else if (401 === login.statusCode) {
+			lMsg += ', check if user "' + GRAPHDB_USERNAME +
+				'" is set up in your GraphDB at ' +
+				graphDBEndpoint.getBaseURL();
+		}
+		console.log("Login failed: " + lMsg);
+		return;
+	}
+	console.log("Login successful"
+		// the "login" object exposes more details on demand
+		// especially the authentication token and the
+		// user's roles configured in GraphDB for
+		// subsequent requests in case of JWT authentication
+		// + ": " + JSON.stringify(login, null, 2)
+	);
 
-    // execute the SPARQL query against the GraphDB endpoint
-    // the access token is used to authorize the request
-    let query = await graphDBEndpoint.query(TEST_QUERY);
+	// execute the SPARQL query against the GraphDB endpoint
+	// the access token is used to authorize the request
+	let query = await graphDBEndpoint.query(DEMO_QUERY);
 
-    // if a result was successfully returned
-    if (query.success) {
-        // transform the bindings into a more convenient result format (optional)
-        resultset = EnapsoGraphDBClient.transformBindingsToResultSet(
-            query, {
-                // drop the prefixes for easier resultset readability (optional)
-                dropPrefixes: true
-            }
-        );
-        // log original SPARQL result and beautified result set to the console
-        console.log("\nBinding:\n" + JSON.stringify(query, null, 2));
-        console.log("\nResultset:\n" + JSON.stringify(resultset, null, 2));
-    } else {
-        console.log("Query failed: " + JSON.stringify(query, null, 2));
-    }
+	if (!query.success) {
+		let lMsg = query.message;
+		if (403 === query.statusCode) {
+			lMsg += ', check if user "' + GRAPHDB_USERNAME +
+				'" has appropriate access rights to the Repository ' +
+				'"' + graphDBEndpoint.getRepository() + '"';
+		}
+		console.log("Query failed: " + lMsg);
+		return;
+	}
+
+	// if a result was successfully returned
+	// log original SPARQL result and 
+	// beautified result set to the console
+	console.log("\nBinding:\n" +
+		JSON.stringify(query, null, 2));
+
+	// transform the bindings into a 
+	// more convenient result format (optional)
+	resultset = graphDBEndpoint.
+		transformBindingsToResultSet(
+			query, {
+				// drop or replace the prefixes for easier 
+				// resultset readability (optional)
+				replacePrefixes: true
+				// dropPrefixes: true
+			}
+		);
+	console.log("\nResultset:\n" +
+		JSON.stringify(resultset, null, 2));
+
+	csv = graphDBEndpoint.
+		transformBindingsToCSV(query);
+	console.log("\CSV:\n" +
+		JSON.stringify(csv, null, 2));
+	fs.writeFileSync(
+		'examples/examples.csv',
+		// optionally add headers
+		csv.headers.join('\r\n') + '\r\n' +
+		// add the csv records to the file
+		csv.records.join('\r\n')
+	);
 
 })();
 ```
@@ -100,46 +162,46 @@ const DEFAULT_PREFIXES = [
 In case of a successful query, a SPARQL compliant JSON is returned. For this low level call, the result neither contains a success flag nor a statusCode or message. You can interpret the existance of the head, results and bindings fields as success criteria.
 ```json
 {
-  "head": {
+    "success": true,
+    "head": {
     "vars": [
-      "s",
-      "p",
-      "o"
+      "iri",
+      "firstName",
+      "lastName"
     ]
   },
   "results": {
     "bindings": [
       {
-        "p": {
+        "iri": {
           "type": "uri",
-          "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+          "value": "http://ont.enapso.com/test#Person_AlexanderSchulze"
         },
-        "s": {
-          "type": "uri",
-          "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+        "firstName": {
+          "type": "literal",
+          "value": "Alexander"
         },
-        "o": {
-          "type": "uri",
-          "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+        "lastName": {
+          "type": "literal",
+          "value": "Schulze"
         }
       },
       {
-        "p": {
+        "iri": {
           "type": "uri",
-          "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+          "value": "http://ont.enapso.com/test#Person_OsvaldoAguilarLauzurique"
         },
-        "s": {
-          "type": "uri",
-          "value": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf"
+        "firstName": {
+          "type": "literal",
+          "value": "Osvaldo"
         },
-        "o": {
-          "type": "uri",
-          "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+        "lastName": {
+          "type": "literal",
+          "value": "Aguilar Lauzurique"
         }
       }
     ]
-  },
-  "success": true
+  }
 }
 ```
 ### Beautified Enapso JSON Resultset:
@@ -149,14 +211,14 @@ In case of a successful query, a SPARQL compliant JSON is returned. For this low
   "success": true,
   "records": [
     {
-      "p": "type",
-      "s": "type",
-      "o": "Property"
+      "iri": "et:Person_AlexanderSchulze",
+      "firstName": "Alexander",
+      "lastName": "Schulze"
     },
     {
-      "p": "type",
-      "s": "subPropertyOf",
-      "o": "Property"
+      "iri": "et:Person_OsvaldoAguilarLauzurique",
+      "firstName": "Osvaldo",
+      "lastName": "Aguilar Lauzurique"
     }
   ]
 }
@@ -168,7 +230,7 @@ In case the login cannot be performed, because no connection to the GraphDB inst
   "success": false,
   "code": "ECONNREFUSED",
   "message": "Error: connect ECONNREFUSED 127.0.0.1:7200",
-  "statusCode": -1
+  "statusCode": 500
 }
 ```
 In case of invalid credentials, the following error will be returned:
@@ -176,7 +238,7 @@ In case of invalid credentials, the following error will be returned:
 {
   "success": false,
   "message": "401 - Bad credentials",
-  "statusCode": -1
+  "statusCode": 401
 }
 ```
 In case of errors during the execution of the query, the following error will be returned:
@@ -186,6 +248,54 @@ In case of errors during the execution of the query, the following error will be
   "statusCode": 400,
   "message": "HTTP Error: 400 Bad Request"
 }
+```
+# Formats
+The Enapso GraphDB client enables you to easily export query results to CSV and TSV files.
+```javascript
+csv = graphDBEndpoint.
+    transformBindingsToCSV(query);
+````
+returns the following object:
+```json
+{
+  "total": 2,
+  "success": true,
+  "headers": [
+    "iri,firstName,lastName"
+  ],
+  "records": [
+    "http://ont.enapso.com/test#Person_AlexanderSchulze,Alexander,Schulze",
+    "http://ont.enapso.com/test#Person_OsvaldoAguilarLauzurique,Osvaldo,Aguilar Lauzurique"
+  ]
+}
+```
+that easily can be written to a file e.g. by the following code:
+```javascript
+fs.writeFileSync(
+    'examples/examples.csv',
+    // optionally add headers
+    csv.headers.join('\r\n') + '\r\n' +
+    // add the csv records to the file
+    csv.records.join('\r\n')
+);
+```
+In case you require more detailed control over the separator and/or string delimiter characters you can use:
+```javascript
+csv = graphDBEndpoint.
+    transformBindingsToSeparatedValues(
+        query, {
+            // replace IRIs by prefixes for easier 
+            // resultset readability (optional)
+            "replacePrefixes": true,
+            // drop the prefixes for easier 
+            // resultset readability (optional)
+            // "dropPrefixes": true,
+            "separator": ',',
+            "separatorEscape": '\\,',
+            "delimiter": '"',
+            "delimiterEscape": '\\"'
+        }
+    );
 ```
 # Formats
 GraphDB supports the import and export of graphs in numerous formats. The EnapsoGraphDBClient provides the available formats as constants. You can use them in your application, for instance, by EnapsoGraphDBClient.FORMAT_TURTLE.

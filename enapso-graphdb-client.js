@@ -270,7 +270,7 @@ EnapsoGraphDBClient.Endpoint.prototype = {
 				"success": false,
 				"code": lErr.error.code,
 				"message": lErr.message,
-				"statusCode": -1
+				"statusCode": lErr.statusCode || 500
 			}
 			this.mAuthorization = null;
 		}
@@ -433,13 +433,19 @@ EnapsoGraphDBClient.Endpoint.prototype = {
 
 	transformBindingsToCSV: function (aBindings, aOptions) {
 		aOptions = aOptions || {};
-		aOptions.separator = aOptions.separator || ',';
+        aOptions.separator = aOptions.separator || ',';
+        aOptions.separatorEscape = aOptions.separatorEscape || '\\,';        
+        aOptions.delimiter = aOptions.delimiter || '' /* '"' */;
+        aOptions.delimiterEscape = aOptions.delimiterEscape || '' /* '\\"' */;    
 		return this.transformBindingsToSeparatedValues(aBindings, aOptions);
 	},
 
 	transformBindingsToTSV: function (aBindings, aOptions) {
 		aOptions = aOptions || {};
-		aOptions.separator = aOptions.separator || '\t';
+        aOptions.separator = aOptions.separator || '\t';
+        aOptions.separatorEscape = aOptions.separatorEscape || '\\t';        
+        aOptions.delimiter = aOptions.delimiter || '';
+        aOptions.delimiterEscape = aOptions.delimiterEscape || '';  
 		return this.transformBindingsToSeparatedValues(aBindings, aOptions);
 	}
 
