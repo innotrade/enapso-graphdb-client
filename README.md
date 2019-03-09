@@ -162,8 +162,7 @@ const DEFAULT_PREFIXES = [
 In case of a successful query, a SPARQL compliant JSON is returned. For this low level call, the result neither contains a success flag nor a statusCode or message. You can interpret the existance of the head, results and bindings fields as success criteria.
 ```json
 {
-    "success": true,
-    "head": {
+  "head": {
     "vars": [
       "iri",
       "firstName",
@@ -201,7 +200,8 @@ In case of a successful query, a SPARQL compliant JSON is returned. For this low
         }
       }
     ]
-  }
+  },
+  "success": true
 }
 ```
 ### Beautified Enapso JSON Resultset:
@@ -249,11 +249,10 @@ In case of errors during the execution of the query, the following error will be
   "message": "HTTP Error: 400 Bad Request"
 }
 ```
-# Formats
+# CSV and TSV Results
 The Enapso GraphDB client enables you to easily export query results to CSV and TSV files.
 ```javascript
-csv = graphDBEndpoint.
-    transformBindingsToCSV(query);
+csv = graphDBEndpoint.transformBindingsToCSV(query);
 ````
 returns the following object:
 ```json
