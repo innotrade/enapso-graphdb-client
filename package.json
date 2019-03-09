@@ -1,6 +1,6 @@
 {
   "name": "enapso-graphdb-client",
-  "version": "1.1.18",
+  "version": "1.1.19",
   "description": "Enapso Ontotext GraphDB 8.x Client for JavaScript",
   "main": "enapso-graphdb-client.js",
   "scripts": {
@@ -31,9 +31,9 @@
   "homepage": "https://github.com/innotrade/enapso-graphdb-client#readme",
   "dependencies": {
     "chai": "^4.2.0",
+    "lodash": "^4.17.11",
     "mocha": "^5.2.0",
     "request-promise": "^4.2.4",
-    "sparql-client-2": "^0.6.3",
-    "underscore": "^1.9.1"
+    "sparql-client-2": "^0.6.3"
   }
 }

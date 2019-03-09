@@ -7,7 +7,7 @@
 const request = require('request-promise');
 const SparqlClient = require('sparql-client-2');
 const SPARQL = SparqlClient.SPARQL;
-const _ = require('underscore');
+const _ = require('lodash');
 
 const EnapsoGraphDBClient = {
 
