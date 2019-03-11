@@ -27,7 +27,7 @@ const fs = require("fs");
 let DEMO_QUERY_SIMPLE = `
 select * 
 where {?s ?p ?o}
-limit 100
+limit 2
 `;
 
 // query to get all individuals of the class Person
