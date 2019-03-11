@@ -1,19 +1,20 @@
 // Innotrade Enapso GraphDB Client Example
 // (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
+// Author: Alexander Schulze
 
 // require the Enapso GraphDB Client package
-const EnapsoGraphDBClient = require("../enapso-graphdb-client");
+const { EnapsoGraphDBClient } = require("../lib/enapso-graphdb-client");
 const fs = require("fs");
 
 // demo SPARQL query
-let DEMO_QUERY_SIMPLE = `
+let DEMO_QUERY = `
 select * 
 where {?s ?p ?o}
-limit 100
+limit 2
 `;
 
 // query to get all individuals of the class Person
-let DEMO_QUERY = `
+let DEMO_QUERY_INDIVIDUALS = `
 select ?iri ?firstName ?lastName
 where {
     ?iri a et:Person

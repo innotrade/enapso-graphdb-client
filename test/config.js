@@ -1,8 +1,10 @@
-
+// Innotrade Enapso GraphDB Client - Configuration for automated tests
+// (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
+// Author: Alexander Schulze
 
 module.exports = (Object.freeze({
-    queryURL: process.env.QUERY_URL || 'localhost:7200/repositories/Test',
-    updateURL: process.env.UPDATE_URL || 'localhost:7200/repositories/Test/statements',
+	baseURL: 'http://localhost:7200',
+	repository: 'Test',
     username: 'Test',
     password: 'Test',
     prefixes: {

@@ -20,7 +20,7 @@ npm i enapso-graphdb-client --save
 ## Querying GraphDB
 ```javascript
 // require the Enapso GraphDB Client package
-const EnapsoGraphDBClient = require("../enapso-graphdb-client");
+const { EnapsoGraphDBClient } = require("enapso-graphdb-client");
 const fs = require("fs");
 
 // demo SPARQL query
