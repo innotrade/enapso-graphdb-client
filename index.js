@@ -5,5 +5,5 @@
 const EnapsoGraphDBClient = require('./lib/enapso-graphdb-client')
 
 module.exports = {
-	EnapsoGraphDBClient: EnapsoGraphDBClient
+	EnapsoGraphDBClient
 }

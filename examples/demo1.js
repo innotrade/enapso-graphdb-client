@@ -3,7 +3,7 @@
 // Author: Alexander Schulze
 
 // require the Enapso GraphDB Client package
-const { EnapsoGraphDBClient } = require("../lib/enapso-graphdb-client");
+const { EnapsoGraphDBClient } = require("../index");
 const fs = require("fs");
 
 // demo SPARQL query

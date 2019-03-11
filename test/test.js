@@ -5,7 +5,7 @@
 const chai = require('chai');
 const should = require('chai').should;
 const expect = require('chai').expect;
-const { EnapsoGraphDBClient } = require("../lib/enapso-graphdb-client");
+const { EnapsoGraphDBClient } = require("../index");
 const testConfig = require("./config");
 
 const graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
