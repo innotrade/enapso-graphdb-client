@@ -18,6 +18,85 @@ npm i enapso-graphdb-client --save
 ```
 # Examples
 ## Querying GraphDB
+This is how you execute a SPARQL query against GraphDB and transform the bindings to an easily processible resultset:
+```javascript
+let binding = await this.graphDBEndpoint.query(`
+  select * 
+    from <${GRAPHDB_CONTEXT_TEST}>
+  where {
+    ?class rdf:type owl:Class
+    filter(regex(str(?class), "http://ont.enapso.com/test#TestClass", "i")) .
+  }`
+);
+if (binding.success) {
+  let resp = await this.graphDBEndpoint.transformBindingsToResultSet(binding);
+  console.log("Query succeeded:\n" + JSON.stringify(resp, null, 2));
+} else {
+  console.log("Query failed:\n" + JSON.stringify(binding, null, 2));
+}
+```
+In case a matching record is found, the result looks like this:
+```json
+{
+  "total": 1,
+  "success": true,
+  "records": [
+    {
+      "class": "http://ont.enapso.com/test#TestClass"
+    }
+  ]
+}
+```
+## Inserting Triples
+This is how can you can insert triples into your graph:
+```javascript
+let resp = await this.graphDBEndpoint.update(`
+  insert data {
+    graph <${GRAPHDB_CONTEXT_TEST}> {
+      et:TestClass rdf:type owl:Class
+    }
+  }`
+);
+console.log('Insert ' +
+  (resp.success ? 'succeeded' : 'failed') +
+  ':\n' + JSON.stringify(resp, null, 2));
+```
+In case the insert operation was successful, you'll get the following result:
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "OK"
+}
+```
+## Updating Triples
+This is how can you can update triples in your graph:
+```javascript
+let resp = await this.graphDBEndpoint.update(`
+  with <${GRAPHDB_CONTEXT_TEST}>
+  delete {
+    et:TestClass rdf:type owl:Class
+  }
+  insert {
+    et:TestClassUpdated rdf:type owl:Class
+  }
+  where {
+    et:TestClass rdf:type owl:Class
+  }`
+);
+console.log('Update ' +
+  (resp.success ? 'succeeded' : 'failed') +
+  ':\n' + JSON.stringify(resp, null, 2));
+```
+In case the update operation was successful, you'll get the following result:
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "OK"
+}
+```
+# Complete Programm
 ```javascript
 // require the Enapso GraphDB Client package
 const { EnapsoGraphDBClient } = require("enapso-graphdb-client");

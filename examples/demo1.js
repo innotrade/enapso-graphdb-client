@@ -72,22 +72,16 @@ const EnapsoGraphDBClientDemo = {
 	},
 
 	demoQuery: async function () {
-		// perform a query
-		let query = `
+		let binding = await this.graphDBEndpoint.query(`
 select * 
 	from <${GRAPHDB_CONTEXT_TEST}>
 where {
 	?class rdf:type owl:Class
 	filter(regex(str(?class), "http://ont.enapso.com/test#TestClass", "i")) .
-} `;
-		let binding = await this.graphDBEndpoint.query(query);
-		// if a result was successfully returned
+}`
+		);
 		if (binding.success) {
-			// transform the bindings into a more convenient result format (optional)
-			let resp = EnapsoGraphDBClient.transformBindingsToResultSet(binding, {
-				// drop the prefixes for easier resultset readability (optional)
-				dropPrefixes: false
-			});
+			let resp = await this.graphDBEndpoint.transformBindingsToResultSet(binding);
 			console.log("Query succeeded:\n" + JSON.stringify(resp, null, 2));
 		} else {
 			console.log("Query failed:\n" + JSON.stringify(binding, null, 2));
@@ -95,26 +89,20 @@ where {
 	},
 
 	demoInsert: async function () {
-		// perform an update (insert operation)
-		let update = `
+		let resp = await this.graphDBEndpoint.update(`
 insert data {
 	graph <${GRAPHDB_CONTEXT_TEST}> {
 		et:TestClass rdf:type owl:Class
 	}
-}
-		`;
-		let resp = await this.graphDBEndpoint.update(update);
-		// if a result was successfully returned
-		if (resp.success) {
-			console.log("Insert succeeded:\n" + JSON.stringify(resp, null, 2));
-		} else {
-			console.log("Insert failed:\n" + JSON.stringify(resp, null, 2));
-		}
+}`
+		);
+		console.log('Insert ' +
+			(resp.success ? 'succeeded' : 'failed') +
+			':\n' + JSON.stringify(resp, null, 2));
 	},
 
 	demoUpdate: async function () {
-		// perform an update (update operation)
-		let update = `
+		let resp = await this.graphDBEndpoint.update(`
 with <${GRAPHDB_CONTEXT_TEST}>
 delete {
 	et:TestClass rdf:type owl:Class
@@ -124,35 +112,27 @@ insert {
 }
 where {
 	et:TestClass rdf:type owl:Class
-}
-		`;
-		let resp = await this.graphDBEndpoint.update(update);
-		// if a result was successfully returned
-		if (resp.success) {
-			console.log("Update succeeded:\n" + JSON.stringify(resp, null, 2));
-		} else {
-			console.log("Update failed:\n" + JSON.stringify(resp, null, 2));
-		}
+}`
+		);
+		console.log('Update ' +
+			(resp.success ? 'succeeded' : 'failed') +
+			':\n' + JSON.stringify(resp, null, 2));
 	},
 
 	demoDelete: async function () {
-		// perform an update (delete operation)
-		let update = `
+		let resp = await this.graphDBEndpoint.update(
+			`
 with <http://ont.enapso.com/test>
 delete {
 	et:TestClassUpdated rdf:type owl:Class
 }
 where {
 	et:TestClassUpdated rdf:type owl:Class
-}
-		`;
-		let resp = await this.graphDBEndpoint.update(update);
-		// if a result was successfully returned
-		if (resp.success) {
-			console.log("Delete succeeded:\n" + JSON.stringify(resp, null, 2));
-		} else {
-			console.log("Delete failed:\n" + JSON.stringify(resp, null, 2));
-		}
+}`
+		);
+		console.log('Delete ' +
+			(resp.success ? 'succeeded' : 'failed') +
+			':\n' + JSON.stringify(resp, null, 2));
 	},
 
 	demo: async function () {
@@ -168,13 +148,18 @@ where {
 			// + ':\n' + JSON.stringify(this.authentication, null, 2)
 		);
 
+		console.log('The initial repository should be empty:')
 		await this.demoQuery();
 		await this.demoInsert();
+		console.log('The query should return one row with the new TestClass:')
 		await this.demoQuery();
 		await this.demoUpdate();
+		console.log('The query should return one row with TestClassUpdated:')
 		await this.demoQuery();
 		await this.demoDelete();
+		console.log('The query should return no rows anymore:')
 		await this.demoQuery();
+		console.log('The demo accomplished.')
 	}
 
 }
