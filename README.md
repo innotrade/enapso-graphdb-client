@@ -17,6 +17,93 @@ To discuss questions and suggestions with the Enapso and GraphDB community, we'l
 npm i enapso-graphdb-client --save
 ```
 # Examples
+## Configuring the GraphDB connection
+This is the configuration data for the connection to your GraphDB instance:
+```javascript
+const { EnapsoGraphDBClient } = require('enapso-graphdb-client');
+const fs = require("fs");
+
+const
+  GRAPHDB_BASE_URL = 'http://localhost:7200',
+  GRAPHDB_REPOSITORY = 'Test',
+  GRAPHDB_USERNAME = 'Test',
+  GRAPHDB_PASSWORD = 'Test',
+  GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test'
+  ;
+
+const DEFAULT_PREFIXES = [
+  EnapsoGraphDBClient.PREFIX_OWL,
+  EnapsoGraphDBClient.PREFIX_RDF,
+  EnapsoGraphDBClient.PREFIX_RDFS,
+  EnapsoGraphDBClient.PREFIX_XSD,
+  EnapsoGraphDBClient.PREFIX_PROTONS,
+  EnapsoGraphDBClient.PREFIX_ENTEST
+];
+```
+```PREFIX_ENTEST``` specifies the prefix ```entest``` that is used as a reference to the base IRI ```http://ont.enapso.com/test#```. Please also refer to the entire list of prefixes at the botton of this document.
+## Instantiating a GraphDB SPARQL Client
+This is how the GraphDB client is created:
+```javascript
+const EnapsoGraphDBClientDemo = {
+  graphDBEndpoint: null,
+  authentication: null,
+
+  this.graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
+    baseURL: GRAPHDB_BASE_URL,
+    repository: GRAPHDB_REPOSITORY,
+    prefixes: DEFAULT_PREFIXES
+  });
+```
+This is how you authenticate against GraphDB using JWT:
+```javascript
+this.authentication = await this.graphDBEndpoint.login(
+  GRAPHDB_USERNAME,
+  GRAPHDB_PASSWORD
+);
+```
+This is how you check the success of the authentication:
+```javascript
+if (!this.authentication.success) {
+  console.log('\nLogin failed:\n' +
+    JSON.stringify(this.authentication, null, 2));
+  return;
+}
+console.log('\nLogin successful');
+```
+If required, you can get more details about the reason of a connection failure:
+```javascript
+if (!this.authentication.success) {
+    let lMsg = this.authentication.message;
+    if (500 === this.authentication.statusCode) {
+        if ('ECONNREFUSED' === this.authentication.code) {
+            lMsg += ', check if GraphDB is running at ' +
+            this.graphDBEndpoint.getBaseURL();
+        }
+    } else if (401 === this.authentication.statusCode) {
+        lMsg += ', check if user "' + GRAPHDB_USERNAME +
+            '" is set up in your GraphDB at ' +
+            this.graphDBEndpoint.getBaseURL();
+    }
+    console.log("Login failed: " + lMsg);
+    return;
+}
+```
+In case a connection cannot be established at all, e.g. because GraphDB is not available or running at the given URL, you'll get a HTTP 500 error message:
+```json
+{
+  "success": false,
+  "message": "Error: connect ECONNREFUSED 127.0.0.1:7201",
+  "statusCode": 500
+}
+```
+In case of invaalid credentials or insufficient access rights, you'll get a HTTP 401 error message:
+```json
+{
+  "success": false,
+  "message": "401 - Bad credentials",
+  "statusCode": 401
+}
+```
 ## Querying GraphDB
 This is how you execute a SPARQL query against GraphDB and transform the bindings to an easily processible resultset:
 ```javascript
@@ -47,13 +134,29 @@ In case a matching record is found, the result looks like this:
   ]
 }
 ```
+In case of errors in the query, you'll get a HTTP 400 error message:
+```json
+{
+  "statusCode": 400,
+  "message": "HTTP Error: 400 Bad Request",
+  "success": false
+}
+```
+In case of insufficient access rights, you'll get a HTTP 403 error message:
+```json
+{
+  "statusCode": 403,
+  "message": "HTTP Error: 403 Forbidden",
+  "success": false
+}
+```
 ## Inserting Triples
 This is how can you can insert triples into your graph:
 ```javascript
 let resp = await this.graphDBEndpoint.update(`
   insert data {
     graph <${GRAPHDB_CONTEXT_TEST}> {
-      et:TestClass rdf:type owl:Class
+      entest:TestClass rdf:type owl:Class
     }
   }`
 );
@@ -70,18 +173,18 @@ In case the insert operation was successful, you'll get the following result:
 }
 ```
 ## Updating Triples
-This is how can you can update triples in your graph:
+This is how you can update triples in your graph:
 ```javascript
 let resp = await this.graphDBEndpoint.update(`
   with <${GRAPHDB_CONTEXT_TEST}>
   delete {
-    et:TestClass rdf:type owl:Class
+    entest:TestClass rdf:type owl:Class
   }
   insert {
-    et:TestClassUpdated rdf:type owl:Class
+    entest:TestClassUpdated rdf:type owl:Class
   }
   where {
-    et:TestClass rdf:type owl:Class
+    entest:TestClass rdf:type owl:Class
   }`
 );
 console.log('Update ' +
@@ -96,149 +199,8 @@ In case the update operation was successful, you'll get the following result:
   "message": "OK"
 }
 ```
-# Complete Programm
-```javascript
-// require the Enapso GraphDB Client package
-const { EnapsoGraphDBClient } = require("enapso-graphdb-client");
-const fs = require("fs");
-
-// demo SPARQL query
-let DEMO_QUERY_SIMPLE = `
-select * 
-where {?s ?p ?o}
-limit 2
-`;
-
-// query to get all individuals of the class Person
-let DEMO_QUERY = `
-select ?iri ?firstName ?lastName
-where {
-    ?iri a et:Person
-    optional {
-        ?iri et:firstName ?firstName .
-        ?iri et:lastName ?lastName .
-    }
-}
-limit 2
-`;
-
-// connection data to the running GraphDB instance
-const
-	GRAPHDB_BASE_URL = 'http://localhost:7200';
-const
-	GRAPHDB_REPOSITORY = 'Test',
-	GRAPHDB_USERNAME = 'Test',
-	GRAPHDB_PASSWORD = 'Test';
-
-// the default prefixes for all SPARQL queries
-const DEFAULT_PREFIXES = [
-	EnapsoGraphDBClient.PREFIX_OWL,
-	EnapsoGraphDBClient.PREFIX_RDF,
-	EnapsoGraphDBClient.PREFIX_RDFS,
-	EnapsoGraphDBClient.PREFIX_XSD,
-	EnapsoGraphDBClient.PREFIX_PROTONS,
-	{
-		"prefix": "et",
-		"iri": "http://ont.enapso.com/test#"
-	}
-];
-
-// demonstrate a SPARQL query against GraphDB
-(async () => {
-	// instantiate the GraphDB endpoint
-	var graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
-		baseURL: GRAPHDB_BASE_URL,
-		repository: GRAPHDB_REPOSITORY,
-		// username and password are required here only 
-		// if you want to use basic authentication
-		// however, for security reasons it is 
-		// strongly recommended to use JWT
-		// username: GRAPHDB_USERNAME,
-		// password: GRAPHDB_PASSWORD,
-		prefixes: DEFAULT_PREFIXES
-	});
-
-	// use the preferred way to login via JWT
-	// and persist returned access token internally
-	// for future requests using this endpoint
-	let login = await graphDBEndpoint.login(
-		GRAPHDB_USERNAME, GRAPHDB_PASSWORD
-	);
-	if (!login.success) {
-		// if login was not successful, exit
-		let lMsg = login.message;
-		if (500 === login.statusCode) {
-			if ('ECONNREFUSED' === login.code) {
-				lMsg += ', check if GraphDB is running at ' +
-					graphDBEndpoint.getBaseURL();
-			}
-		} else if (401 === login.statusCode) {
-			lMsg += ', check if user "' + GRAPHDB_USERNAME +
-				'" is set up in your GraphDB at ' +
-				graphDBEndpoint.getBaseURL();
-		}
-		console.log("Login failed: " + lMsg);
-		return;
-	}
-	console.log("Login successful"
-		// the "login" object exposes more details on demand
-		// especially the authentication token and the
-		// user's roles configured in GraphDB for
-		// subsequent requests in case of JWT authentication
-		// + ": " + JSON.stringify(login, null, 2)
-	);
-
-	// execute the SPARQL query against the GraphDB endpoint
-	// the access token is used to authorize the request
-	let query = await graphDBEndpoint.query(DEMO_QUERY);
-
-	if (!query.success) {
-		let lMsg = query.message;
-		if (403 === query.statusCode) {
-			lMsg += ', check if user "' + GRAPHDB_USERNAME +
-				'" has appropriate access rights to the Repository ' +
-				'"' + graphDBEndpoint.getRepository() + '"';
-		}
-		console.log("Query failed: " + lMsg);
-		return;
-	}
-
-	// if a result was successfully returned
-	// log original SPARQL result and 
-	// beautified result set to the console
-	console.log("\nBinding:\n" +
-		JSON.stringify(query, null, 2));
-
-	// transform the bindings into a 
-	// more convenient result format (optional)
-	resultset = graphDBEndpoint.
-		transformBindingsToResultSet(
-			query, {
-				// drop or replace the prefixes for easier 
-				// resultset readability (optional)
-				replacePrefixes: true
-				// dropPrefixes: true
-			}
-		);
-	console.log("\nResultset:\n" +
-		JSON.stringify(resultset, null, 2));
-
-	csv = graphDBEndpoint.
-		transformBindingsToCSV(query);
-	console.log("\CSV:\n" +
-		JSON.stringify(csv, null, 2));
-	fs.writeFileSync(
-		'examples/examples.csv',
-		// optionally add headers
-		csv.headers.join('\r\n') + '\r\n' +
-		// add the csv records to the file
-		csv.records.join('\r\n')
-	);
-
-})();
-```
 ### Standard SPARQL JSON binding:
-In case of a successful query, a SPARQL compliant JSON is returned. For this low level call, the result neither contains a success flag nor a statusCode or message. You can interpret the existance of the head, results and bindings fields as success criteria.
+In case of a successful query, a SPARQL compliant JSON is returned. For this low level call, the result neither contains a statusCode nor a message. In addition to the successf flag, you can interpret the existance of the head, results and bindings fields as success criteria.
 ```json
 {
   "head": {
@@ -290,12 +252,12 @@ In case of a successful query, a SPARQL compliant JSON is returned. For this low
   "success": true,
   "records": [
     {
-      "iri": "et:Person_AlexanderSchulze",
+      "iri": "entest:Person_AlexanderSchulze",
       "firstName": "Alexander",
       "lastName": "Schulze"
     },
     {
-      "iri": "et:Person_OsvaldoAguilarLauzurique",
+      "iri": "entest:Person_OsvaldoAguilarLauzurique",
       "firstName": "Osvaldo",
       "lastName": "Aguilar Lauzurique"
     }
@@ -331,7 +293,7 @@ In case of errors during the execution of the query, the following error will be
 # CSV and TSV Results
 The Enapso GraphDB client enables you to easily export query results to CSV and TSV files.
 ```javascript
-csv = graphDBEndpoint.transformBindingsToCSV(query);
+csv = this.graphDBEndpoint.transformBindingsToCSV(query);
 ````
 returns the following object:
 ```json
@@ -359,7 +321,7 @@ fs.writeFileSync(
 ```
 In case you require more detailed control over the separator and/or string delimiter characters you can use:
 ```javascript
-csv = graphDBEndpoint.
+csv = this.graphDBEndpoint.
     transformBindingsToSeparatedValues(
         query, {
             // replace IRIs by prefixes for easier 
@@ -455,5 +417,9 @@ The following prefixes are already predefined in the Enapso GraphDB Client:
 "PREFIX_SFN": {
     "prefix": "sfn",
     "iri": "http://www.w3.org/ns/sparql#"
+},
+"PREFIX_ENTEST": {
+    "prefix": "entest",
+    "iri": "http://ont.enapso.com/test#"
 }
 ```
