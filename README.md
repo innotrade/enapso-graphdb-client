@@ -40,7 +40,7 @@ const DEFAULT_PREFIXES = [
   EnapsoGraphDBClient.PREFIX_ENTEST
 ];
 ```
-```PREFIX_ENTEST``` specifies the prefix ```entest``` that is used as a reference to the base IRI ```http://ont.enapso.com/test#```. Please also refer to the entire list of prefixes at the botton of this document.
+```PREFIX_ENTEST``` specifies the prefix ```entest``` that is used as a reference to the base IRI ```http://ont.enapso.com/test#```. Please also refer to the entire list of prefixes at the bottom of this document.
 ## Instantiating a GraphDB SPARQL Client
 This is how the GraphDB client is created:
 ```javascript
