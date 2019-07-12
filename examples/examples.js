@@ -105,6 +105,22 @@ where {
     },
 
     demo: async function () {
+/*
+        let sparql = `
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX encountries: <http://ont.enapso.com/countries#>
+
+select 
+    ?erId ?erJiraKey
+    ?erCreatedAt ?erLastUpdate
+    ?erProductArea ?erStatus
+    ?erSeverity ?erPriority
+    ?erJiraSummary 
+`;
+        let prefixes = EnapsoGraphDBClient.parsePrefixes(sparql);
+        console.log(JSON.stringify(prefixes, null, 2));
+        return;
+*/
         this.graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
             baseURL: GRAPHDB_BASE_URL,
             repository: GRAPHDB_REPOSITORY,
