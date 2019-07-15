@@ -167,7 +167,10 @@ select
         // if query successful, write csv to file
         if (res.success) {
             let csv = this.graphDBEndpoint.
-                transformBindingsToCSV(res);
+                transformBindingsToCSV(res, {
+                    delimiter: '"',
+                    delimiterOptional: false
+                });
             console.log("\CSV:\n" +
                 JSON.stringify(csv, null, 2));
             fs.writeFileSync(
