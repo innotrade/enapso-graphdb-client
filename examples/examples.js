@@ -89,9 +89,8 @@ where {
     },
 
     demoDelete: async function () {
-        let resp = await this.graphDBEndpoint.update(
-            `
-with <http://ont.enapso.com/test>
+        let resp = await this.graphDBEndpoint.update(`
+with <${GRAPHDB_CONTEXT_TEST}>
 delete {
 	entest:TestClassUpdated rdf:type owl:Class
 }
@@ -106,17 +105,6 @@ where {
 
     demo: async function () {
 /*
-        let sparql = `
-PREFIX spif: <http://spinrdf.org/spif#>
-PREFIX encountries: <http://ont.enapso.com/countries#>
-
-select 
-    ?erId ?erJiraKey
-    ?erCreatedAt ?erLastUpdate
-    ?erProductArea ?erStatus
-    ?erSeverity ?erPriority
-    ?erJiraSummary 
-`;
         let prefixes = EnapsoGraphDBClient.parsePrefixes(sparql);
         console.log(JSON.stringify(prefixes, null, 2));
         return;
@@ -218,17 +206,3 @@ console.log("Enapso GraphDB Client Demo");
 (async () => {
     await EnapsoGraphDBClientDemo.demo();
 })();
-
-	// 	// transform the bindings into a 
-	// 	// more convenient result format (optional)
-	// 	resultset = graphDBEndpoint.
-	// 		transformBindingsToResultSet(
-	// 			query, {
-	// 				// drop or replace the prefixes for easier 
-	// 				// resultset readability (optional)
-	// 				replacePrefixes: true
-	// 				// dropPrefixes: true
-	// 			}
-	// 		);
-	// 	console.log("\nResultset:\n" +
-	// 		JSON.stringify(resultset, null, 2));

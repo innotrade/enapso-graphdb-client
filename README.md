@@ -1,13 +1,13 @@
 # enapso-graphdb-client
-Enapso Ontotext GraphDB 8.x Client for Node.js
+Enapso Ontotext GraphDB 8.x/9.x Client for Node.js
 
 Client for Ontotext GraphDB to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in node.js applications. The client implements the authentication (Basic and JWT), the handling of prefixes, a convenient error handling and an optional transformation of SPARQL result bindings to CSV and TSV files as well as to JSON resultsets that can easily be processed in JavaScript.
 Please also refer to the enapso-graphdb-admin project. There you'll find also tools to manage GraphDB and to easily upload and download ontolgies to and from your GraphDB repositories.
 Future versions will implement further convenience methods on SPARQL level.
 Any questions and suggestions are welcome.
 
-**The following demos require a running GraphDB 8.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.**
-Get the latest version of GraphDB for free at https://www.ontotext.com/free-graphdb-download-copy/.
+**The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.**
+Get the latest version of GraphDB for free at https://www.ontotext.com/products/graphdb/.
 
 **This project is actively developed and maintained.**
 To discuss questions and suggestions with the Enapso and GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
