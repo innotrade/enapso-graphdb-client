@@ -421,5 +421,21 @@ The following prefixes are already predefined in the Enapso GraphDB Client:
 "PREFIX_ENTEST": {
     "prefix": "entest",
     "iri": "http://ont.enapso.com/test#"
+},
+"PREFIX_ONTOFN": {
+    "prefix": "ontofn",
+    "iri": "http://www.ontotext.com/sparql/functions/#"
+},
+"PREFIX_SPIF": {
+    "prefix": "spif",
+    "iri": "http://spinrdf.org/spif#"
+},
+"PREFIX_APROPF": {
+    "prefix": "aprof",
+    "iri": "http://jena.hpl.hp.com/ARQ/property#"
+},
+"PREFIX_ALIST": {
+    "prefix": "alist",
+    "iri": "http://jena.apache.org/ARQ/list#"
 }
 ```
