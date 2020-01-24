@@ -14,13 +14,13 @@ To discuss questions and suggestions with the Enapso and GraphDB community, we'l
 
 # Installation 
 ```
-npm i enapso-graphdb-client --save
+npm i @innotrade/enapso-graphdb-client --save
 ```
 # Examples
 ## Configuring the GraphDB connection
 This is the configuration data for the connection to your GraphDB instance:
 ```javascript
-const { EnapsoGraphDBClient } = require('enapso-graphdb-client');
+const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
 const fs = require("fs");
 
 const
