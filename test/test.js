@@ -1,10 +1,11 @@
 // Innotrade Enapso GraphDB Client - Automated Test Suite
-// (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
+// (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author: Alexander Schulze
 
 const chai = require('chai');
 const should = require('chai').should;
 const expect = require('chai').expect;
+
 const { EnapsoGraphDBClient } = require("../index");
 const testConfig = require("./config");
 

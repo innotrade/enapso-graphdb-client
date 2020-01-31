@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/innotrade/enapso-graphdb-client#readme",
   "dependencies": {
+    "@innotrade/enapso-logger": "0.0.5",
     "chai": "^4.2.0",
     "lodash": "^4.17.15",
     "mocha": "^5.2.0",
