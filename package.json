@@ -4,7 +4,7 @@
   "description": "Enapso Ontotext GraphDB 8.x/9.x Client for Node.js",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha --reporter spec test/test.js --exit"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,8 @@
   "dependencies": {
     "@innotrade/enapso-logger": "0.0.5",
     "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "cross-env": "^7.0.0",
     "lodash": "^4.17.15",
     "mocha": "^5.2.0",
     "request-promise": "^4.2.4",
