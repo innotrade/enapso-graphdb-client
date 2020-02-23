@@ -2,14 +2,15 @@
 // (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author: Alexander Schulze
 
-// require the Enapso GraphDB Client package
+// require the Enapso GraphDB Client and the Enapso Logger package
 const
 	fs = require('fs'),
 	{ EnapsoGraphDBClient } = require('../index'),
-	{ EnapsoLogger } = require('@innotrade/enapso-logger');
+	{ EnapsoLogger, EnapsoLoggerFactory } = require('@innotrade/enapso-logger')
+	;
 
-global.enlogger = new EnapsoLogger();
-enlogger.setLevel(EnapsoLogger.ALL);
+EnapsoLoggerFactory.createGlobalLogger('enLogger');
+enLogger.setLevel(EnapsoLogger.ALL);
 
 // connection data to the running GraphDB instance
 const
@@ -46,7 +47,7 @@ where {
 		);
 		if (query.success) {
 			let resp = await this.graphDBEndpoint.transformBindingsToResultSet(query);
-			enlogger.debug("Query succeeded:\n" + JSON.stringify(resp, null, 2));
+			enLogger.debug("Query succeeded:\n" + JSON.stringify(resp, null, 2));
 		} else {
 			let lMsg = query.message;
 			if (400 === query.statusCode) {
@@ -56,7 +57,7 @@ where {
 					'" has appropriate access rights to the Repository ' +
 					'"' + this.graphDBEndpoint.getRepository() + '"';
 			}
-			enlogger.debug("Query failed (" + lMsg + "):\n" +
+			enLogger.debug("Query failed (" + lMsg + "):\n" +
 				JSON.stringify(query, null, 2));
 		}
 		return query;
@@ -70,7 +71,7 @@ insert data {
 	}
 }`
 		);
-		enlogger.debug('Insert ' +
+		enLogger.debug('Insert ' +
 			(resp.success ? 'succeeded' : 'failed') +
 			':\n' + JSON.stringify(resp, null, 2));
 	},
@@ -88,7 +89,7 @@ where {
 	entest:TestClass rdf:type owl:Class
 }`
 		);
-		enlogger.debug('Update ' +
+		enLogger.debug('Update ' +
 			(resp.success ? 'succeeded' : 'failed') +
 			':\n' + JSON.stringify(resp, null, 2));
 	},
@@ -103,7 +104,7 @@ where {
 	entest:TestClassUpdated rdf:type owl:Class
 }`
 		);
-		enlogger.debug('Delete ' +
+		enLogger.debug('Delete ' +
 			(resp.success ? 'succeeded' : 'failed') +
 			':\n' + JSON.stringify(resp, null, 2));
 	},
@@ -111,7 +112,7 @@ where {
 	demo: async function () {
 		/*
 				let prefixes = EnapsoGraphDBClient.parsePrefixes(sparql);
-				enlogger.debug(JSON.stringify(prefixes, null, 2));
+				enLogger.debug(JSON.stringify(prefixes, null, 2));
 				return;
 		*/
 		this.graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
@@ -137,25 +138,25 @@ where {
 					'" is set up in your GraphDB at ' +
 					this.graphDBEndpoint.getBaseURL();
 			}
-			enlogger.debug("Login failed: " + lMsg);
+			enLogger.debug("Login failed: " + lMsg);
 			return;
 		}
 
 		// verify authentication
 		if (!this.authentication.success) {
-			enlogger.debug("\nLogin failed:\n" +
+			enLogger.debug("\nLogin failed:\n" +
 				JSON.stringify(this.authentication, null, 2));
 			return;
 		}
-		enlogger.debug("\nLogin successful"
+		enLogger.debug("\nLogin successful"
 			// + ':\n' + JSON.stringify(this.authentication, null, 2)
 		);
 
-		enlogger.debug('The initial repository should be empty:')
+		enLogger.debug('The initial repository should be empty:')
 		await this.demoQuery();
 		await this.demoInsert();
 
-		enlogger.debug('The query should return one row with the new TestClass:')
+		enLogger.debug('The query should return one row with the new TestClass:')
 		var res = await this.demoQuery();
 		// if query successful, write csv to file
 		if (res.success) {
@@ -164,17 +165,17 @@ where {
 					delimiter: '"',
 					delimiterOptional: false
 				});
-			enlogger.debug("\CSV:\n" +
+			enLogger.debug("\CSV:\n" +
 				JSON.stringify(csv, null, 2));
 			fs.writeFileSync(
-				'examples/example1.csv',
+				'demo/example1.csv',
 				// optionally add headers
 				csv.headers.join('\r\n') + '\r\n' +
 				// add the csv records to the file
 				csv.records.join('\r\n'));
 		}
 		await this.demoUpdate();
-		enlogger.debug('The query should return one row with TestClassUpdated:')
+		enLogger.debug('The query should return one row with TestClassUpdated:')
 		res = await this.demoQuery();
 		if (res.success) {
 			let csv = this.graphDBEndpoint.
@@ -192,21 +193,21 @@ where {
 				}
 				);
 			fs.writeFileSync(
-				'examples/example2.csv',
+				'demo/example2.csv',
 				// optionally add headers
 				csv.headers.join('\r\n') + '\r\n' +
 				// add the csv records to the file
 				csv.records.join('\r\n'));
 		}
 		await this.demoDelete();
-		enlogger.debug('The query should return no rows anymore:')
+		enLogger.debug('The query should return no rows anymore:')
 		await this.demoQuery();
-		enlogger.debug('The demo accomplished.')
+		enLogger.debug('The demo accomplished.')
 	}
 
 }
 
-enlogger.info("Enapso GraphDB Client Demo\n(C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany");
+enLogger.info("Enapso GraphDB Client Demo\n(C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany");
 
 (async () => {
 	await EnapsoGraphDBClientDemo.demo();

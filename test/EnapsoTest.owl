@@ -1,14 +1,16 @@
 <?xml version="1.0"?>
 <rdf:RDF xmlns="http://ont.enapso.com/test#"
      xml:base="http://ont.enapso.com/test"
-     xmlns:et="http://ont.enapso.com/test#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:entest="http://ont.enapso.com/test#">
     <owl:Ontology rdf:about="http://ont.enapso.com/test">
-        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">(C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, Germany</rdfs:comment>
+        <owl:versionIRI rdf:resource="http://ont.enapso.com/test/1.0.0"/>
+        <rdfs:comment xml:lang="en">(C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany</rdfs:comment>
+        <rdfs:comment xml:lang="en">Enapso Test Ontology</rdfs:comment>
     </owl:Ontology>
     
 
@@ -111,12 +113,22 @@
     
 
 
-    <!-- http://ont.enapso.com/test#Person_OsvaldoAguilarLauzurique -->
+    <!-- http://ont.enapso.com/test#Person_AsheshGoplani -->
 
-    <owl:NamedIndividual rdf:about="http://ont.enapso.com/test#Person_OsvaldoAguilarLauzurique">
+    <owl:NamedIndividual rdf:about="http://ont.enapso.com/test#Person_AsheshGoplani">
         <rdf:type rdf:resource="http://ont.enapso.com/test#Person"/>
-        <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Osvaldo</firstName>
-        <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Aguilar Lauzurique</lastName>
+        <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ashesh</firstName>
+        <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Goplani</lastName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ont.enapso.com/test#Person_MuhammadYasir -->
+
+    <owl:NamedIndividual rdf:about="http://ont.enapso.com/test#Person_MuhammadYasir">
+        <rdf:type rdf:resource="http://ont.enapso.com/test#Person"/>
+        <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Muhammad</firstName>
+        <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Yasir</lastName>
     </owl:NamedIndividual>
 </rdf:RDF>
 
