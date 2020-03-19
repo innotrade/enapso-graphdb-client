@@ -10,15 +10,7 @@ chai.use(chaiHttp);
 const { EnapsoGraphDBClient } = require("../index");
 
 const testConfig = require("./config");
-const GRAPHDB_CONTEXT_TEST = "http://ont.enapso.com/test";
-const graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
-  baseURL: testConfig.baseURL,
-  repository: testConfig.repository,
-  username: testConfig.username,
-  password: testConfig.password,
-  prefixes: testConfig.prefixes
-});
-
+const GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test';
 describe("Query test", () => {
   before(function(done) {
     setTimeout(function() {
@@ -26,30 +18,40 @@ describe("Query test", () => {
     }, 500);
   });
 
-  it("It should return a result", done => {
-    let lQuery = "select * where { ?s ?p ?o } limit 1";
-    graphDBEndpoint.query(lQuery).then(result => {
-      console.log("Success: " + result.success);
-      expect(result).to.have.a.property("success");
-      done();
-    });
-  });
+  let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
+		baseURL: testConfig.baseURL,
+		repository: testConfig.repository,
+		prefixes: testConfig.prefixes
+	});
 
-  it("It expect to  return a status code 400 while performing upation", done => {
+	it('Authenticate against GraphDB instance', (done) => {
+		graphDBEndpoint.login(
+			testConfig.username,
+			testConfig.password
+		).then(result => {
+			// console.log(result.statusCode);
+			expect(result).to.have.property('statusCode', 200);
+			done();
+		})
+	});
+
+
+  it("It expect to  return a success while performing upation", done => {
     let lQuery = `
-	with <${GRAPHDB_CONTEXT_TEST}>
-	delete {
-		entest:TestClass rdf:type owl:Class
-	}
-	insert {
-		entest:TestClassUpdated rdf:type owl:Class
-	}
-	where {
-		entest:TestClass rdf:type owl:Class
-	}`;
-    graphDBEndpoint.update(lQuery).then(result => {
-      console.log("Success: " + result.statusCode);
-      expect(result.statusCode).to.equal(400);
+    prefix et: <http://ont.enapso.com/test#>
+    with <${GRAPHDB_CONTEXT_TEST}>
+    delete {
+        et:TestClass rdf:type owl:Class
+    }
+    insert {
+        et:TestClassUpdated rdf:type owl:Class
+    }
+    where {
+        et:TestClass rdf:type owl:Class
+    }`;
+   graphDBEndpoint.update(lQuery).then(result => {
+      console.log("Success: " + result.success);
+      expect(result).to.have.property('success', true);
       done();
     });
   });
@@ -59,51 +61,39 @@ describe("Query test", () => {
 select * where { ?s ?p ?o } limit 1`;
     graphDBEndpoint.query(lQuery).then(result => {
       // console.log("Success: " + result.success);
-      console.log("Success: " + JSON.stringify(result));
+      console.log("Success: " + result.success);
       expect(result.results.bindings).to.have.lengthOf(1);
       done();
     });
   });
-
-  it("Check server is working", done => {
-    // <= Pass in done callback
-    chai
-      .request("http://localhost:7200")
-      .get("/")
-      .end(function() {
-        let lQuery = "select * where { ?s ?p ?o } limit 1";
-        graphDBEndpoint.query(lQuery).then(result => {
-          console.log("Success: " + result.success);
-          expect(result).to.have.a.property("success");
-          done();
-        });
-      });
-  });
-  it("It should return a status code of 500 while insertion", done => {
+  it("It should return a success as a true while insertion", done => {
     let lQuery = `
-        insert data {
-            graph <${GRAPHDB_CONTEXT_TEST}> {
-                entest:TestClass rdf:type owl:Class
-            }
-        }`;
-    graphDBEndpoint.query(lQuery).then(result => {
-      console.log("Success: " + result.statusCode);
-      expect(result.statusCode).to.equal(500);
+    prefix et: <http://ont.enapso.com/test#>
+    insert data {
+        graph <${GRAPHDB_CONTEXT_TEST}> {
+            et:TestClass rdf:type owl:Class
+        }
+    }
+    `;
+    graphDBEndpoint.update(lQuery).then(result => {
+      console.log("Success: " + result.success);
+      expect(result).to.have.property('success', true);
       done();
     });
   });
-  it("It should return a status code of 400 while deleting ", done => {
+  it("It should return a success as a true while deleting ", done => {
     let lQuery = `
-        with <${GRAPHDB_CONTEXT_TEST}>
-		delete {
-			entest:TestClassUpdated rdf:type owl:Class
-		}
-		where {
-			entest:TestClassUpdated rdf:type owl:Class
-		}`;
-    graphDBEndpoint.query(lQuery).then(result => {
-      console.log("Success: " + result.statusCode);
-      expect(result.statusCode).to.equal(400);
+    prefix et: <http://ont.enapso.com/test#>
+    with <http://ont.enapso.com/test>
+    delete {
+        et:TestClassUpdated rdf:type owl:Class
+    }
+    where {
+        et:TestClassUpdated rdf:type owl:Class
+    }`;
+    graphDBEndpoint.update(lQuery).then(result => {
+      console.log("Success: " + result.success);
+      expect(result).to.have.property('success', true);
       done();
     });
   });
