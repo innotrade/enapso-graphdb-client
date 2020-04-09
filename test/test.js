@@ -12,13 +12,10 @@ const { EnapsoGraphDBClient } = require("../index");
 const testConfig = require("./config");
 const GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test';
 
-describe("Query test", () => {
+describe("Query test", function() {
 
-	before(function (done) {
-		setTimeout(function () {
-			done();
-		}, 500);
-	});
+	this.timeout(2000);
+	this.slow(100);
 
 	let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 		baseURL: testConfig.baseURL,
@@ -26,7 +23,8 @@ describe("Query test", () => {
 		prefixes: testConfig.prefixes
 	});
 
-	it('Authenticate against GraphDB instance', (done) => {
+	it('Authenticate against GraphDB instance', function (done) {
+		this.slow(80);
 		graphDBEndpoint.login(
 			testConfig.username,
 			testConfig.password
@@ -34,26 +32,36 @@ describe("Query test", () => {
 			// console.log(result.statusCode);
 			expect(result).to.have.property('statusCode', 200);
 			done();
+		}).catch(err => {
+			console.log('Authentication: ' + err.message);
+			done(err);
 		})
 	});
 
 	// first try to insert a class
-	it("Test to insert a class", (done) => {
+	it("Insert a class", (done) => {
+		this.slow(80);
 		let lQuery = `
 insert data {
 	graph <${GRAPHDB_CONTEXT_TEST}> {
 		entest:TestClass rdf:type owl:Class
 	}
 }`;
-		graphDBEndpoint.update(lQuery).then(result => {
-			console.log("Success: " + result.success);
+		graphDBEndpoint.update(
+			lQuery
+		).then(result => {
+			// console.log("Success: " + result.success);
 			expect(result).to.have.property('success', true);
 			done();
+		}).catch(err => {
+			console.log('Insert class: ' + err.message);
+			done(err);
 		});
 	});
 
 	// then try to update that inserted class
-	it("Test to update the inserted class", (done) => {
+	it("Update inserted class", function (done) {
+		this.slow(80);
 		let lQuery = `
 with <${GRAPHDB_CONTEXT_TEST}>
 delete {
@@ -65,15 +73,21 @@ insert {
 where {
 	entest:TestClass rdf:type owl:Class
 }`;
-		graphDBEndpoint.update(lQuery).then(result => {
-			console.log("Success: " + result.success);
+		graphDBEndpoint.update(
+			lQuery
+		).then(result => {
+			// console.log("Success: " + result.success);
 			expect(result).to.have.property('success', true);
 			done();
+		}).catch(err => {
+			console.log('Update class: ' + err.message);
+			done(err);
 		});
 	});
 
 	// now try to read the updated class
-	it("Test to read the inserted and updated class", (done) => {
+	it("Read inserted and updated class", function (done) {
+		this.slow(80);
 		let lQuery = `
 select ?class 
 where  {
@@ -81,15 +95,21 @@ where  {
 		?class a owl:Class
 	}
 } limit 1`;
-		graphDBEndpoint.query(lQuery).then(result => {
-			console.log("Success: " + result.success);
+		graphDBEndpoint.query(
+			lQuery
+		).then(result => {
+			// console.log("Success: " + result.success);
 			expect(result.results.bindings).to.have.lengthOf(1);
 			done();
-		});
+		}).catch(err => {
+			console.log('Read class: ' + err.message);
+			done(err);
+		});;
 	});
 
 	// and finally try to delete the new and updated class
-	it("Test to delete the inserted and updated class", (done) => {
+	it("Delete inserted and updated class", function (done) {
+		this.slow(80);
 		let lQuery = `
 with <${GRAPHDB_CONTEXT_TEST}>
 delete {
@@ -98,11 +118,16 @@ delete {
 where {
 	entest:TestClassUpdated rdf:type owl:Class
 }`;
-		graphDBEndpoint.update(lQuery).then(result => {
-			console.log("Success: " + result.success);
+		graphDBEndpoint.update(
+			lQuery
+		).then(result => {
+			// console.log("Success: " + result.success);
 			expect(result).to.have.property('success', true);
 			done();
-		});
+		}).catch(err => {
+			console.log('Delete class: ' + err.message);
+			done(err);
+		});;
 	});
 
 });
