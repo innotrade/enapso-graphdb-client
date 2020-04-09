@@ -12,7 +12,7 @@ const { EnapsoGraphDBClient } = require("../index");
 const testConfig = require("./config");
 const GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test';
 
-describe("Query test", function() {
+describe("Enapso GraphDB Client Tests", function() {
 
 	this.timeout(2000);
 	this.slow(100);
