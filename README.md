@@ -2,12 +2,10 @@
 
 Enapso Ontotext GraphDB 8.x/9.x Client for Node.js
 
-Client for Ontotext GraphDB to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in node.js applications. The client implements the authentication (Basic and JWT), the handling of prefixes, a convenient error handling and an optional transformation of SPARQL result bindings to CSV and TSV files as well as to JSON resultsets that can easily be processed in JavaScript.
-Please also refer to the enapso-graphdb-admin project. There you'll find also tools to manage GraphDB and to easily upload and download ontolgies to and from your GraphDB repositories.
-Future versions will implement further convenience methods on SPARQL level.
-Any questions and suggestions are welcome.
+Node.js client for Ontotext GraphDB to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in Node.js applications. The client implements the authentication (Basic and JWT), the handling of prefixes, a convenient error handling and an optional transformation of SPARQL result bindings to CSV and TSV files as well as to JSON resultsets that can easily be processed in JavaScript.
+Please also refer to the @innotrade/enapso-graphdb-admin project. There you'll find also tools to manage GraphDB and to easily upload and download ontolgies to and from your GraphDB repositories. Any questions and suggestions are welcome.
 
-**The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.While creating new repository select the ruleset OWL-Horst(Optimized).**
+**The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository. While creating new repository select the ruleset RDFS-Plus (Optimized).**
 Get the latest version of GraphDB for free at https://www.ontotext.com/products/graphdb/.
 
 **This project is actively developed and maintained.**
@@ -33,17 +31,19 @@ const
   GRAPHDB_REPOSITORY = 'Test',
   GRAPHDB_USERNAME = 'Test',
   GRAPHDB_PASSWORD = 'Test',
-  GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test',
-  const DEFAULT_PREFIXES = [
+  GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test'
+  ;
+  
+const DEFAULT_PREFIXES = [
   EnapsoGraphDBClient.PREFIX_OWL,
   EnapsoGraphDBClient.PREFIX_RDF,
   EnapsoGraphDBClient.PREFIX_RDFS,
   EnapsoGraphDBClient.PREFIX_XSD,
   EnapsoGraphDBClient.PREFIX_PROTONS,
-   {
-	"prefix": "entest",
+  {
+	  "prefix": "entest",
     "iri": "http://ont.enapso.com/test#"
-   }
+  }
 ];
 ```
 
@@ -398,54 +398,54 @@ GraphDB supports the import and export of graphs in numerous formats. The Enapso
 
 ```json
 "FORMAT_JSON": {
-    "name": "JSON",
-    "type": "application/rdf+json",
-    "extension": ".json"
+  "name": "JSON",
+  "type": "application/rdf+json",
+  "extension": ".json"
 },
 "FORMAT_JSON_LD": {
-    "name": "JSON-LD",
-    "type": "application/ld+json",
-    "extension": ".jsonld"
+  "name": "JSON-LD",
+  "type": "application/ld+json",
+  "extension": ".jsonld"
 },
 "FORMAT_RDF_XML": {
-    "name": "RDF-XML",
-    "type": "application/rdf+xml",
-    "extension": ".rdf"
+  "name": "RDF-XML",
+  "type": "application/rdf+xml",
+  "extension": ".rdf"
 },
 "FORMAT_N3": {
-    "name": "N3",
-    "type": "text/rdf+n3",
-    "extension": ".n3"
+  "name": "N3",
+  "type": "text/rdf+n3",
+  "extension": ".n3"
 },
 "FORMAT_N_TRIPLES": {
-    "name": "N-Triples",
-    "type": "text/plain",
-    "extension": ".nt"
+  "name": "N-Triples",
+  "type": "text/plain",
+  "extension": ".nt"
 },
 "FORMAT_N_QUADS": {
-    "name": "N-Quads",
-    "type": "text/x-nquads",
-    "extension": ".nq"
+  "name": "N-Quads",
+  "type": "text/x-nquads",
+  "extension": ".nq"
 },
 "FORMAT_TURTLE": {
-    "name": "Turtle",
-    "type": "text/turtle",
-    "extension": ".ttl"
+  "name": "Turtle",
+  "type": "text/turtle",
+  "extension": ".ttl"
 },
 "FORMAT_TRIX": {
-    "name": "TriX",
-    "type": "application/trix",
-    "extension": ".trix"
+  "name": "TriX",
+  "type": "application/trix",
+  "extension": ".trix"
 },
 "FORMAT_TRIG": {
-    "name": "TriG",
-    "type": "application/x-trig",
-    "extension": ".trig"
+  "name": "TriG",
+  "type": "application/x-trig",
+  "extension": ".trig"
 },
 "FORMAT_BINARY_RDF": {
-    "name": "Binary RDF",
-    "type": "application/x-binary-rdf",
-    "extension": ".brf"
+  "name": "Binary RDF",
+  "type": "application/x-binary-rdf",
+  "extension": ".brf"
 }
 ```
 
@@ -455,43 +455,43 @@ The following prefixes are already predefined in the Enapso GraphDB Client:
 
 ```json
 "PREFIX_OWL": {
-    "prefix": "owl",
-    "iri": "http://www.w3.org/2002/07/owl#"
+  "prefix": "owl",
+  "iri": "http://www.w3.org/2002/07/owl#"
 },
 "PREFIX_RDF": {
-    "prefix": "rdf",
-    "iri": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  "prefix": "rdf",
+  "iri": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 },
 "PREFIX_RDFS": {
-    "prefix": "rdfs",
-    "iri": "http://www.w3.org/2000/01/rdf-schema#"
+  "prefix": "rdfs",
+  "iri": "http://www.w3.org/2000/01/rdf-schema#"
 },
 "PREFIX_XSD": {
-    "prefix": "xsd",
-    "iri": "http://www.w3.org/2001/XMLSchema#"
+  "prefix": "xsd",
+  "iri": "http://www.w3.org/2001/XMLSchema#"
 },
 "PREFIX_FN": {
-    "prefix": "fn",
-    "iri": "http://www.w3.org/2005/xpath-functions#"
+  "prefix": "fn",
+  "iri": "http://www.w3.org/2005/xpath-functions#"
 },
 "PREFIX_SFN": {
-    "prefix": "sfn",
-    "iri": "http://www.w3.org/ns/sparql#"
+  "prefix": "sfn",
+  "iri": "http://www.w3.org/ns/sparql#"
 }
 "PREFIX_ONTOFN": {
-    "prefix": "ontofn",
-    "iri": "http://www.ontotext.com/sparql/functions/#"
+  "prefix": "ontofn",
+  "iri": "http://www.ontotext.com/sparql/functions/#"
 },
 "PREFIX_SPIF": {
-    "prefix": "spif",
-    "iri": "http://spinrdf.org/spif#"
+  "prefix": "spif",
+  "iri": "http://spinrdf.org/spif#"
 },
 "PREFIX_APROPF": {
-    "prefix": "aprof",
-    "iri": "http://jena.hpl.hp.com/ARQ/property#"
+  "prefix": "aprof",
+  "iri": "http://jena.hpl.hp.com/ARQ/property#"
 },
 "PREFIX_ALIST": {
-    "prefix": "alist",
-    "iri": "http://jena.apache.org/ARQ/list#"
+  "prefix": "alist",
+  "iri": "http://jena.apache.org/ARQ/list#"
 }
 ```
