@@ -41,7 +41,7 @@ const DEFAULT_PREFIXES = [
   EnapsoGraphDBClient.PREFIX_XSD,
   EnapsoGraphDBClient.PREFIX_PROTONS,
   {
-	  "prefix": "entest",
+    "prefix": "entest",
     "iri": "http://ont.enapso.com/test#"
   }
 ];
