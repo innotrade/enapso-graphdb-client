@@ -6,8 +6,7 @@ Please also refer to the enapso-graphdb-admin project. There you'll find also to
 Future versions will implement further convenience methods on SPARQL level.
 Any questions and suggestions are welcome.
 
-**The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.
-While creating new repository select the ruleset OWL-Horst(Optimized)**
+**The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.While creating new repository select the ruleset OWL-Horst(Optimized).**
 Get the latest version of GraphDB for free at https://www.ontotext.com/products/graphdb/.
 
 **This project is actively developed and maintained.**
@@ -22,33 +21,32 @@ npm i @innotrade/enapso-graphdb-client --save
 This is the configuration data for the connection to your GraphDB instance:
 ```javascript
 const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
-const fs = require("fs");
 
 const
   GRAPHDB_BASE_URL = 'http://localhost:7200',
   GRAPHDB_REPOSITORY = 'Test',
   GRAPHDB_USERNAME = 'Test',
   GRAPHDB_PASSWORD = 'Test',
-  GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test'
-  ;
-
+  GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test',
+  NS_AUTH = "http://ont.enapso.com/repo#",
+	PREFIX_AUTH = "enrepo";
 const DEFAULT_PREFIXES = [
   EnapsoGraphDBClient.PREFIX_OWL,
   EnapsoGraphDBClient.PREFIX_RDF,
   EnapsoGraphDBClient.PREFIX_RDFS,
   EnapsoGraphDBClient.PREFIX_XSD,
   EnapsoGraphDBClient.PREFIX_PROTONS,
-  EnapsoGraphDBClient.PREFIX_ENTEST
+  {
+		prefix: PREFIX_AUTH,
+		iri: NS_AUTH,
+	},
 ];
 ```
 ```PREFIX_ENTEST``` specifies the prefix ```entest``` that is used as a reference to the base IRI ```http://ont.enapso.com/test#```. Please also refer to the entire list of prefixes at the bottom of this document.
 ## Instantiating a GraphDB SPARQL Client
-This is how the GraphDB client is created:
-```javascript
-const EnapsoGraphDBClientDemo = {
-  graphDBEndpoint: null,
-  authentication: null,
+Create an async function and in that functuion create a GraphDB client like:
 
+```javascript
   this.graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     baseURL: GRAPHDB_BASE_URL,
     repository: GRAPHDB_REPOSITORY,
