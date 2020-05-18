@@ -20,15 +20,16 @@ const
 	GRAPHDB_PASSWORD = 'Test',
 	GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test'
 	;
-
-// the default prefixes for all SPARQL queries
 const DEFAULT_PREFIXES = [
-	EnapsoGraphDBClient.PREFIX_OWL,
-	EnapsoGraphDBClient.PREFIX_RDF,
-	EnapsoGraphDBClient.PREFIX_RDFS,
-	EnapsoGraphDBClient.PREFIX_XSD,
-	EnapsoGraphDBClient.PREFIX_PROTONS,
-	EnapsoGraphDBClient.PREFIX_ENTEST
+  EnapsoGraphDBClient.PREFIX_OWL,
+  EnapsoGraphDBClient.PREFIX_RDF,
+  EnapsoGraphDBClient.PREFIX_RDFS,
+  EnapsoGraphDBClient.PREFIX_XSD,
+  EnapsoGraphDBClient.PREFIX_PROTONS,
+  {
+	"prefix": "entest",
+    "iri": "http://ont.enapso.com/test#"
+  }
 ];
 
 const EnapsoGraphDBClientDemo = {

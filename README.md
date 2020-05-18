@@ -28,21 +28,19 @@ const
   GRAPHDB_USERNAME = 'Test',
   GRAPHDB_PASSWORD = 'Test',
   GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test',
-  NS_AUTH = "http://ont.enapso.com/repo#",
-	PREFIX_AUTH = "enrepo";
-const DEFAULT_PREFIXES = [
+  const DEFAULT_PREFIXES = [
   EnapsoGraphDBClient.PREFIX_OWL,
   EnapsoGraphDBClient.PREFIX_RDF,
   EnapsoGraphDBClient.PREFIX_RDFS,
   EnapsoGraphDBClient.PREFIX_XSD,
   EnapsoGraphDBClient.PREFIX_PROTONS,
-  {
-		prefix: PREFIX_AUTH,
-		iri: NS_AUTH,
-	},
+   {
+	"prefix": "entest",
+    "iri": "http://ont.enapso.com/test#"
+   }
 ];
 ```
-```PREFIX_ENTEST``` specifies the prefix ```entest``` that is used as a reference to the base IRI ```http://ont.enapso.com/test#```. Please also refer to the entire list of prefixes at the bottom of this document.
+```PREFIX_AUTH``` specifies the prefix ```entest``` that is used as a reference to the base IRI ```http://ont.enapso.com/test#```. and ```NS_AUTH``` to pass the reference of base IRI of Ontology .Please also refer to the entire list of prefixes at the bottom of this document.
 ## Instantiating a GraphDB SPARQL Client
 Create an async function and in that functuion create a GraphDB client like:
 
@@ -416,11 +414,7 @@ The following prefixes are already predefined in the Enapso GraphDB Client:
 "PREFIX_SFN": {
     "prefix": "sfn",
     "iri": "http://www.w3.org/ns/sparql#"
-},
-"PREFIX_ENTEST": {
-    "prefix": "entest",
-    "iri": "http://ont.enapso.com/test#"
-},
+}
 "PREFIX_ONTOFN": {
     "prefix": "ontofn",
     "iri": "http://www.ontotext.com/sparql/functions/#"
