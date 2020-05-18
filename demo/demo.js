@@ -168,7 +168,7 @@ where {
 			enLogger.debug("\CSV:\n" +
 				JSON.stringify(csv, null, 2));
 			fs.writeFileSync(
-				'demo/example1.csv',
+				'example1.csv',
 				// optionally add headers
 				csv.headers.join('\r\n') + '\r\n' +
 				// add the csv records to the file
@@ -193,7 +193,7 @@ where {
 				}
 				);
 			fs.writeFileSync(
-				'demo/example2.csv',
+				'example2.csv',
 				// optionally add headers
 				csv.headers.join('\r\n') + '\r\n' +
 				// add the csv records to the file
