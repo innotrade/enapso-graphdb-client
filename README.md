@@ -47,7 +47,7 @@ const
 ];
 ```
 
-`PREFIX_AUTH` specifies the prefix `entest` that is used as a reference to the base IRI `http://ont.enapso.com/test#`. and `NS_AUTH` to pass the reference of base IRI of Ontology .Please also refer to the entire list of prefixes at the bottom of this document.
+`prefix` specifies the prefix `entest` that is used as a reference to the base IRI `http://ont.enapso.com/test#`. and `iri` to pass the reference of base IRI of Ontology .Please also refer to the entire list of prefixes at the bottom of this document.
 
 ## Instantiating a GraphDB SPARQL Client
 
