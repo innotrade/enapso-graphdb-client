@@ -6,7 +6,8 @@ Please also refer to the enapso-graphdb-admin project. There you'll find also to
 Future versions will implement further convenience methods on SPARQL level.
 Any questions and suggestions are welcome.
 
-**The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.**
+**The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.
+While creating new repository select the ruleset OWL-Horst(Optimized)**
 Get the latest version of GraphDB for free at https://www.ontotext.com/products/graphdb/.
 
 **This project is actively developed and maintained.**
