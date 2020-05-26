@@ -60,7 +60,7 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
   transform: "toCSV",
 });
 ```
-
+tranform is use to convert the results of GraphDB in a specific format so here we define the format there we have 3 predefine formats ```toJSON``` ```toCSV``` and ```toTSV``` this option is optional
 This is how you authenticate against GraphDB using JWT:
 
 ```javascript
@@ -106,7 +106,7 @@ where {
     ?class rdf:type owl:Class
     filter(regex(str(?class), "http://ont.enapso.com/test#TestClass", "i")) .
 }`
-  )
+ ,{transform:"toJSON"} )
   .then((result) => {
     console.log("Read the classes name:\n" + JSON.stringify(result, null, 2));
   })
@@ -114,7 +114,7 @@ where {
     console.log(err);
   });
 ```
-
+if you want to convert the result of one query result to another format not the golbal defined format so you can see the above example.
 In case a matching record is found, the result looks like this:
 
 ```json

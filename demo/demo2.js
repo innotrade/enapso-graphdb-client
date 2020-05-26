@@ -66,7 +66,7 @@ graphDBEndpoint.query(`select *from <${GRAPHDB_CONTEXT_TEST}>
 where {
 	?class rdf:type owl:Class
 	filter(regex(str(?class), "http://ont.enapso.com/test#TestClass", "i")) .
-}`).then((result) => {
+}`,{transform:"toJSON"}).then((result) => {
 	console.log("Read the classes name:\n" + JSON.stringify(result, null, 2));
 }).catch((err) => {
 	console.log(err);
