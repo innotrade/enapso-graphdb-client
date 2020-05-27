@@ -27,7 +27,7 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 	baseURL: GRAPHDB_BASE_URL,
 	repository: GRAPHDB_REPOSITORY,
 	prefixes: DEFAULT_PREFIXES,
-	transform: "toCSV",
+	transform: "toJSON",
 });
 
 graphDBEndpoint
@@ -44,7 +44,8 @@ graphDBEndpoint
     from <${GRAPHDB_CONTEXT_TEST}>
 where {
     ?class rdf:type owl:Class
-}`
+}`,
+		{ transform: "toCSV" }
 	)
 	.then((result) => {
 		// console.log(graphDBEndpoint.transformBindingsToResultSet(result));
@@ -55,18 +56,34 @@ where {
 	});
 
 graphDBEndpoint
-	.update(
-		`
-  insert data {
-    graph <${GRAPHDB_CONTEXT_TEST}> {
-      entest:TestClass rdf:type owl:Class
-    }
-  }`
+	.query(
+		` select *
+    from <${GRAPHDB_CONTEXT_TEST}>
+where {
+    ?class rdf:type owl:Class
+}`
 	)
 	.then((result) => {
 		// console.log(graphDBEndpoint.transformBindingsToResultSet(result));
-		console.log(result, "hjere in second");
+		console.log(result);
 	})
 	.catch((err) => {
 		console.log(err, "here in error");
 	});
+
+// graphDBEndpoint
+// 	.update(
+// 		`
+//   insert data {
+//     graph <${GRAPHDB_CONTEXT_TEST}> {
+//       entest:TestClass rdf:type owl:Class
+//     }
+//   }`
+// 	)
+// 	.then((result) => {
+// 		// console.log(graphDBEndpoint.transformBindingsToResultSet(result));
+// 		console.log(result, "hjere in second");
+// 	})
+// 	.catch((err) => {
+// 		console.log(err, "here in error");
+// 	});
