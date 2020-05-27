@@ -24,16 +24,15 @@ npm i @innotrade/enapso-graphdb-client --save
 This is the configuration data for the connection to your GraphDB instance:
 
 ```javascript
-const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
+const { EnapsoGraphDBClient } = require("@innotrade/enapso-graphdb-client");
 
-const
-  GRAPHDB_BASE_URL = 'http://localhost:7200',
-  GRAPHDB_REPOSITORY = 'Test',
-  GRAPHDB_USERNAME = 'Test',
-  GRAPHDB_PASSWORD = 'Test',
-  GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test'
-  ;
-  
+// connection data to the running GraphDB instance
+const GRAPHDB_BASE_URL = "http://localhost:7200",
+  GRAPHDB_REPOSITORY = "Test",
+  GRAPHDB_USERNAME = "Test",
+  GRAPHDB_PASSWORD = "Test",
+  GRAPHDB_CONTEXT_TEST = "http://ont.enapso.com/repo";
+
 const DEFAULT_PREFIXES = [
   EnapsoGraphDBClient.PREFIX_OWL,
   EnapsoGraphDBClient.PREFIX_RDF,
@@ -41,9 +40,9 @@ const DEFAULT_PREFIXES = [
   EnapsoGraphDBClient.PREFIX_XSD,
   EnapsoGraphDBClient.PREFIX_PROTONS,
   {
-    "prefix": "entest",
-    "iri": "http://ont.enapso.com/test#"
-  }
+    prefix: "entest",
+    iri: "http://ont.enapso.com/test#",
+  },
 ];
 ```
 
@@ -51,57 +50,28 @@ const DEFAULT_PREFIXES = [
 
 ## Instantiating a GraphDB SPARQL Client
 
-Create an async function and in that functuion create a GraphDB client like:
+Create an GraphDB client like:
 
 ```javascript
-this.graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
+let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
   baseURL: GRAPHDB_BASE_URL,
   repository: GRAPHDB_REPOSITORY,
   prefixes: DEFAULT_PREFIXES,
+  transform: "toCSV",
 });
 ```
-
+tranform is use to convert the results of GraphDB in a specific format so here we define the format there we have 3 predefine formats ```toJSON``` ```toCSV``` and ```toTSV``` this option is optional
 This is how you authenticate against GraphDB using JWT:
 
 ```javascript
-this.authentication = await this.graphDBEndpoint.login(
-  GRAPHDB_USERNAME,
-  GRAPHDB_PASSWORD
-);
-```
-
-This is how you check the success of the authentication:
-
-```javascript
-if (!this.authentication.success) {
-  console.log(
-    "\nLogin failed:\n" + JSON.stringify(this.authentication, null, 2)
-  );
-  return;
-}
-console.log("\nLogin successful");
-```
-
-If required, you can get more details about the reason of a connection failure:
-
-```javascript
-if (!this.authentication.success) {
-  let lMsg = this.authentication.message;
-  if (500 === this.authentication.statusCode) {
-    if ("ECONNREFUSED" === this.authentication.code) {
-      lMsg +=
-        ", check if GraphDB is running at " + this.graphDBEndpoint.getBaseURL();
-    }
-  } else if (401 === this.authentication.statusCode) {
-    lMsg +=
-      ', check if user "' +
-      GRAPHDB_USERNAME +
-      '" is set up in your GraphDB at ' +
-      this.graphDBEndpoint.getBaseURL();
-  }
-  console.log("Login failed: " + lMsg);
-  return;
-}
+graphDBEndpoint
+  .login(GRAPHDB_USERNAME, GRAPHDB_PASSWORD)
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 In case a connection cannot be established at all, e.g. because GraphDB is not available or running at the given URL, you'll get a HTTP 500 error message:
@@ -129,21 +99,22 @@ In case of invaalid credentials or insufficient access rights, you'll get a HTTP
 This is how you execute a SPARQL query against GraphDB and transform the bindings to an easily processible resultset:
 
 ```javascript
-let binding = await this.graphDBEndpoint.query(`
-  select * 
-    from <${GRAPHDB_CONTEXT_TEST}>
-  where {
+graphDBEndpoint
+  .query(
+    `select *from <${GRAPHDB_CONTEXT_TEST}>
+where {
     ?class rdf:type owl:Class
     filter(regex(str(?class), "http://ont.enapso.com/test#TestClass", "i")) .
-  }`);
-if (binding.success) {
-  let resp = await this.graphDBEndpoint.transformBindingsToResultSet(binding);
-  console.log("Query succeeded:\n" + JSON.stringify(resp, null, 2));
-} else {
-  console.log("Query failed:\n" + JSON.stringify(binding, null, 2));
-}
+}`
+ ,{transform:"toJSON"} )
+  .then((result) => {
+    console.log("Read the classes name:\n" + JSON.stringify(result, null, 2));
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
-
+if you want to convert the result of one query result to another format not the golbal defined format so you can see the above example.
 In case a matching record is found, the result looks like this:
 
 ```json
@@ -183,18 +154,19 @@ In case of insufficient access rights, you'll get a HTTP 403 error message:
 This is how can you can insert triples into your graph:
 
 ```javascript
-let resp = await this.graphDBEndpoint.update(`
-  insert data {
-    graph <${GRAPHDB_CONTEXT_TEST}> {
-      entest:TestClass rdf:type owl:Class
-    }
-  }`);
-console.log(
-  "Insert " +
-    (resp.success ? "succeeded" : "failed") +
-    ":\n" +
-    JSON.stringify(resp, null, 2)
-);
+graphDBEndpoint
+  .update(
+    `insert data {
+			graph <${GRAPHDB_CONTEXT_TEST}> {
+      entest:TestClass rdf:type owl:Class}
+  }`
+  )
+  .then((result) => {
+    console.log("inserted a class :\n" + JSON.stringify(result, null, 2));
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 In case the insert operation was successful, you'll get the following result:
@@ -212,23 +184,54 @@ In case the insert operation was successful, you'll get the following result:
 This is how you can update triples in your graph:
 
 ```javascript
-let resp = await this.graphDBEndpoint.update(`
-  with <${GRAPHDB_CONTEXT_TEST}>
-  delete {
-    entest:TestClass rdf:type owl:Class
-  }
-  insert {
-    entest:TestClassUpdated rdf:type owl:Class
-  }
-  where {
-    entest:TestClass rdf:type owl:Class
-  }`);
-console.log(
-  "Update " +
-    (resp.success ? "succeeded" : "failed") +
-    ":\n" +
-    JSON.stringify(resp, null, 2)
-);
+graphDBEndpoint
+  .update(
+    `with <${GRAPHDB_CONTEXT_TEST}>
+		delete {
+		  entest:TestClass rdf:type owl:Class
+		}
+		insert {
+		  entest:TestClassUpdated rdf:type owl:Class
+		}
+		where {
+		  entest:TestClass rdf:type owl:Class
+		}`
+  )
+  .then((result) => {
+    console.log(
+      "Updated the inserted class name:\n" + JSON.stringify(result, null, 2)
+    );
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+```
+
+In case the update operation was successful, you'll get the following result:
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "OK"
+}
+```
+## Delete Triples
+
+This is how you can delete triples in your graph:
+
+```javascript
+graphDBEndpoint.update(`with <${GRAPHDB_CONTEXT_TEST}>
+		delete {
+			entest:TestClassUpdated rdf:type owl:Class
+		}
+		where {
+			entest:TestClassUpdated rdf:type owl:Class
+		}`).then((result) => {
+	console.log("Delete the class:\n" + JSON.stringify(result, null, 2));
+}).catch((err) => {
+	console.log(err);
+});
 ```
 
 In case the update operation was successful, you'll get the following result:

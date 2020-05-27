@@ -19,7 +19,7 @@ const DEFAULT_PREFIXES = [
 	EnapsoGraphDBClient.PREFIX_PROTONS,
 	{
 		prefix: "entest",
-		iri: "http://ont.enapso.com/repo#",
+		iri: "http://ont.enapso.com/test#",
 	},
 ];
 
@@ -30,19 +30,41 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 	transform: "toJSON",
 });
 
-graphDBEndpoint
-	.login(GRAPHDB_USERNAME, GRAPHDB_PASSWORD)
-	.then((result) => {
-		console.log(result);
-	})
-	.catch((err) => {
-		console.log(err, "here in error");
-	});
-graphDBEndpoint
-	.query(
-		` select *
-    from <${GRAPHDB_CONTEXT_TEST}>
+graphDBEndpoint.login(GRAPHDB_USERNAME, GRAPHDB_PASSWORD).then((result) => {
+	console.log(result);
+}).catch((err) => {
+	console.log(err);
+});
+
+graphDBEndpoint.update(`insert data {
+			graph <${GRAPHDB_CONTEXT_TEST}> {
+      entest:TestClass rdf:type owl:Class}
+  }`).then((result) => {
+	console.log("insert a class :\n" + JSON.stringify(result, null, 2));
+}).catch((err) => {
+	console.log(err);
+});
+
+
+
+graphDBEndpoint.update(`with <${GRAPHDB_CONTEXT_TEST}>
+		delete {
+		  entest:TestClass rdf:type owl:Class
+		}
+		insert {
+		  entest:TestClassUpdated rdf:type owl:Class
+		}
+		where {
+		  entest:TestClass rdf:type owl:Class
+		}`).then((result) => {
+	console.log("Update the class name:\n" + JSON.stringify(result, null, 2));
+}).catch((err) => {
+	console.log(err);
+});
+
+graphDBEndpoint.query(`select *from <${GRAPHDB_CONTEXT_TEST}>
 where {
+<<<<<<< HEAD
     ?class rdf:type owl:Class
 }`,
 		{ transform: "toCSV" }
@@ -87,3 +109,26 @@ where {
 // 	.catch((err) => {
 // 		console.log(err, "here in error");
 // 	});
+=======
+	?class rdf:type owl:Class
+	filter(regex(str(?class), "http://ont.enapso.com/test#TestClass", "i")) .
+}`,{transform:"toJSON"}).then((result) => {
+	console.log("Read the classes name:\n" + JSON.stringify(result, null, 2));
+}).catch((err) => {
+	console.log(err);
+});
+
+
+graphDBEndpoint.update(`with <${GRAPHDB_CONTEXT_TEST}>
+		delete {
+			entest:TestClassUpdated rdf:type owl:Class
+		}
+		where {
+			entest:TestClassUpdated rdf:type owl:Class
+		}`).then((result) => {
+	console.log("Delete the class:\n" + JSON.stringify(result, null, 2));
+}).catch((err) => {
+	console.log(err);
+});
+
+>>>>>>> Error-handling
