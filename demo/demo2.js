@@ -27,7 +27,7 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 	baseURL: GRAPHDB_BASE_URL,
 	repository: GRAPHDB_REPOSITORY,
 	prefixes: DEFAULT_PREFIXES,
-	transform: "toJSON",
+	transform: "toCSV",
 });
 
 graphDBEndpoint.login(GRAPHDB_USERNAME, GRAPHDB_PASSWORD).then((result) => {
@@ -64,55 +64,9 @@ graphDBEndpoint.update(`with <${GRAPHDB_CONTEXT_TEST}>
 
 graphDBEndpoint.query(`select *from <${GRAPHDB_CONTEXT_TEST}>
 where {
-<<<<<<< HEAD
-    ?class rdf:type owl:Class
-}`,
-		{ transform: "toCSV" }
-	)
-	.then((result) => {
-		// console.log(graphDBEndpoint.transformBindingsToResultSet(result));
-		console.log(result);
-	})
-	.catch((err) => {
-		console.log(err, "here in error");
-	});
-
-graphDBEndpoint
-	.query(
-		` select *
-    from <${GRAPHDB_CONTEXT_TEST}>
-where {
-    ?class rdf:type owl:Class
-}`
-	)
-	.then((result) => {
-		// console.log(graphDBEndpoint.transformBindingsToResultSet(result));
-		console.log(result);
-	})
-	.catch((err) => {
-		console.log(err, "here in error");
-	});
-
-// graphDBEndpoint
-// 	.update(
-// 		`
-//   insert data {
-//     graph <${GRAPHDB_CONTEXT_TEST}> {
-//       entest:TestClass rdf:type owl:Class
-//     }
-//   }`
-// 	)
-// 	.then((result) => {
-// 		// console.log(graphDBEndpoint.transformBindingsToResultSet(result));
-// 		console.log(result, "hjere in second");
-// 	})
-// 	.catch((err) => {
-// 		console.log(err, "here in error");
-// 	});
-=======
 	?class rdf:type owl:Class
 	filter(regex(str(?class), "http://ont.enapso.com/test#TestClass", "i")) .
-}`,{transform:"toJSON"}).then((result) => {
+}`, { transform: "toJSON" }).then((result) => {
 	console.log("Read the classes name:\n" + JSON.stringify(result, null, 2));
 }).catch((err) => {
 	console.log(err);
@@ -131,4 +85,3 @@ graphDBEndpoint.update(`with <${GRAPHDB_CONTEXT_TEST}>
 	console.log(err);
 });
 
->>>>>>> Error-handling

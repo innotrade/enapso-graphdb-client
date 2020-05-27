@@ -60,7 +60,8 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
   transform: "toCSV",
 });
 ```
-tranform is use to convert the results of GraphDB in a specific format so here we define the format there we have 3 predefine formats ```toJSON``` ```toCSV``` and ```toTSV``` this option is optional
+
+tranform is use to convert the results of GraphDB in a specific format so here we define the format there we have 3 predefine formats `toJSON` `toCSV` and `toTSV` this option is optional
 This is how you authenticate against GraphDB using JWT:
 
 ```javascript
@@ -105,8 +106,9 @@ graphDBEndpoint
 where {
     ?class rdf:type owl:Class
     filter(regex(str(?class), "http://ont.enapso.com/test#TestClass", "i")) .
-}`
- ,{transform:"toJSON"} )
+}`,
+    { transform: "toJSON" }
+  )
   .then((result) => {
     console.log("Read the classes name:\n" + JSON.stringify(result, null, 2));
   })
@@ -114,6 +116,7 @@ where {
     console.log(err);
   });
 ```
+
 if you want to convert the result of one query result to another format not the golbal defined format so you can see the above example.
 In case a matching record is found, the result looks like this:
 
@@ -216,22 +219,28 @@ In case the update operation was successful, you'll get the following result:
   "message": "OK"
 }
 ```
+
 ## Delete Triples
 
 This is how you can delete triples in your graph:
 
 ```javascript
-graphDBEndpoint.update(`with <${GRAPHDB_CONTEXT_TEST}>
+graphDBEndpoint
+  .update(
+    `with <${GRAPHDB_CONTEXT_TEST}>
 		delete {
 			entest:TestClassUpdated rdf:type owl:Class
 		}
 		where {
 			entest:TestClassUpdated rdf:type owl:Class
-		}`).then((result) => {
-	console.log("Delete the class:\n" + JSON.stringify(result, null, 2));
-}).catch((err) => {
-	console.log(err);
-});
+		}`
+  )
+  .then((result) => {
+    console.log("Delete the class:\n" + JSON.stringify(result, null, 2));
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 In case the update operation was successful, you'll get the following result:
