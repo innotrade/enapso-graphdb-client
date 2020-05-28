@@ -1,6 +1,6 @@
 # enapso-graphdb-client
 
-Enapso Ontotext GraphDB 8.x/9.x Client for Node.js
+enapso Ontotext GraphDB 8.x/9.x Client for Node.js
 
 Node.js client for Ontotext GraphDB to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in Node.js applications. The client implements the authentication (Basic and JWT), the handling of prefixes, a convenient error handling and an optional transformation of SPARQL result bindings to CSV and TSV files as well as to JSON resultsets that can easily be processed in JavaScript.
 Please also refer to the @innotrade/enapso-graphdb-admin project. There you'll find also tools to manage GraphDB and to easily upload and download ontolgies to and from your GraphDB repositories. Any questions and suggestions are welcome.
@@ -9,7 +9,7 @@ Please also refer to the @innotrade/enapso-graphdb-admin project. There you'll f
 Get the latest version of GraphDB for free at https://www.ontotext.com/products/graphdb/.
 
 **This project is actively developed and maintained.**
-To discuss questions and suggestions with the Enapso and GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
+To discuss questions and suggestions with the enapso and GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
 
 # Installation
 
@@ -42,7 +42,7 @@ const DEFAULT_PREFIXES = [
   {
     prefix: "entest",
     iri: "http://ont.enapso.com/test#",
-  },
+  }
 ];
 ```
 
@@ -298,7 +298,7 @@ In case of a successful query, a SPARQL compliant JSON is returned. For this low
 }
 ```
 
-### Beautified Enapso JSON Resultset:
+### Beautified enapso JSON Resultset:
 
 ```json
 {
@@ -354,7 +354,7 @@ In case of errors during the execution of the query, the following error will be
 
 # CSV and TSV Results
 
-The Enapso GraphDB client enables you to easily export query results to CSV and TSV files.
+The enapso GraphDB client enables you to easily export query results to CSV and TSV files.
 
 ```javascript
 csv = this.graphDBEndpoint.transformBindingsToCSV(query);
@@ -463,7 +463,7 @@ GraphDB supports the import and export of graphs in numerous formats. The Enapso
 
 # Prefixes
 
-The following prefixes are already predefined in the Enapso GraphDB Client:
+The following prefixes are already predefined in the enapso GraphDB Client:
 
 ```json
 "PREFIX_OWL": {
