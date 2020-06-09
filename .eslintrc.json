@@ -1,0 +1,27 @@
+{
+    "extends": ["airbnb", "prettier"],
+    "plugins": ["prettier"],
+    "parserOptions": {
+        "ecmaVersion": 7,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "rules": {
+        "prettier/prettier": ["error"],
+        // https://eslint.org/docs/rules/no-param-reassign
+        "no-param-reassign": 0, // off, function parameters may be re-assigned,
+        // https://eslint.org/docs/rules/func-names
+        "func-names": ["error", "as-needed"],
+        // https://eslint.org/docs/rules/padding-line-between-statements
+        "padding-line-between-statements": [
+            "error",
+            {
+                "blankLine": "always",
+                "prev": "function",
+                "next": "function"
+            }
+        ]
+    }
+}
