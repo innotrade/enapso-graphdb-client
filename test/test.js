@@ -2,7 +2,7 @@
 /* eslint-disable no-console, func-names, no-undef */
 // Innotrade Enapso GraphDB Client - Automated Test Suite
 // (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
-// Author: Alexander Schulze
+// Author: Alexander Schulze and Muhammad Yasir
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
@@ -15,7 +15,7 @@ const GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test';
 
 chai.use(chaiHttp);
 
-describe('Enapso GraphDB Client Tests', function () {
+describe('ENAPSO GraphDB Client Automated Test Suite', function () {
     this.timeout(2000);
     this.slow(100);
 
