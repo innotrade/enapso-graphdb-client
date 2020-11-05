@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-console, func-names, no-undef */
 // Innotrade Enapso GraphDB Client - Automated Test Suite
 // (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
@@ -73,7 +74,7 @@ insert {
 	entest:TestClassUpdated rdf:type owl:Class
 }
 where {
-	entest:TestClass rdf:type owl:Class
+    entest:TestClass rdf:type owl:Class
 }`;
         graphDBEndpoint
             .update(lQuery)
