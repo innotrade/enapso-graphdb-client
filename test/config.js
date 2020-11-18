@@ -7,12 +7,12 @@ require('@innotrade/enapso-config');
 
 module.exports = Object.freeze({
     baseURL: encfg.getConfig(
-        'GraphDB.GRAPHDB_BASE_URL',
+        'enapsoDefaultGraphDB.baseUrl',
         'http://localhost:7200'
     ),
-    repository: encfg.getConfig('GraphDB.GRAPHDB_REPOSITORY', 'Test'),
-    username: encfg.getConfig('GraphDB.GRAPHDB_USERNAME', 'Test'),
-    password: encfg.getConfig('GraphDB.GRAPHDB_PASSWORD', 'Test'),
+    repository: encfg.getConfig('enapsoDefaultGraphDB.repository', 'Test'),
+    username: encfg.getConfig('enapsoDefaultGraphDB.userName', 'Test'),
+    password: encfg.getConfig('enapsoDefaultGraphDB.password', 'Test'),
 
     prefixes: {
         PREFIX_OWL: {
