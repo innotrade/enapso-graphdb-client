@@ -11,7 +11,10 @@ const { expect } = require('chai');
 const { EnapsoGraphDBClient } = require('../index');
 const testConfig = require('./config');
 
-const GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test';
+const GRAPHDB_CONTEXT_TEST = encfg.getConfig(
+    'enapsoDefaultGraphDB.contextTest',
+    'http://ont.enapso.com/test'
+);
 
 chai.use(chaiHttp);
 
