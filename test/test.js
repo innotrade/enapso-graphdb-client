@@ -16,7 +16,7 @@ const GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test';
 chai.use(chaiHttp);
 
 describe('ENAPSO GraphDB Client Automated Test Suite', function () {
-    this.timeout(2000);
+    this.timeout(5000);
     this.slow(100);
 
     const graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
