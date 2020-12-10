@@ -66,7 +66,7 @@ const FUSEKI_QUERY_PATH = `/${GRAPHDB_REPOSITORY}/sparql`,
     FUSEKI_UPDATE_PATH = `/${GRAPHDB_REPOSITORY}/update`;
 ```
 
-if you want to use the fuseki server you need to give the query and update part as given above and if you are gonna use the GraphDB then dont need to pass any path constants it by default use the GraphDB paths.
+if you want to use the fuseki server you need to give the query and update part as given above and if you are gonna use the GraphDB then you dont need to pass any path constants it by default use the GraphDB paths.
 
 ## Instantiating a Apache Jena FUSEKI Client
 
