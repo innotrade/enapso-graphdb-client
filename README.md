@@ -59,14 +59,14 @@ const DEFAULT_PREFIXES = [
 
 ## Configuring the Fuseki connection
 
-For fuseki connection we use the same congiuration as above descirbe for GraphDB we need to change the port from 7200 to 3030 and add two more constant variable.
+For fuseki connection we use the same congiuration as above descirbe for GraphDB we need to change the port from `7200` to `3030` and add two more constant variable.
 
 ```javascript
 const FUSEKI_QUERY_PATH = `/${GRAPHDB_REPOSITORY}/sparql`,
     FUSEKI_UPDATE_PATH = `/${GRAPHDB_REPOSITORY}/update`;
 ```
 
-the above given fuseki path to change the path according to our db by default it use the GraphDB and other functionality working on same way as GraphDB client working like for query and update except the login functionality is not available in fuskei client.
+if you want to use the fuseki server you need to give the query and update part as given above and if you are gonna use the GraphDB then dont need to pass any path constants it by default use the GraphDB paths.
 
 ## Instantiating a Apache Jena FUSEKI Client
 
