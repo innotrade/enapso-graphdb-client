@@ -1,3 +1,8 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable prefer-const */
+/* eslint-disable prefer-template */
+/* eslint-disable no-console */
+/* eslint-disable prettier/prettier */
 /* eslint-disable one-var */
 /* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
@@ -10,7 +15,7 @@ const { EnapsoGraphDBClient } = require('../index');
 // connection data to the running GraphDB instance
 const GRAPHDB_BASE_URL = encfg.getConfig(
         'enapsoDefaultGraphDB.baseUrl',
-        'http://localhost:7200'
+        'http://localhost:3030'
     ),
     GRAPHDB_REPOSITORY = encfg.getConfig(
         'enapsoDefaultGraphDB.repository',
@@ -21,6 +26,14 @@ const GRAPHDB_BASE_URL = encfg.getConfig(
         'admin'
     ),
     GRAPHDB_PASSWORD = encfg.getConfig('enapsoDefaultGraphDB.password', 'root'),
+    FUSEKI_QUERY_PATH = encfg.getConfig(
+        'enapsoDefaultGraphDB.queryPath',
+        `/${GRAPHDB_REPOSITORY}/sparql`
+    ),
+    FUSEKI_UPDATE_PATH = encfg.getConfig(
+        'enapsoDefaultGraphDB.updatePath',
+        `/${GRAPHDB_REPOSITORY}/update`
+    ),
     GRAPHDB_CONTEXT_TEST = encfg.getConfig(
         'enapsoDefaultGraphDB.contextTest',
         'http://ont.enapso.com/test'
@@ -45,6 +58,8 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     baseURL: GRAPHDB_BASE_URL,
     repository: GRAPHDB_REPOSITORY,
     prefixes: DEFAULT_PREFIXES,
+    queryPath: FUSEKI_QUERY_PATH,
+    updatePath: FUSEKI_UPDATE_PATH,
     transform: 'toCSV'
 });
 
