@@ -63,15 +63,15 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     transform: 'toCSV'
 });
 
-// connect and authenticate
-graphDBEndpoint
-    .login(GRAPHDB_USERNAME, GRAPHDB_PASSWORD)
-    .then((result) => {
-        console.log(result);
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+// // connect and authenticate
+// graphDBEndpoint
+//     .login(GRAPHDB_USERNAME, GRAPHDB_PASSWORD)
+//     .then((result) => {
+//         console.log(result);
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     });
 
 // read the class
 graphDBEndpoint

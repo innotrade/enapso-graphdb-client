@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
 // Innotrade Enapso GraphDB Client - Configuration for automated tests
@@ -10,10 +11,21 @@ module.exports = Object.freeze({
         'enapsoDefaultGraphDB.baseUrl',
         'http://localhost:7200'
     ),
+    fusekiBaseURL: encfg.getConfig(
+        'enapsoDefaultGraphDB.fusekiBaseURL',
+        'http://localhost:3030'
+    ),
     repository: encfg.getConfig('enapsoDefaultGraphDB.repository', 'Test'),
     username: encfg.getConfig('enapsoDefaultGraphDB.userName', 'Test'),
     password: encfg.getConfig('enapsoDefaultGraphDB.password', 'Test'),
-
+    updatePath: encfg.getConfig(
+        'enapsoDefaultGraphDB.updatePath',
+        `/${encfg.getConfig('enapsoDefaultGraphDB.repository', 'Test')}/update`
+    ),
+    queryPath: encfg.getConfig(
+        'enapsoDefaultGraphDB.queryPath',
+        `/${encfg.getConfig('enapsoDefaultGraphDB.repository', 'Test')}/sparql`
+    ),
     prefixes: {
         PREFIX_OWL: {
             prefix: 'owl',
