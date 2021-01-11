@@ -1,3 +1,11 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable prefer-const */
+/* eslint-disable prefer-template */
+/* eslint-disable no-console */
+/* eslint-disable prettier/prettier */
+/* eslint-disable one-var */
+/* eslint-disable no-undef */
+/* eslint-disable prettier/prettier */
 // Innotrade enapso GraphDB Client Example
 // (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author: Alexander Schulze
@@ -6,14 +14,28 @@ const { EnapsoGraphDBClient } = require('../index');
 
 // connection data to the running GraphDB instance
 const GRAPHDB_BASE_URL = encfg.getConfig(
-        'GraphDB.GRAPHDB_BASE_URL',
-        'http://localhost:7200'
+        'enapsoDefaultGraphDB.baseUrl',
+        'http://localhost:3030'
     ),
-    GRAPHDB_REPOSITORY = encfg.getConfig('GraphDB.GRAPHDB_REPOSITORY', 'Test'),
-    GRAPHDB_USERNAME = encfg.getConfig('GraphDB.GRAPHDB_USERNAME', 'admin'),
-    GRAPHDB_PASSWORD = encfg.getConfig('GraphDB.GRAPHDB_PASSWORD', 'root'),
+    GRAPHDB_REPOSITORY = encfg.getConfig(
+        'enapsoDefaultGraphDB.repository',
+        'Test'
+    ),
+    GRAPHDB_USERNAME = encfg.getConfig(
+        'enapsoDefaultGraphDB.userName',
+        'admin'
+    ),
+    GRAPHDB_PASSWORD = encfg.getConfig('enapsoDefaultGraphDB.password', 'root'),
+    FUSEKI_QUERY_PATH = encfg.getConfig(
+        'enapsoDefaultGraphDB.queryPath',
+        `/${GRAPHDB_REPOSITORY}/sparql`
+    ),
+    FUSEKI_UPDATE_PATH = encfg.getConfig(
+        'enapsoDefaultGraphDB.updatePath',
+        `/${GRAPHDB_REPOSITORY}/update`
+    ),
     GRAPHDB_CONTEXT_TEST = encfg.getConfig(
-        'GraphDB.GRAPHDB_CONTEXT_TEST',
+        'enapsoDefaultGraphDB.contextTest',
         'http://ont.enapso.com/test'
     );
 
@@ -24,8 +46,11 @@ const DEFAULT_PREFIXES = [
     EnapsoGraphDBClient.PREFIX_XSD,
     EnapsoGraphDBClient.PREFIX_PROTONS,
     {
-        prefix: encfg.getConfig('GraphDB.prefix', 'entest'),
-        iri: encfg.getConfig('GraphDB.iri', 'http://ont.enapso.com/test#')
+        prefix: encfg.getConfig('enapsoDefaultGraphDB.prefix', 'entest'),
+        iri: encfg.getConfig(
+            'enapsoDefaultGraphDB.iri',
+            'http://ont.enapso.com/test#'
+        )
     }
 ];
 
@@ -33,18 +58,20 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     baseURL: GRAPHDB_BASE_URL,
     repository: GRAPHDB_REPOSITORY,
     prefixes: DEFAULT_PREFIXES,
+    queryPath: FUSEKI_QUERY_PATH,
+    updatePath: FUSEKI_UPDATE_PATH,
     transform: 'toCSV'
 });
 
-// connect and authenticate
-graphDBEndpoint
-    .login(GRAPHDB_USERNAME, GRAPHDB_PASSWORD)
-    .then((result) => {
-        console.log(result);
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+// // connect and authenticate
+// graphDBEndpoint
+//     .login(GRAPHDB_USERNAME, GRAPHDB_PASSWORD)
+//     .then((result) => {
+//         console.log(result);
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     });
 
 // read the class
 graphDBEndpoint
