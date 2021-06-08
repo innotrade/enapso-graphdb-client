@@ -16,8 +16,8 @@ module.exports = Object.freeze({
         'http://localhost:3030'
     ),
     repository: encfg.getConfig('enapsoDefaultGraphDB.repository', 'Test'),
-    username: encfg.getConfig('enapsoDefaultGraphDB.userName', 'Test'),
-    password: encfg.getConfig('enapsoDefaultGraphDB.password', 'Test'),
+    username: encfg.getConfig('enapsoDefaultGraphDB.userName', 'admin'),
+    password: encfg.getConfig('enapsoDefaultGraphDB.password', 'root'),
     updatePath: encfg.getConfig(
         'enapsoDefaultGraphDB.updatePath',
         `/${encfg.getConfig('enapsoDefaultGraphDB.repository', 'Test')}/update`
