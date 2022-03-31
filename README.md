@@ -119,7 +119,7 @@ In case a connection cannot be established at all, e.g. because GraphDB is not a
 {
     "success": false,
     "message": "Error: connect ECONNREFUSED 127.0.0.1:7201",
-    "statusCode": 500
+    "": 500
 }
 ```
 
@@ -129,7 +129,7 @@ In case of invaalid credentials or insufficient access rights, you'll get a HTTP
 {
     "success": false,
     "message": "401 - Bad credentials",
-    "statusCode": 401
+    "": 401
 }
 ```
 
@@ -176,7 +176,7 @@ In case of errors in the query, you'll get a HTTP 400 error message:
 
 ```json
 {
-    "statusCode": 400,
+    "": 400,
     "message": "HTTP Error: 400 Bad Request",
     "success": false
 }
@@ -186,7 +186,7 @@ In case of insufficient access rights, you'll get a HTTP 403 error message:
 
 ```json
 {
-    "statusCode": 403,
+    "": 403,
     "message": "HTTP Error: 403 Forbidden",
     "success": false
 }
@@ -217,7 +217,7 @@ In case the insert operation was successful, you'll get the following result:
 ```json
 {
     "success": true,
-    "statusCode": 200,
+    "": 200,
     "message": "OK"
 }
 ```
@@ -256,7 +256,7 @@ In case the update operation was successful, you'll get the following result:
 ```json
 {
     "success": true,
-    "statusCode": 200,
+    "": 200,
     "message": "OK"
 }
 ```
@@ -289,14 +289,14 @@ In case the update operation was successful, you'll get the following result:
 ```json
 {
     "success": true,
-    "statusCode": 200,
+    "": 200,
     "message": "OK"
 }
 ```
 
 ### Standard SPARQL JSON binding:
 
-In case of a successful query, a SPARQL compliant JSON is returned. For this low level call, the result neither contains a statusCode nor a message. In addition to the successf flag, you can interpret the existance of the head, results and bindings fields as success criteria.
+In case of a successful query, a SPARQL compliant JSON is returned. For this low level call, the result neither contains a nor a message. In addition to the successf flag, you can interpret the existance of the head, results and bindings fields as success criteria.
 
 ```json
 {
@@ -369,7 +369,7 @@ In case the login cannot be performed, because no connection to the GraphDB inst
     "success": false,
     "code": "ECONNREFUSED",
     "message": "Error: connect ECONNREFUSED 127.0.0.1:7200",
-    "statusCode": 500
+    "": 500
 }
 ```
 
@@ -379,7 +379,7 @@ In case of invalid credentials, the following error will be returned:
 {
     "success": false,
     "message": "401 - Bad credentials",
-    "statusCode": 401
+    "": 401
 }
 ```
 
@@ -388,7 +388,7 @@ In case of errors during the execution of the query, the following error will be
 ```json
 {
     "success": false,
-    "statusCode": 400,
+    "": 400,
     "message": "HTTP Error: 400 Bad Request"
 }
 ```

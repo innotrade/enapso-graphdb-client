@@ -33,8 +33,8 @@ describe('ENAPSO Client GraphDB Automated Test Suite', function () {
         graphDBEndpoint
             .login(testConfig.username, testConfig.password)
             .then((result) => {
-                // console.log(result.statusCode);
-                expect(result).to.have.property('statusCode', 200);
+                // console.log(result.);
+                expect(result).to.have.property('status', 200);
                 done();
             })
             .catch((err) => {

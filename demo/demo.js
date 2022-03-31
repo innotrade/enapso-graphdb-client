@@ -66,9 +66,9 @@ where {
                 );
             } else {
                 let lMsg = query.message;
-                if (400 === query.statusCode) {
+                if (400 === query.) {
                     lMsg += ', check your query for potential errors';
-                } else if (403 === query.statusCode) {
+                } else if (403 === query.) {
                     lMsg +=
                         ', check if user "' +
                         GRAPHDB_USERNAME +
