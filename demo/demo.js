@@ -58,17 +58,18 @@ where {
 	filter(regex(str(?class), "http://ont.enapso.com/test#TestClass", "i")) .
 }`);
             if (query.success) {
-                let resp = await this.graphDBEndpoint.transformBindingsToResultSet(
-                    query
-                );
+                let resp =
+                    await this.graphDBEndpoint.transformBindingsToResultSet(
+                        query
+                    );
                 enLogger.debug(
                     'Query succeeded:\n' + JSON.stringify(resp, null, 2)
                 );
             } else {
                 let lMsg = query.message;
-                if (400 === query.) {
+                if (400 === query.status) {
                     lMsg += ', check your query for potential errors';
-                } else if (403 === query.) {
+                } else if (403 === query.status) {
                     lMsg +=
                         ', check if user "' +
                         GRAPHDB_USERNAME +
@@ -207,21 +208,22 @@ where {
             );
             res = await this.demoQuery();
             if (res.success) {
-                let csv = this.graphDBEndpoint.transformBindingsToSeparatedValues(
-                    res,
-                    {
-                        // replace IRIs by prefixes for easier
-                        // resultset readability (optional)
-                        replacePrefixes: true,
-                        // drop the prefixes for easier
-                        // resultset readability (optional)
-                        // "dropPrefixes": true,
-                        separator: ',',
-                        separatorEscape: '\\,',
-                        delimiter: '"',
-                        delimiterEscape: '\\"'
-                    }
-                );
+                let csv =
+                    this.graphDBEndpoint.transformBindingsToSeparatedValues(
+                        res,
+                        {
+                            // replace IRIs by prefixes for easier
+                            // resultset readability (optional)
+                            replacePrefixes: true,
+                            // drop the prefixes for easier
+                            // resultset readability (optional)
+                            // "dropPrefixes": true,
+                            separator: ',',
+                            separatorEscape: '\\,',
+                            delimiter: '"',
+                            delimiterEscape: '\\"'
+                        }
+                    );
                 fs.writeFileSync(
                     'example2.csv',
                     // optionally add headers
