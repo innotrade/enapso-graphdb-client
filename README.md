@@ -2,7 +2,7 @@
 
 In enapso graphdb client we provide connection with two different databases so you can use any one for connection which you need, just upload your OWL file and perform queries against that owl file.
 
-enapso Ontotext GraphDB 8.x/9.x Client for Node.js
+ENAPSO Ontotext GraphDB 8.x/9.x Client for Node.js
 
 Node.js client for Ontotext GraphDB to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in Node.js applications. The client implements the authentication (Basic and JWT), the handling of prefixes, a convenient error handling and an optional transformation of SPARQL result bindings to CSV and TSV files as well as to JSON resultsets that can easily be processed in JavaScript.
 Please also refer to the @innotrade/enapso-graphdb-admin project. There you'll find also tools to manage GraphDB and to easily upload and download ontolgies to and from your GraphDB repositories. Any questions and suggestions are welcome.
@@ -10,7 +10,7 @@ Please also refer to the @innotrade/enapso-graphdb-admin project. There you'll f
 **The following demo require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository. While creating new repository select the ruleset RDFS-Plus (Optimized).**
 Get the latest version of GraphDB for free at https://www.ontotext.com/products/graphdb/.
 
-enapso Apache Jena Fuseki2 Client for Node.js
+ENAPSO Apache Jena Fuseki2 Client for Node.js
 
 Node.js client for fuseki to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in Node.js applications. The client implements the handling of prefixes, a convenient error handling and an optional transformation of SPARQL result bindings to CSV and TSV files as well as to JSON resultsets that can easily be processed in JavaScript.
 
@@ -19,6 +19,14 @@ After successfully downloading the zip folder of apache jena fuseki unzip the do
 Now to run the apache server, you need to go to apache folder and run the batch file of apache-server.bat you will see a command prompt open and your server will be start on `localhost:3030` port.
 
 **The following demo2 for fuseki require a running fuseki instance on localhost at port 3030 for which you need to a create a dataset name Test on fuseki server for which you need to go `localhost:3030` click on manage datasets=>add new dataset**
+
+ENAPSO Stardog Client for Node.js
+
+Node.js client for stardog to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in Node.js applications. The client implements the handling of prefixes, a convenient error handling and an optional transformation of SPARQL result bindings to CSV and TSV files as well as to JSON resultsets that can easily be processed in JavaScript.
+
+Get the latest version of stardog free at https://www.stardog.com/.
+
+**The following demo3 for stardog require a running stardog instance on localhost at port 5820 for which you need to a create a database name Test on stardog studio**
 
 **This project is actively developed and maintained.**
 To discuss questions and suggestions with the enapso and GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
@@ -31,9 +39,9 @@ npm i @innotrade/enapso-graphdb-client --save
 
 # Examples
 
-## Configuring the GraphDB connection
+## Configuring the Triple Store connection
 
-This is the configuration data for the connection to your GraphDB instance:
+This is the configuration data for the connection to your TripleStore instance:
 
 ```javascript
 const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
@@ -60,46 +68,23 @@ const DEFAULT_PREFIXES = [
 
 `prefix` specifies the prefix `entest` that is used as a reference to the base IRI `http://ont.enapso.com/test#`. and `iri` to pass the reference of base IRI of Ontology .Please also refer to the entire list of prefixes at the bottom of this document.
 
-## Configuring the Fuseki connection
+## Instantiating a ENAPSO Client
 
-For fuseki connection we use the same congiuration as above descirbe for GraphDB we need to change the port from `7200` to `3030` and add two more constant variable.
-
-```javascript
-const FUSEKI_QUERY_PATH = `/${GRAPHDB_REPOSITORY}/sparql`,
-    FUSEKI_UPDATE_PATH = `/${GRAPHDB_REPOSITORY}/update`;
-```
-
-if you want to use the fuseki server you need to give the query and update part as given above and if you are gonna use the GraphDB then you dont need to pass any path constants it by default use the GraphDB paths.
-
-## Instantiating a Apache Jena FUSEKI Client
-
-Create an fuski client like:
+Create an ENAPSO client like:
 
 ```javascript
 let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     baseURL: GRAPHDB_BASE_URL,
     repository: GRAPHDB_REPOSITORY,
     prefixes: DEFAULT_PREFIXES,
-    queryPath: FUSEKI_QUERY_PATH,
-    updatePath: FUSEKI_UPDATE_PATH,
+    tripleStore:'fuseki/stardog/graphDB'
     transform: 'toCSV'
 });
 ```
 
-## Instantiating a GraphDB SPARQL Client
+while creating connection we specify the name of triple store using `tripleStore` variable against which we perform the crud operations.
 
-Create an GraphDB client like:
-
-```javascript
-let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
-    baseURL: GRAPHDB_BASE_URL,
-    repository: GRAPHDB_REPOSITORY,
-    prefixes: DEFAULT_PREFIXES,
-    transform: 'toCSV'
-});
-```
-
-tranform is use to convert the results of GraphDB in a specific format so here we define the format there we have 3 predefine formats `toJSON` `toCSV` and `toTSV` this option is optional
+tranform is use to convert the results of triplestor in a specific format so here we define the format there we have 3 predefine formats `toJSON` `toCSV` and `toTSV` this option is optional
 This is how you authenticate against GraphDB using JWT:
 
 ```javascript
