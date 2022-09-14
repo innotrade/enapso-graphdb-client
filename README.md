@@ -1,6 +1,6 @@
 # enapso-graphdb-client
 
-In enapso graphdb client we provide connection with two different databases so you can use any one for connection which you need, just upload your OWL file and perform queries against that owl file.
+In enapso graphdb client we provide connection with three triplestores so you can use any one for connection which you need, just upload your OWL file and perform queries against that owl file.
 
 ENAPSO Ontotext GraphDB 8.x/9.x Client for Node.js
 

@@ -27,7 +27,8 @@ const GRAPHDB_BASE_URL = encfg.getConfig(
     GRAPHDB_CONTEXT_TEST = encfg.getConfig(
         'enapsoDefaultGraphDB.contextTest',
         'http://ont.enapso.com/test'
-    );
+    ),
+    GRAPHDB_VERSION = 10;
 
 const DEFAULT_PREFIXES = [
     EnapsoGraphDBClient.PREFIX_OWL,
@@ -166,7 +167,8 @@ where {
             this.graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
                 baseURL: GRAPHDB_BASE_URL,
                 repository: GRAPHDB_REPOSITORY,
-                prefixes: DEFAULT_PREFIXES
+                prefixes: DEFAULT_PREFIXES,
+                version: GRAPHDB_VERSION
             });
             this.authentication = await this.graphDBEndpoint.login(
                 GRAPHDB_USERNAME,
