@@ -15,8 +15,6 @@ ENAPSO Apache Jena Fuseki2 Client for Node.js
 Node.js client for fuseki to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in Node.js applications. The client implements the handling of prefixes, a convenient error handling and an optional transformation of SPARQL result bindings to CSV and TSV files as well as to JSON resultsets that can easily be processed in JavaScript.
 
 Get the latest version of Apache jena Fuseki for free at https://jena.apache.org/download/index.cgi.
-After successfully downloading the zip folder of apache jena fuseki unzip the downloaded folder. To run the server of apache jena fuski and it work correctly you need to configure the shiro.ini file available in folder `Apache_Jena_Fuseki=> run=> shiro.ini`. Open the file comment the 26 line where it restricted to localhost `/$/** = localhostFilter` just need to add `#` in start of this line and save the file.
-Now to run the apache server, you need to go to apache folder and run the batch file of apache-server.bat you will see a command prompt open and your server will be start on `localhost:3030` port.
 
 **The following demo2 for fuseki require a running fuseki instance on localhost at port 3030 for which you need to a create a dataset name Test on fuseki server for which you need to go `localhost:3030` click on manage datasets=>add new dataset**
 
@@ -30,6 +28,10 @@ Get the latest version of stardog free at https://www.stardog.com/.
 
 **This project is actively developed and maintained.**
 To discuss questions and suggestions with the enapso and GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
+
+## Test Suite
+
+To run the test suite against triplestore run the following command `npm test`. Following file (`test/config.js`) need to configure depend on triplestore before running the test suite.
 
 # Installation
 
@@ -82,10 +84,10 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 });
 ```
 
-while creating connection we specify the name of triple store using `tripleStore` variable against which we perform the crud operations.
+while creating connection we specify the name of triple store using `tripleStore` variable against which we perform the crud operations by default it work with graphDB.
 
-tranform is use to convert the results of triplestor in a specific format so here we define the format there we have 3 predefine formats `toJSON` `toCSV` and `toTSV` this option is optional
-This is how you authenticate against GraphDB using JWT:
+tranform is use to convert the results of triplestore in a specific format so here we define the format there we have 3 predefine formats `toJSON` `toCSV` and `toTSV` this option is optional
+This is how you authenticate against GraphDB or stardog using JWT:
 
 ```javascript
 graphDBEndpoint
@@ -98,7 +100,7 @@ graphDBEndpoint
     });
 ```
 
-In case a connection cannot be established at all, e.g. because GraphDB is not available or running at the given URL, you'll get a HTTP 500 error message:
+In case a connection cannot be established at all, e.g. because tripleStore is not available or running at the given URL, you'll get a HTTP 500 error message:
 
 ```json
 {
@@ -118,9 +120,9 @@ In case of invaalid credentials or insufficient access rights, you'll get a HTTP
 }
 ```
 
-## Querying GraphDB
+## Querying TripleStore
 
-This is how you execute a SPARQL query against GraphDB and transform the bindings to an easily processible resultset:
+This is how you execute a SPARQL query against tripleStore and transform the bindings to an easily processible resultset:
 
 ```javascript
 graphDBEndpoint
@@ -347,7 +349,7 @@ In case of a successful query, a SPARQL compliant JSON is returned. For this low
 
 ### Error Handling
 
-In case the login cannot be performed, because no connection to the GraphDB instance can be established, the following error will be returned:
+In case the login cannot be performed, because no connection to the tripleStore instance can be established, the following error will be returned:
 
 ```json
 {
