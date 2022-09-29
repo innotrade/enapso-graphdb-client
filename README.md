@@ -1,11 +1,60 @@
-# enapso-graphdb-client
+![ENAPSO](https://i.ibb.co/6b3rXrB/enapso-client.png)
 
-In enapso graphdb client we provide connection with two different databases so you can use any one for connection which you need, just upload your OWL file and perform queries against that owl file.
+<div align="center">
+  <h1><span style="font-weight:bold; color: #4299E1;">ENAPSO</span> Graph Database Client</h1>
+  <a href="https://www.npmjs.com/package/@innotrade/enapso-graphdb-client"><img src="https://img.shields.io/npm/v/@innotrade/enapso-graphdb-client" /></a>
+  <a href="https://github.com/prisma/prisma/blob/main/CONTRIBUTING.md"><img src="https://img.shields.io/badge/connect-Community-brightgreen" /></a>
+  <a href="https://github.com/innotrade/enapso-graphdb-client/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202-blue" /></a>
+  <a href="https://github.com/innotrade/enapso-graphdb-client/blob/main/CODE_OF_CONDUCT.md"><img src="https://img.shields.io/badge/code-Conduct-orange" /></a>
+  <br />
+  <br />
+  <a href="https://www.innotrade.com/">Website</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="https://github.com/innotrade/enapso-graphdb-client/wiki">Documentation</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="https://github.com/innotrade/enapso-graphdb-client/discussions">Discussion</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="#">Facebook</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="#">Twitter</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="#">LinkedIn</a>
+  <br />
+  <hr />
+</div>
 
-enapso Ontotext GraphDB 8.x/9.x Client for Node.js
 
-Node.js client for Ontotext GraphDB to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in Node.js applications. The client implements the authentication (Basic and JWT), the handling of prefixes, a convenient error handling and an optional transformation of SPARQL result bindings to CSV and TSV files as well as to JSON resultsets that can easily be processed in JavaScript.
-Please also refer to the @innotrade/enapso-graphdb-admin project. There you'll find also tools to manage GraphDB and to easily upload and download ontolgies to and from your GraphDB repositories. Any questions and suggestions are welcome.
+ENAPSO Graph Database client is an easy-to-use tool for performing SPARQL queries and update statements against your knowledge graphs or ontologies stored in your graph database. You can use it with any Node.js application.
+
+
+As of now we support the connection with three major graph databases
+* [Ontotext GraphDB](https://www.ontotext.com/products/graphdb/)
+* [Apache fuseki](https://jena.apache.org/)
+* [Stardog](https://www.stardog.com/) 
+ 
+There will be more graph databases added to this list in the future.
+
+
+In addition to authentication (Basic and JWT), the client handles prefixes, provides error-handling capabilities, and is capable of transforming SPARQL result bindings into CSV and TSV files as well as  JSON resultsets that can be easily processed in Javascript.
+
+
+You may also find these tools useful
+
+- [**ENAPSO Graph Database Admin**](https://github.com/innotrade/enapso-graphdb-admin): To perform administrative and monitoring operations against your graph databases, such as importing and exporting ontologies/knowledge graphs and utilizing the graph database's special features.
+- [**ENAPSO Command Line Interface for Graph Databases**](https://github.com/innotrade/enapso-graphdb-admin): To easily perform numeropus scriptable convenience operations on graph databases
+
+ Any questions and suggestions are welcome.
+
+
+
+
+
+
+
+
+
+
+
 
 **The following demo require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository. While creating new repository select the ruleset RDFS-Plus (Optimized).**
 Get the latest version of GraphDB for free at https://www.ontotext.com/products/graphdb/.
