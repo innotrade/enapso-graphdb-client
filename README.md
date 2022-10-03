@@ -79,12 +79,12 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     baseURL: GRAPHDB_BASE_URL,
     repository: GRAPHDB_REPOSITORY,
     prefixes: DEFAULT_PREFIXES,
-    tripleStore:'fuseki/stardog/graphDB'
+    triplestore:'fuseki/stardog/graphDB'
     transform: 'toCSV'
 });
 ```
 
-while creating connection we specify the name of triple store using `tripleStore` variable against which we perform the crud operations by default it work with graphDB.
+while creating connection we specify the name of triple store using `triplestore` variable against which we perform the crud operations by default it work with graphDB.
 
 tranform is use to convert the results of triplestore in a specific format so here we define the format there we have 3 predefine formats `toJSON` `toCSV` and `toTSV` this option is optional
 This is how you authenticate against GraphDB or stardog using JWT:
@@ -100,7 +100,7 @@ graphDBEndpoint
     });
 ```
 
-In case a connection cannot be established at all, e.g. because tripleStore is not available or running at the given URL, you'll get a HTTP 500 error message:
+In case a connection cannot be established at all, e.g. because triplestore is not available or running at the given URL, you'll get a HTTP 500 error message:
 
 ```json
 {
@@ -122,7 +122,7 @@ In case of invaalid credentials or insufficient access rights, you'll get a HTTP
 
 ## Querying TripleStore
 
-This is how you execute a SPARQL query against tripleStore and transform the bindings to an easily processible resultset:
+This is how you execute a SPARQL query against triplestore and transform the bindings to an easily processible resultset:
 
 ```javascript
 graphDBEndpoint
@@ -349,7 +349,7 @@ In case of a successful query, a SPARQL compliant JSON is returned. For this low
 
 ### Error Handling
 
-In case the login cannot be performed, because no connection to the tripleStore instance can be established, the following error will be returned:
+In case the login cannot be performed, because no connection to the triplestore instance can be established, the following error will be returned:
 
 ```json
 {

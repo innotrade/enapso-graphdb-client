@@ -18,7 +18,7 @@ const GRAPHDB_CONTEXT_TEST = encfg.getConfig(
 
 chai.use(chaiHttp);
 
-describe('ENAPSO Client GraphDB Automated Test Suite', function () {
+describe('ENAPSO GraphDB Client Automated Test Suite', function () {
     this.timeout(5000);
     this.slow(100);
 
@@ -26,22 +26,26 @@ describe('ENAPSO Client GraphDB Automated Test Suite', function () {
         baseURL: testConfig.baseURL,
         repository: testConfig.repository,
         prefixes: testConfig.prefixes,
-        tripleStore: testConfig.tripleStore
+        triplestore: testConfig.triplestore
     });
 
     it('Authenticate against GraphDB instance', function (done) {
-        this.slow(80);
-        graphDBEndpoint
-            .login(testConfig.username, testConfig.password)
-            .then((result) => {
-                // console.log(result.);
-                expect(result).to.have.property('status', 200);
-                done();
-            })
-            .catch((err) => {
-                console.log(`Authentication: ${err.message}`);
-                done(err);
-            });
+        if (testConfig.triplestore != 'fuseki') {
+            this.slow(80);
+            graphDBEndpoint
+                .login(testConfig.username, testConfig.password)
+                .then((result) => {
+                    // console.log(result.);
+                    expect(result).to.have.property('status', 200);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Authentication: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
     });
 
     // first try to insert a class

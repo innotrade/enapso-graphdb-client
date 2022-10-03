@@ -1,6 +1,6 @@
 {
     "name": "@innotrade/enapso-graphdb-client",
-    "version": "1.8.10",
+    "version": "1.8.11",
     "description": "enapso Ontotext GraphDB 8.x/9.x Client for Node.js",
     "main": "index.js",
     "scripts": {
@@ -41,7 +41,7 @@
         "sparql-client-2": "^0.6.3"
     },
     "devDependencies": {
-        "eslint": "^8.23.1",
+        "eslint": "^8.24.0",
         "eslint-config-airbnb": "^19.0.4",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-import": "^2.26.0",

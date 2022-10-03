@@ -61,7 +61,7 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     baseURL: GRAPHDB_BASE_URL,
     repository: GRAPHDB_REPOSITORY,
     prefixes: DEFAULT_PREFIXES,
-    tripleStore: 'stardog',
+    triplestore: 'stardog',
     transform: 'toCSV'
 });
 
