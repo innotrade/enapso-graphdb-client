@@ -1,37 +1,29 @@
 # enapso-graphdb-client
 
-In enapso graphdb client we provide connection with three triplestores so you can use any one for connection which you need, just upload your OWL file and perform queries against that owl file.
-
 ENAPSO Ontotext GraphDB 8.x/9.x Client for Node.js
 
-Node.js client for Ontotext GraphDB to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in Node.js applications. The client implements the authentication (Basic and JWT), the handling of prefixes, a convenient error handling and an optional transformation of SPARQL result bindings to CSV and TSV files as well as to JSON resultsets that can easily be processed in JavaScript.
-Please also refer to the @innotrade/enapso-graphdb-admin project. There you'll find also tools to manage GraphDB and to easily upload and download ontolgies to and from your GraphDB repositories. Any questions and suggestions are welcome.
+Node.js client for Ontotext GraphDB/stardog/Apache Jena Fuseki to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in Node.js applications. The client implements the authentication (Basic and JWT), the handling of prefixes, a convenient error handling and an optional transformation of SPARQL result bindings to CSV and TSV files as well as to JSON resultsets that can easily be processed in JavaScript.
+Please also refer to the @innotrade/enapso-graphdb-admin project. There you'll find also tools to manage Graph DB and to easily upload and download ontolgies to and from your graph database repositories. Any questions and suggestions are welcome.
 
-**The following demo require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository. While creating new repository select the ruleset RDFS-Plus (Optimized).**
+**To run the test suite against triplestores (Ontotext GraphDB/stardog/Apache Jena Fuseki) run the following command `npm test`. In the following file (`test/config.js`) variable triplestore value (graphDB/fuseki/stardog) and baseURL need to be set depend on triplestore before running the test suite**
+
+# Configuration for Ontotext GraphDB
+
+**GraphDB 8.x/9.x/10.x instance running on localhost at port 7200. A fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.**
 Get the latest version of GraphDB for free at https://www.ontotext.com/products/graphdb/.
 
-ENAPSO Apache Jena Fuseki2 Client for Node.js
+# Configuration for Apache Jena Fuseki
 
-Node.js client for fuseki to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in Node.js applications. The client implements the handling of prefixes, a convenient error handling and an optional transformation of SPARQL result bindings to CSV and TSV files as well as to JSON resultsets that can easily be processed in JavaScript.
-
+**Fuseki instance running on localhost at port 3030. A fully working Fuseki Dataset "Test"**
 Get the latest version of Apache jena Fuseki for free at https://jena.apache.org/download/index.cgi.
 
-**The following demo2 for fuseki require a running fuseki instance on localhost at port 3030 for which you need to a create a dataset name Test on fuseki server for which you need to go `localhost:3030` click on manage datasets=>add new dataset**
+# Configuration for Apache Jena Fuseki
 
-ENAPSO Stardog Client for Node.js
-
-Node.js client for stardog to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in Node.js applications. The client implements the handling of prefixes, a convenient error handling and an optional transformation of SPARQL result bindings to CSV and TSV files as well as to JSON resultsets that can easily be processed in JavaScript.
-
+**Stardog instance running on localhost at port 5820. A fully working Database "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Database.**
 Get the latest version of stardog free at https://www.stardog.com/.
-
-**The following demo3 for stardog require a running stardog instance on localhost at port 5820 for which you need to a create a database name Test on stardog studio**
 
 **This project is actively developed and maintained.**
 To discuss questions and suggestions with the enapso and GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
-
-## Test Suite
-
-To run the test suite against triplestore run the following command `npm test`. Following file (`test/config.js`) need to configure depend on triplestore before running the test suite.
 
 # Installation
 

@@ -9,8 +9,8 @@ require('@innotrade/enapso-config');
 module.exports = Object.freeze({
     baseURL: 'http://localhost:5820',
     repository: 'Test',
-    username: 'admin',
-    password: 'admin',
+    username: 'Test',
+    password: 'Test',
     triplestore: 'stardog',
     prefixes: {
         PREFIX_OWL: {
