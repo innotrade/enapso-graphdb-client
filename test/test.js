@@ -10,7 +10,11 @@ const { expect } = require('chai');
 
 const { EnapsoGraphDBClient } = require('../index');
 const testConfig = require('./config');
-
+const baseURL = process.argv[5].replace(/'/g, '');
+const triplestore = process.argv[7].replace(/'/g, '');
+const username = process.argv[9].replace(/'/g, '');
+const password = process.argv[11].replace(/'/g, '');
+console.log(baseURL, triplestore, username, password);
 const GRAPHDB_CONTEXT_TEST = encfg.getConfig(
     'enapsoDefaultGraphDB.contextTest',
     'http://ont.enapso.com/test'
@@ -23,17 +27,18 @@ describe('ENAPSO GraphDB Client Automated Test Suite', function () {
     this.slow(100);
 
     const graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
-        baseURL: testConfig.baseURL,
+        baseURL,
         repository: testConfig.repository,
         prefixes: testConfig.prefixes,
-        triplestore: testConfig.triplestore
+        triplestore
     });
 
     it('Authenticate against GraphDB instance', function (done) {
-        if (testConfig.triplestore != 'fuseki') {
+        // eslint-disable-next-line eqeqeq
+        if (triplestore != 'fuseki') {
             this.slow(80);
             graphDBEndpoint
-                .login(testConfig.username, testConfig.password)
+                .login(username, password)
                 .then((result) => {
                     // console.log(result.);
                     expect(result).to.have.property('status', 200);
