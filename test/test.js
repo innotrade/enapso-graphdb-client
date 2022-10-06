@@ -14,7 +14,6 @@ const baseURL = process.argv[5].replace(/'/g, '');
 const triplestore = process.argv[7].replace(/'/g, '');
 const username = process.argv[9].replace(/'/g, '');
 const password = process.argv[11].replace(/'/g, '');
-console.log(baseURL, triplestore, username, password);
 const GRAPHDB_CONTEXT_TEST = encfg.getConfig(
     'enapsoDefaultGraphDB.contextTest',
     'http://ont.enapso.com/test'

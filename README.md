@@ -9,17 +9,35 @@ Please also refer to the @innotrade/enapso-graphdb-admin project. There you'll f
 
 # Configuration for Ontotext GraphDB
 
-**GraphDB 8.x/9.x/10.x instance running on localhost at port 7200. A fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.**
+**GraphDB 8.x/9.x/10.x instance running on localhost at port 7200. A fully working Ontotext GraphDB repository "Test".**
+
+```
+npm run test:ontotext-graphDB
+
+```
+
 Get the latest version of GraphDB for free at https://www.ontotext.com/products/graphdb/.
 
 # Configuration for Apache Jena Fuseki
 
 **Fuseki instance running on localhost at port 3030. A fully working Fuseki Dataset "Test"**
+
+```
+npm run test:fuseki
+
+```
+
 Get the latest version of Apache jena Fuseki for free at https://jena.apache.org/download/index.cgi.
 
-# Configuration for Apache Jena Fuseki
+# Configuration for Stardog
 
-**Stardog instance running on localhost at port 5820. A fully working Database "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Database.**
+**Stardog instance running on localhost at port 5820. A fully working Database "Test" and a user "Test".**
+
+```
+npm run test:stardog
+
+```
+
 Get the latest version of stardog free at https://www.stardog.com/.
 
 **This project is actively developed and maintained.**
