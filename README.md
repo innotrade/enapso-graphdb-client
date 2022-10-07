@@ -44,34 +44,6 @@ You may also find these tools useful
 - [**ENAPSO Command Line Interface for Graph Databases**](https://github.com/innotrade/enapso-graphdb-admin): To easily perform numeropus scriptable convenience operations on graph databases
 
  Any questions and suggestions are welcome.
-
-
-
-
-
-
-
-
-
-
-
-
-**The following demo require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository. While creating new repository select the ruleset RDFS-Plus (Optimized).**
-Get the latest version of GraphDB for free at https://www.ontotext.com/products/graphdb/.
-
-enapso Apache Jena Fuseki2 Client for Node.js
-
-Node.js client for fuseki to easily perform SPARQL queries and update statements against your RDF stores, your OWL ontologies or knowledge graphs in Node.js applications. The client implements the handling of prefixes, a convenient error handling and an optional transformation of SPARQL result bindings to CSV and TSV files as well as to JSON resultsets that can easily be processed in JavaScript.
-
-Get the latest version of Apache jena Fuseki for free at https://jena.apache.org/download/index.cgi.
-After successfully downloading the zip folder of apache jena fuseki unzip the downloaded folder. To run the server of apache jena fuski and it work correctly you need to configure the shiro.ini file available in folder `Apache_Jena_Fuseki=> run=> shiro.ini`. Open the file comment the 26 line where it restricted to localhost `/$/** = localhostFilter` just need to add `#` in start of this line and save the file.
-Now to run the apache server, you need to go to apache folder and run the batch file of apache-server.bat you will see a command prompt open and your server will be start on `localhost:3030` port.
-
-**The following demo2 for fuseki require a running fuseki instance on localhost at port 3030 for which you need to a create a dataset name Test on fuseki server for which you need to go `localhost:3030` click on manage datasets=>add new dataset**
-
-**This project is actively developed and maintained.**
-To discuss questions and suggestions with the enapso and GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
-
 # Installation
 
 ```
@@ -80,75 +52,24 @@ npm i @innotrade/enapso-graphdb-client --save
 
 # Examples
 
-## Configuring the GraphDB connection
+## Create the GraphDB connection
 
-This is the configuration data for the connection to your GraphDB instance:
 
 ```javascript
 const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
 
-// connection data to the running GraphDB instance
-const GRAPHDB_BASE_URL = 'http://localhost:7200',
-    GRAPHDB_REPOSITORY = 'Test',
-    GRAPHDB_USERNAME = 'Test',
-    GRAPHDB_PASSWORD = 'Test',
-    GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/repo';
-
-const DEFAULT_PREFIXES = [
-    EnapsoGraphDBClient.PREFIX_OWL,
-    EnapsoGraphDBClient.PREFIX_RDF,
-    EnapsoGraphDBClient.PREFIX_RDFS,
-    EnapsoGraphDBClient.PREFIX_XSD,
-    EnapsoGraphDBClient.PREFIX_PROTONS,
-    {
+let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
+    baseURL: 'http://localhost:7200',
+    repository: 'Test',
+    triplestore:'ontotext-graphDB', // 'ontotext-graphDB'or'fuseki' or 'stardog'
+    prefixes: {
         prefix: 'entest',
         iri: 'http://ont.enapso.com/test#'
-    }
-];
-```
-
-`prefix` specifies the prefix `entest` that is used as a reference to the base IRI `http://ont.enapso.com/test#`. and `iri` to pass the reference of base IRI of Ontology .Please also refer to the entire list of prefixes at the bottom of this document.
-
-## Configuring the Fuseki connection
-
-For fuseki connection we use the same congiuration as above descirbe for GraphDB we need to change the port from `7200` to `3030` and add two more constant variable.
-
-```javascript
-const FUSEKI_QUERY_PATH = `/${GRAPHDB_REPOSITORY}/sparql`,
-    FUSEKI_UPDATE_PATH = `/${GRAPHDB_REPOSITORY}/update`;
-```
-
-if you want to use the fuseki server you need to give the query and update part as given above and if you are gonna use the GraphDB then you dont need to pass any path constants it by default use the GraphDB paths.
-
-## Instantiating a Apache Jena FUSEKI Client
-
-Create an fuski client like:
-
-```javascript
-let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
-    baseURL: GRAPHDB_BASE_URL,
-    repository: GRAPHDB_REPOSITORY,
-    prefixes: DEFAULT_PREFIXES,
-    queryPath: FUSEKI_QUERY_PATH,
-    updatePath: FUSEKI_UPDATE_PATH,
+    },
     transform: 'toCSV'
 });
 ```
 
-## Instantiating a GraphDB SPARQL Client
-
-Create an GraphDB client like:
-
-```javascript
-let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
-    baseURL: GRAPHDB_BASE_URL,
-    repository: GRAPHDB_REPOSITORY,
-    prefixes: DEFAULT_PREFIXES,
-    transform: 'toCSV'
-});
-```
-
-tranform is use to convert the results of GraphDB in a specific format so here we define the format there we have 3 predefine formats `toJSON` `toCSV` and `toTSV` this option is optional
 This is how you authenticate against GraphDB using JWT:
 
 ```javascript
