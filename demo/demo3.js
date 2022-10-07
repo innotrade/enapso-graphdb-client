@@ -15,7 +15,7 @@ const { EnapsoGraphDBClient } = require('../index');
 // connection data to the running GraphDB instance
 const GRAPHDB_BASE_URL = encfg.getConfig(
         'enapsoDefaultGraphDB.baseUrl',
-        'http://localhost:3030'
+        'http://localhost:5820'
     ),
     GRAPHDB_REPOSITORY = encfg.getConfig(
         'enapsoDefaultGraphDB.repository',
@@ -61,7 +61,7 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     baseURL: GRAPHDB_BASE_URL,
     repository: GRAPHDB_REPOSITORY,
     prefixes: DEFAULT_PREFIXES,
-    triplestore: 'fuseki',
+    triplestore: 'stardog',
     transform: 'toCSV'
 });
 
