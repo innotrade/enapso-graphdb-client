@@ -1,7 +1,7 @@
 {
     "name": "@innotrade/enapso-graphdb-client",
     "version": "1.8.12",
-    "description": "enapso Ontotext GraphDB 8.x/9.x Client for Node.js",
+    "description": "ENAPSO Graph Database Client for Node.js",
     "main": "index.js",
     "scripts": {
         "test": "mocha --timeout 10000 --baseURL 'http://localhost:7200' --triplestore 'ontotext-graphDB' --username 'admin' --password 'root'",
@@ -44,13 +44,13 @@
         "sparql-client-2": "^0.6.3"
     },
     "devDependencies": {
-        "eslint": "^8.24.0",
+        "eslint": "^8.25.0",
         "eslint-config-airbnb": "^19.0.4",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-jsx-a11y": "^6.6.1",
         "eslint-plugin-prettier": "^4.2.1",
-        "eslint-plugin-react": "^7.31.8",
+        "eslint-plugin-react": "^7.31.9",
         "eslint-plugin-react-hooks": "^4.6.0",
         "prettier": "^2.7.1"
     }
