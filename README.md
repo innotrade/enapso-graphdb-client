@@ -25,7 +25,7 @@
 
 ENAPSO Graph Database client is an easy-to-use tool for performing SPARQL queries and update statements against your knowledge graphs or ontologies stored in your graph database. You can use it with any Node.js application.
 
-As of now we support the connection with three major graph databases
+As of now ENAPSO Graph Database Client supports the following graph databases:
 
 -   [Ontotext GraphDB](https://www.ontotext.com/products/graphdb/)
 -   [Apache Jena fuseki](https://jena.apache.org/)
@@ -58,7 +58,7 @@ const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
 let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     baseURL: 'http://localhost:7200',
     repository: 'Test',
-    triplestore: 'ontotext-graphDB', // 'ontotext-graphDB'or'fuseki' or 'stardog'
+    triplestore: 'ontotext-graphDB', // 'ontotext-graphDB' or 'fuseki' or 'stardog'
     prefixes: [
         {
             prefix: 'entest',
@@ -124,9 +124,9 @@ where {
 graphDBEndpoint
     .update(
         `insert data {
-		graph <http://ont.enapso.com/test> {
-      entest:TestClass rdf:type owl:Class}
-  }`
+	   graph <http://ont.enapso.com/test> {
+             entest:TestClass rdf:type owl:Class}
+           }`
     )
     .then((result) => {
         console.log('inserted a class :\n' + JSON.stringify(result, null, 2));
@@ -138,7 +138,7 @@ graphDBEndpoint
 
 ## Contribution
 
-If you have a bug to report, do not hesitate to file an issue.
+If you have a bug to report, do not hesitate to contact us or to file an issue.
 
 If you are willing to fix an issue or propose a [feature](https://www.innotrade.com/forum/); all PRs with clear explanations are welcome and encouraged.
 
