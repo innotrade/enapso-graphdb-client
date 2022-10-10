@@ -52,7 +52,7 @@ You may also find these tools useful
 npm i @innotrade/enapso-graphdb-client --save
 ```
 
-## Create the GraphDB connection
+## Create the connection with Graph Database
 
 
 ```javascript
@@ -69,17 +69,72 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     transform: 'toCSV'
 });
 ```
-| Parameter     | Type    | Description   |
-| ------------- | --------| ------------- |
-| baseURL(required) | String | Pass the URL in which graph databases is running. |
-| repository(required)  | String | Pass the name of repository or database of the graph databases with which you want to create connection. |
-| prefixes(required)  | Array | Pass the prefix and its iri as object which will be used in the SPARQL query to perform crud operations. |
-| triplestore(optional)  | String | Pass the name of graph database with which you want to create connection by default it create connection with Ontotext GraphDB. Following are the values ('ontotext-graphDB' or 'stardog' or 'fuseki') |
-| transform(optional)  | String | Pass the type in which you want to show result of SPARQL query by default it show result in json format. Following are the values ('toJSON' or 'toCSV' or 'toTSV') |
+| Parameter     | Type    | Description   | Values   |
+| ------------- | --------| ------------- |--------- |
+| baseURL(required) | String | Pass the URL in which graph databases is running. | |
+| repository(required)  | String | Pass the name of repository or database of the graph databases with which you want to create connection. | |
+| prefixes(required)  | Array of objects | Pass the prefix and its iri as object which will be used in the SPARQL query to perform crud operations. | |
+| triplestore(optional)  | String | Pass the name of graph database with which you want to create connection by default it create connection with Ontotext GraphDB. |('ontotext-graphDB' , 'stardog' , 'fuseki') |
+| transform(optional)  | String | Pass the type in which you want to show result of SPARQL query by default it show result in json format.| ('toJSON', 'toCSV' , 'toTSV') |
 # Feature List
 
 | Feature |  Description  | Ontotext GraphDB  | Apache Jena Fuseki  | Stardog  |
 | ------- | ------------- |------------- |------------- |------------- |
-| [Login](https://github.com/innotrade/enapso-graphdb-client/wiki#authenticate-against-the-graph-database)   |  Authenticate against the Graph Database |✔ |✘ |✔ 
-| [Query](https://github.com/innotrade/enapso-graphdb-client/wiki#querying-graph-database)   |  To retrieve the information from graph database using SPARQL query |✔ |✔ |✔ 
-| [Update](https://github.com/innotrade/enapso-graphdb-client/wiki#updating-triples-in-graph-database)  |  To update the triples in the graph database |✔ |✔ |✔ 
+| [Login](#authenticate-against-the-graph-database)   |  Authenticate against the Graph Database |✔ |✘ |✔ 
+| [Query](#querying-against-the-graph-database)   |  To retrieve the information from graph database using SPARQL query |✔ |✔ |✔ 
+| [Update](#updating-triples-in-graph-database)  |  To update the triples in the graph database |✔ |✔ |✔ 
+
+
+## Authenticate against the Graph Database
+
+```
+graphDBEndpoint.login('admin','root').then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+```
+
+
+## Querying against the Graph Database
+
+```
+graphDBEndpoint
+    .query(
+        'select *
+where {
+    ?class rdf:type owl:Class
+    filter(regex(str(?class), "http://ont.enapso.com/test#TestClass", "i")) .
+}',
+        { transform: 'toJSON' }
+    )
+    .then((result) => {
+        console.log(
+            'Read the classes name:\n' + JSON.stringify(result, null, 2)
+        );
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+```
+## Updating Triples in Graph Database
+
+```
+graphDBEndpoint
+    .update(
+        `insert data {
+		graph <http://ont.enapso.com/test> {
+      entest:TestClass rdf:type owl:Class}
+  }`
+    )
+    .then((result) => {
+        console.log('inserted a class :\n' + JSON.stringify(result, null, 2));
+    })
+    .catch((err) => {
+        `console.log(err);
+    });
+```
+
+For more use cases and detailed description follow the following link
+https://github.com/innotrade/enapso-graphdb-client/wiki
