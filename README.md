@@ -70,7 +70,14 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 | Parameter     | Type    | Description   |
 | ------------- | --------| ------------- |
 | baseURL(required) | String | Pass the URL in which graph databases is running. |
-| repository(required)  | String | Pass the name of repository or databases of the graph databases with which you want to create connection. |
+| repository(required)  | String | Pass the name of repository or database of the graph databases with which you want to create connection. |
 | prefixes(required)  | Array | Pass the prefix and its iri as object which will be used in the SPARQL query to perform crud operations. |
 | triplestore(optional)  | String | Pass the name of graph database with which you want to create connection by default it create connection with Ontotext GraphDB. Following are the values ('ontotext-graphDB' or 'stardog' or 'fuseki') |
 | transform(optional)  | String | Pass the type in which you want to show result of SPARQL query by default it show result in json format. Following are the values ('toJSON' or 'toCSV' or 'toTSV') |
+# Feature List
+
+| Feature |  Description  | Ontotext GraphDB  | Apache Jena Fuseki  | Stardog  |
+| ------- | ------------- |------------- |------------- |------------- |
+| [Login](https://github.com/innotrade/enapso-graphdb-client/wiki#authenticate-against-the-graph-database)   |  Authenticate Against Graph Databases |✔ |✘ |✔ 
+| [Query](https://github.com/innotrade/enapso-graphdb-client/wiki#querying-graph-database)   |  To retrieve the information from graph database using SPARQL query |✔ |✔ |✔ 
+| [Update](https://github.com/innotrade/enapso-graphdb-client/wiki#updating-triples-in-graph-database)  |  To update the triples in the graph database |✔ |✔ |✔ 
