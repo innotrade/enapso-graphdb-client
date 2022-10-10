@@ -136,5 +136,16 @@ graphDBEndpoint
     });
 ```
 
-For more use cases and detailed description follow the following link
-https://github.com/innotrade/enapso-graphdb-client/wiki
+## Contribution
+
+If you have a bug to report, do not hesitate to file an issue.
+
+If you are willing to fix an issue or propose a [feature](https://www.innotrade.com/forum/); all PRs with clear explanations are welcome and encouraged.
+
+## License
+
+[Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0)
+
+## Documentation & Examples
+
+For more use cases and detailed documentation follow the [wiki](https://github.com/innotrade/enapso-graphdb-client/wiki)
