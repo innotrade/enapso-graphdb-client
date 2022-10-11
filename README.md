@@ -23,9 +23,9 @@
   <hr />
 </div>
 
-ENAPSO Graph Database client is an easy-to-use tool for performing SPARQL queries and update statements against your knowledge graphs or ontologies stored in your graph database. You can use it with any Node.js application.
+ENAPSO Graph Database client is an easy-to-use tool for performing SPARQL queries and updating statements against your knowledge graphs or ontologies stored in your graph database. You can use it with any Node.js application.
 
-As of now ENAPSO Graph Database Client supports the following graph databases:
+As of now, ENAPSO Graph Database Client supports the following graph databases:
 
 -   [Ontotext GraphDB](https://www.ontotext.com/products/graphdb/)
 -   [Apache Jena fuseki](https://jena.apache.org/)
@@ -38,7 +38,7 @@ In addition to authentication (Basic and JWT), the client handles prefixes, prov
 You may also find these tools useful
 
 -   [**ENAPSO Graph Database Admin**](https://github.com/innotrade/enapso-graphdb-admin): To perform administrative and monitoring operations against your graph databases, such as importing and exporting ontologies/knowledge graphs and utilizing the graph database's special features.
--   [**ENAPSO Command Line Interface for Graph Databases**](https://github.com/innotrade/enapso-graphdb-admin): To easily perform numeropus scriptable convenience operations on graph databases
+-   [**ENAPSO Command Line Interface for Graph Databases**](https://github.com/innotrade/enapso-graphdb-admin): To easily perform numerous scriptable convenience operations on graph databases
 
 [**Tutorial for Test Suite**](https://github.com/innotrade/enapso-graphdb-client/wiki/Tutorial-for-Graph-Databases-Test-Suite): To run the Test suites against the graph database.
 
@@ -72,10 +72,10 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 | Parameter             | Type             | Description                                                                                                                     | Values                                      |
 | --------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
 | baseURL(required)     | String           | Pass the URL in which graph databases is running.                                                                               |                                             |
-| repository(required)  | String           | Pass the name of repository or database of the graph databases with which you want to create connection.                        |                                             |
-| prefixes(required)    | Array of objects | Pass the prefix and its iri as object which will be used in the SPARQL query to perform crud operations.                        |                                             |
-| triplestore(optional) | String           | Pass the name of graph database with which you want to create connection by default it create connection with Ontotext GraphDB. | ('ontotext-graphDB' , 'stardog' , 'fuseki') |
-| transform(optional)   | String           | Pass the type in which you want to show result of SPARQL query by default it show result in json format.                        | ('toJSON', 'toCSV' , 'toTSV')               |
+| repository(required)  | String           | Pass the name of the repository or database of the graph databases with which you want to create a connection.                        |                                             |
+| prefixes(required)    | Array of objects | Pass the prefix and its IRI as an object which will be used in the SPARQL query to perform crud operations.                        |                                             |
+| triplestore(optional) | String           | Pass the name of the graph database with which you want to create a connection by default it creates a connection with Ontotext GraphDB. | ('ontotext-graphDB' , 'stardog' , 'fuseki') |
+| transform(optional)   | String           | Pass the type in which you want to show the result of SPARQL query by default it shows the result in JSON format.                        | ('toJSON', 'toCSV' , 'toTSV')               |
 
 # Feature List
 
@@ -138,7 +138,7 @@ graphDBEndpoint
 
 ## Contribution
 
-If you have a bug to report, do not hesitate to contact us or to file an issue.
+If you have a bug to report, do not hesitate to contact us or file an issue.
 
 If you are willing to fix an issue or propose a [feature](https://www.innotrade.com/forum/); all PRs with clear explanations are welcome and encouraged.
 
