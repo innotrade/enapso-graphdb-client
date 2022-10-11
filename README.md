@@ -175,7 +175,7 @@ document.
 ## Contributors
 
 <a href = "https://github.com/Tanu-N-Prabhu/Python/graphs/contributors">
-  <img src = "https://contrib.rocks/image?repo=innotrade/enapso-graphdb-client"/>
+  <img src = "https://contrib.rocks/image?repo=innotrade/enapso-graphdb-client" width="200"/>
 </a>
 
 <div>  
