@@ -44,7 +44,7 @@ You may also find these tools useful
 
 Any questions and suggestions are welcome.
 
-# Installation
+# ⚙️ Installation
 
 ```
 npm i @innotrade/enapso-graphdb-client --save
@@ -77,7 +77,7 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 | triplestore(optional) | String           | Pass the name of the graph database with which you want to create a connection by default it creates a connection with Ontotext GraphDB. | ('ontotext-graphDB' , 'stardog' , 'fuseki') |
 | transform(optional)   | String           | Pass the type in which you want to show the result of SPARQL query by default it shows the result in JSON format.                        | ('toJSON', 'toCSV' , 'toTSV')               |
 
-# Feature List
+# :book: &nbsp; Features
 
 | Feature                                           | Description                                                        | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
 | ------------------------------------------------- | ------------------------------------------------------------------ | ---------------- | ------------------ | ------- |
@@ -142,9 +142,10 @@ If you have a bug to report, do not hesitate to contact us or file an issue.
 
 If you are willing to fix an issue or propose a [feature](https://www.innotrade.com/forum/); all PRs with clear explanations are welcome and encouraged.
 
-## License
+## :receipt: &nbsp; License
 
-[Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0)
+This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more
+details.
 
 ## Documentation & Examples
 
