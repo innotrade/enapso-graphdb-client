@@ -136,17 +136,49 @@ graphDBEndpoint
     });
 ```
 
-## Contribution
 
-If you have a bug to report, do not hesitate to contact us or file an issue.
+# :test_tube: &nbsp; Testing
 
-If you are willing to fix an issue or propose a [feature](https://www.innotrade.com/forum/); all PRs with clear explanations are welcome and encouraged.
+about the testing info
 
-## :receipt: &nbsp; License
+<div>  
+  &nbsp; 
+</div>
+
+# :sunglasses: &nbsp; Contributing
+
+Contributing is more than just coding. You can help the project in many ways, and we will be very
+happy to accept your contribution to our project.
+
+Details of how you can help the project are described in the [CONTRIBUTING.md](./CONTRIBUTING.md)
+document.
+
+## Contributors
+
+<a href = "https://github.com/Tanu-N-Prabhu/Python/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo=innotrade/enapso-graphdb-client"/>
+</a>
+
+<div>  
+  &nbsp; 
+</div>
+
+# :speech_balloon: &nbsp; Bugs and Feature Requests
+
+Do you have a bug report or a feature request? 
+
+Please feel free to add a [new
+issue](https://github.com/innotrade/enapso-graphdb-client/issues/new) or write to us in [discussion](https://github.com/innotrade/enapso-graphdb-client/discussions):
+
+<div>  
+  &nbsp; 
+</div>
+
+# :receipt: &nbsp; License
 
 This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more
 details.
 
-## Documentation & Examples
+# :book: &nbsp; Documentation
 
 For more use cases and detailed documentation follow the [wiki](https://github.com/innotrade/enapso-graphdb-client/wiki)
