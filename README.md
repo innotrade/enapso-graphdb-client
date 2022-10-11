@@ -40,9 +40,9 @@ You may also find these tools useful
 -   [**ENAPSO Graph Database Admin**](https://github.com/innotrade/enapso-graphdb-admin): To perform administrative and monitoring operations against your graph databases, such as importing and exporting ontologies/knowledge graphs and utilizing the graph database's special features.
 -   [**ENAPSO Command Line Interface for Graph Databases**](https://github.com/innotrade/enapso-graphdb-admin): To easily perform numerous scriptable convenience operations on graph databases
 
-[**Tutorial for Test Suite**](https://github.com/innotrade/enapso-graphdb-client/wiki/Tutorial-for-Graph-Databases-Test-Suite): To run the Test suites against the graph database.
+# :book: &nbsp; Documentation
 
-Any questions and suggestions are welcome.
+[View the documentation](https://github.com/innotrade/enapso-graphdb-client/wiki) for further usage examples and how to use client in your project.
 
 # ⚙️ Installation
 
@@ -68,6 +68,7 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     transform: 'toCSV'
 });
 ```
+### Parameters
 
 | Parameter             | Type             | Description                                                                                                                     | Values                                      |
 | --------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
@@ -81,11 +82,18 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 
 | Feature                                           | Description                                                        | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
 | ------------------------------------------------- | ------------------------------------------------------------------ | ---------------- | ------------------ | ------- |
-| [Login](#authenticate-against-the-graph-database) | Authenticate against the Graph Database                            | ✔                | ✘                  | ✔       |
-| [Query](#querying-against-the-graph-database)     | To retrieve the information from graph database using SPARQL query | ✔                | ✔                  | ✔       |
-| [Update](#updating-triples-in-graph-database)     | To update the triples in the graph database                        | ✔                | ✔                  | ✔       |
+| [Login](#login) | Authenticate against the Graph Database                            | ✔                | ✘                  | ✔       |
+| [Query](#query)     | To retrieve the information from graph database using SPARQL query | ✔                | ✔                  | ✔       |
+| [Update](#update)     | To update the triples in the graph database                        | ✔                | ✔                  | ✔       |
 
-## Authenticate against the Graph Database
+<details open>
+
+<summary>
+
+## Login
+
+</summary>
+Authenticate against the Graph Database
 
 ```
 graphDBEndpoint.login('admin','root').then((result) => {
@@ -95,8 +103,17 @@ graphDBEndpoint.login('admin','root').then((result) => {
         console.log(err);
     });
 ```
+</details>
 
-## Querying against the Graph Database
+<details open>
+
+<summary>
+
+## Query
+
+</summary>
+
+Querying against the Graph Database
 
 ```
 graphDBEndpoint
@@ -117,8 +134,17 @@ where {
         console.log(err);
     });
 ```
+</details>
 
-## Updating Triples in Graph Database
+<details open>
+
+<summary>
+
+## Update
+
+</summary>
+
+Updating Triples in Graph Database
 
 ```
 graphDBEndpoint
@@ -135,11 +161,10 @@ graphDBEndpoint
         `console.log(err);
     });
 ```
-
+</details>
 
 # :test_tube: &nbsp; Testing
-
-about the testing info
+To run the Test suites against the graph database follow the [Test Suite Tutorial](https://github.com/innotrade/enapso-graphdb-client/wiki/Tutorial-for-Graph-Databases-Test-Suite).
 
 <div>  
   &nbsp; 
@@ -153,7 +178,9 @@ happy to accept your contribution to our project.
 Details of how you can help the project are described in the [CONTRIBUTING.md](./CONTRIBUTING.md)
 document.
 
-## Contributors
+Any questions and suggestions are welcome.
+
+## 🧑‍🏫 Contributors
 
 <a href = "https://github.com/Tanu-N-Prabhu/Python/graphs/contributors">
   <img src = "https://contrib.rocks/image?repo=innotrade/enapso-graphdb-client"/>
@@ -179,6 +206,3 @@ issue](https://github.com/innotrade/enapso-graphdb-client/issues/new) or write t
 This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more
 details.
 
-# :book: &nbsp; Documentation
-
-For more use cases and detailed documentation follow the [wiki](https://github.com/innotrade/enapso-graphdb-client/wiki)
