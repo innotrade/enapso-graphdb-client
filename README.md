@@ -40,11 +40,9 @@ You may also find these tools useful
 -   [**ENAPSO Graph Database Admin**](https://github.com/innotrade/enapso-graphdb-admin): To perform administrative and monitoring operations against your graph databases, such as importing and exporting ontologies/knowledge graphs and utilizing the graph database's special features.
 -   [**ENAPSO Command Line Interface for Graph Databases**](https://github.com/innotrade/enapso-graphdb-admin): To easily perform numerous scriptable convenience operations on graph databases
 
-# :book: &nbsp; Documentation
 
-[View the documentation](https://github.com/innotrade/enapso-graphdb-client/wiki) for further usage examples and how to use client in your project.
 
-# ⚙️ Installation
+# 🛠️&nbsp;Installation
 
 ```
 npm i @innotrade/enapso-graphdb-client --save
@@ -68,7 +66,6 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     transform: 'toCSV'
 });
 ```
-### Parameters
 
 | Parameter             | Type             | Description                                                                                                                     | Values                                      |
 | --------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
@@ -78,23 +75,27 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 | triplestore(optional) | String           | Pass the name of the graph database with which you want to create a connection by default it creates a connection with Ontotext GraphDB. | ('ontotext-graphDB' , 'stardog' , 'fuseki') |
 | transform(optional)   | String           | Pass the type in which you want to show the result of SPARQL query by default it shows the result in JSON format.                        | ('toJSON', 'toCSV' , 'toTSV')               |
 
-# :book: &nbsp; Features
+# 📋&nbsp;Features
 
 | Feature                                           | Description                                                        | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
 | ------------------------------------------------- | ------------------------------------------------------------------ | ---------------- | ------------------ | ------- |
-| [Login](#login) | Authenticate against the Graph Database                            | ✔                | ✘                  | ✔       |
-| [Query](#query)     | To retrieve the information from graph database using SPARQL query | ✔                | ✔                  | ✔       |
-| [Update](#update)     | To update the triples in the graph database                        | ✔                | ✔                  | ✔       |
+| [Login](#authenticate-against-the-graph-database) | Authenticate against the Graph Database                            | ✔                | ✘                  | ✔       |
+| [Query](#querying-against-the-graph-database)     | To retrieve the information from graph database using SPARQL query | ✔                | ✔                  | ✔       |
+| [Update](#updating-triples-in-graph-database)     | To update the triples in the graph database                        | ✔                | ✔                  | ✔       |
+
+
+
 
 <details open>
-
 <summary>
-
+  
 ## Login
-
 </summary>
-Authenticate against the Graph Database
-
+Authenticate against the Graph Database  
+<div>  
+  &nbsp; 
+</div>
+	
 ```
 graphDBEndpoint.login('admin','root').then((result) => {
         console.log(result);
@@ -103,17 +104,10 @@ graphDBEndpoint.login('admin','root').then((result) => {
         console.log(err);
     });
 ```
+
 </details>
-
-<details open>
-
-<summary>
-
-## Query
-
-</summary>
-
-Querying against the Graph Database
+	
+## Querying against the Graph Database
 
 ```
 graphDBEndpoint
@@ -134,17 +128,8 @@ where {
         console.log(err);
     });
 ```
-</details>
 
-<details open>
-
-<summary>
-
-## Update
-
-</summary>
-
-Updating Triples in Graph Database
+## Updating Triples in Graph Database
 
 ```
 graphDBEndpoint
@@ -161,16 +146,25 @@ graphDBEndpoint
         `console.log(err);
     });
 ```
-</details>
 
-# :test_tube: &nbsp; Testing
-To run the Test suites against the graph database follow the [Test Suite Tutorial](https://github.com/innotrade/enapso-graphdb-client/wiki/Tutorial-for-Graph-Databases-Test-Suite).
+# 📖&nbsp;Documentation
+
+For more use cases and detailed documentation follow the [wiki](https://github.com/innotrade/enapso-graphdb-client/wiki)
 
 <div>  
   &nbsp; 
 </div>
 
-# :sunglasses: &nbsp; Contributing
+# 🧪&nbsp;Testing
+
+To run the Test suites against the graph database.
+[**Tutorial for Test Suite**](https://github.com/innotrade/enapso-graphdb-client/wiki/Tutorial-for-Graph-Databases-Test-Suite): 
+
+<div>  
+  &nbsp; 
+</div>
+
+# 😎&nbsp;Contributing
 
 Contributing is more than just coding. You can help the project in many ways, and we will be very
 happy to accept your contribution to our project.
@@ -178,9 +172,7 @@ happy to accept your contribution to our project.
 Details of how you can help the project are described in the [CONTRIBUTING.md](./CONTRIBUTING.md)
 document.
 
-Any questions and suggestions are welcome.
-
-## 🧑‍🏫 Contributors
+## Contributors
 
 <a href = "https://github.com/Tanu-N-Prabhu/Python/graphs/contributors">
   <img src = "https://contrib.rocks/image?repo=innotrade/enapso-graphdb-client"/>
@@ -190,19 +182,18 @@ Any questions and suggestions are welcome.
   &nbsp; 
 </div>
 
-# :speech_balloon: &nbsp; Bugs and Feature Requests
+# 💬&nbsp;Bugs and Feature Requests
 
 Do you have a bug report or a feature request? 
 
 Please feel free to add a [new
-issue](https://github.com/innotrade/enapso-graphdb-client/issues/new) or write to us in [discussion](https://github.com/innotrade/enapso-graphdb-client/discussions):
+issue](https://github.com/innotrade/enapso-graphdb-client/issues/new) or write to us in [discussion](https://github.com/innotrade/enapso-graphdb-client/discussions): Any questions and suggestions are welcome.
 
 <div>  
   &nbsp; 
 </div>
 
-# :receipt: &nbsp; License
-
+# 🧾&nbsp;License
 This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more
 details.
 
