@@ -48,7 +48,7 @@ You may also find these tools useful
 npm i @innotrade/enapso-graphdb-client --save
 ```
 
-## Create the connection with Graph Database
+## Create the connection with graph database
 
 ```javascript
 const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
@@ -69,7 +69,7 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 ### Parameters
 | Parameter             | Type             | Description                                                                                                                     | Values                                      |
 | --------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| baseURL(required)     | String           | Pass the URL in which graph databases is running.                                                                               |                                             |
+| baseURL(required)     | String           | Pass the URL in which graph database is running.                                                                               |                                             |
 | repository(required)  | String           | Pass the name of the repository or database of the graph databases with which you want to create a connection.                        |                                             |
 | prefixes(required)    | Array of objects | Pass the prefix and its IRI as an object which will be used in the SPARQL query to perform crud operations.                        |                                             |
 | triplestore(optional) | String           | Pass the name of the graph database with which you want to create a connection by default it creates a connection with Ontotext GraphDB. | ('ontotext-graphDB' , 'stardog' , 'fuseki') |
@@ -79,7 +79,7 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 
 | Feature                                           | Description                                                        | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
 | ------------------------------------------------- | ------------------------------------------------------------------ | ---------------- | ------------------ | ------- |
-| [Login](#login) | Authenticate against the Graph Database                            | ✔                | ✘                  | ✔       |
+| [Login](#login) | Authenticate user against the graph database                            | ✔                | ✘                  | ✔       |
 | [Query](#query)     | To retrieve the information from graph database using SPARQL query | ✔                | ✔                  | ✔       |
 | [Update](#update)     | To update the triples in the graph database                        | ✔                | ✔                  | ✔       |
 
@@ -91,7 +91,7 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
   
 ## Login
 </summary>
-Authenticate against the Graph Database  
+Authenticate against the graph database  
 <div>  
   &nbsp; 
 </div>
@@ -113,7 +113,7 @@ graphDBEndpoint.login('admin','root').then((result) => {
 ## Query
 </summary>
 
-Querying against the Graph Database
+Querying against the graph database
 
 ```
 graphDBEndpoint
@@ -142,7 +142,7 @@ where {
 ## Update
 </summary>
 
-Updating Triples in Graph Database
+Updating Triples in graph database
 
 ```
 graphDBEndpoint
