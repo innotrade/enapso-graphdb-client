@@ -66,7 +66,7 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     transform: 'toCSV'
 });
 ```
-
+### Parameters
 | Parameter             | Type             | Description                                                                                                                     | Values                                      |
 | --------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
 | baseURL(required)     | String           | Pass the URL in which graph databases is running.                                                                               |                                             |
@@ -79,9 +79,9 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 
 | Feature                                           | Description                                                        | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
 | ------------------------------------------------- | ------------------------------------------------------------------ | ---------------- | ------------------ | ------- |
-| [Login](#authenticate-against-the-graph-database) | Authenticate against the Graph Database                            | ✔                | ✘                  | ✔       |
-| [Query](#querying-against-the-graph-database)     | To retrieve the information from graph database using SPARQL query | ✔                | ✔                  | ✔       |
-| [Update](#updating-triples-in-graph-database)     | To update the triples in the graph database                        | ✔                | ✔                  | ✔       |
+| [Login](#login) | Authenticate against the Graph Database                            | ✔                | ✘                  | ✔       |
+| [Query](#query)     | To retrieve the information from graph database using SPARQL query | ✔                | ✔                  | ✔       |
+| [Update](#update)     | To update the triples in the graph database                        | ✔                | ✔                  | ✔       |
 
 
 
@@ -107,7 +107,13 @@ graphDBEndpoint.login('admin','root').then((result) => {
 
 </details>
 	
-## Querying against the Graph Database
+<details open>
+<summary>
+  
+## Query
+</summary>
+
+Querying against the Graph Database
 
 ```
 graphDBEndpoint
@@ -128,8 +134,15 @@ where {
         console.log(err);
     });
 ```
+</details>
 
-## Updating Triples in Graph Database
+<details open>
+<summary>
+  
+## Update
+</summary>
+
+Updating Triples in Graph Database
 
 ```
 graphDBEndpoint
@@ -147,9 +160,11 @@ graphDBEndpoint
     });
 ```
 
+</details>
+
 # 📖&nbsp;Documentation
 
-For more use cases and detailed documentation follow the [wiki](https://github.com/innotrade/enapso-graphdb-client/wiki)
+[View the documentation](https://github.com/innotrade/enapso-graphdb-client/wiki) for further usage examples.
 
 <div>  
   &nbsp; 
@@ -157,8 +172,7 @@ For more use cases and detailed documentation follow the [wiki](https://github.c
 
 # 🧪&nbsp;Testing
 
-To run the Test suites against the graph database.
-[**Tutorial for Test Suite**](https://github.com/innotrade/enapso-graphdb-client/wiki/Tutorial-for-Graph-Databases-Test-Suite): 
+[Tutorial](https://github.com/innotrade/enapso-graphdb-client/wiki/Tutorial-for-Graph-Databases-Test-Suite) to run the Test suite against the graph database.
 
 <div>  
   &nbsp; 
@@ -172,7 +186,7 @@ happy to accept your contribution to our project.
 Details of how you can help the project are described in the [CONTRIBUTING.md](./CONTRIBUTING.md)
 document.
 
-## Contributors
+## 🧑‍🏫&nbsp;Contributors
 
 <a href = "https://github.com/Tanu-N-Prabhu/Python/graphs/contributors">
   <img src = "https://contrib.rocks/image?repo=innotrade/enapso-graphdb-client" width="200"/>
