@@ -1,4 +1,4 @@
-![ENAPSO](https://i.ibb.co/6b3rXrB/enapso-client.png)
+![ENAPSO](https://i.ibb.co/yf9fm5g/enapso-graphdb.png)
 
 <div align="center">
   <h1><span style="font-weight:bold; color: #4299E1;">ENAPSO</span> Graph Database Client</h1>
