@@ -23,7 +23,7 @@
   <hr />
 </div>
 
-ENAPSO Graph Database client is an easy-to-use tool for performing SPARQL queries and updating statements against your knowledge graphs or ontologies stored in your graph database. You can use it with any Node.js application.
+ENAPSO Graph Database client is an easy-to-use tool to perform SPARQL query and update statements against your knowledge graphs or ontologies stored in your graph database. It can be used with any Node.js application.
 
 As of now, ENAPSO Graph Database Client supports the following graph databases:
 
@@ -31,14 +31,14 @@ As of now, ENAPSO Graph Database Client supports the following graph databases:
 -   [Apache Jena fuseki](https://jena.apache.org/)
 -   [Stardog](https://www.stardog.com/)
 
-There will be more graph databases added to this list in the future.
+More graph databases will be supported added in the future.
 
-In addition to authentication (Basic and JWT), the client handles prefixes, provides error-handling capabilities, and is capable of transforming SPARQL result bindings into CSV and TSV files as well as JSON resultsets that can be easily processed in Javascript.
+In addition to authentication (Basic and JWT), the client handles prefixes, handles errors, and transforms SPARQL result bindings into CSV and TSV files as well as JSON result sets that can be easily processed in JavaScript.
 
-You may also find these tools useful
+The following tools you also might find useful:
 
--   [**ENAPSO Graph Database Admin**](https://github.com/innotrade/enapso-graphdb-admin): To perform administrative and monitoring operations against your graph databases, such as importing and exporting ontologies/knowledge graphs and utilizing the graph database's special features.
--   [**ENAPSO Command Line Interface for Graph Databases**](https://github.com/innotrade/enapso-graphdb-admin): To easily perform numerous scriptable convenience operations on graph databases
+-   [**ENAPSO Graph Database Admin**](https://github.com/innotrade/enapso-graphdb-admin): Enables you to perform administrative and monitoring operations against your graph databases, such as importing and exporting ontologies or knowledge graphs and utilizing the graph database's special features.
+-   [**ENAPSO Command Line Interface for Graph Databases**](https://github.com/innotrade/enapso-graphdb-admin): Enables you to perform numerous scriptable operations on graph databases, e.g. for monitoring and testing, CI/CD pipelines or backup and restore.
 
 # 🛠️&nbsp;Installation
 
@@ -86,9 +86,9 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 <details open>
 <summary>
   
-## Login
+## Authentication
 </summary>
-Authenticate against the graph database  
+Authenticate against the graph database:
 <div>  
   &nbsp; 
 </div>
@@ -110,7 +110,7 @@ graphDBEndpoint.login('admin','root').then((result) => {
 ## Query
 </summary>
 
-Querying against the graph database
+Query the graph database:
 
 ```
 graphDBEndpoint
@@ -140,7 +140,7 @@ where {
 ## Update
 </summary>
 
-Updating Triples in graph database
+Update the graph database:
 
 ```
 graphDBEndpoint
@@ -162,24 +162,15 @@ graphDBEndpoint
 
 # 📖&nbsp;Documentation
 
-[View the documentation](https://github.com/innotrade/enapso-graphdb-client/wiki) for further usage examples.
-
-<div>  
-  &nbsp; 
-</div>
+View the [documentation](https://github.com/innotrade/enapso-graphdb-client/wiki) for further usage examples.
 
 # 🧪&nbsp;Testing
 
 [Tutorial](https://github.com/innotrade/enapso-graphdb-client/wiki/Tutorial-for-Graph-Databases-Test-Suite) to run the Test suite against the graph database.
 
-<div>  
-  &nbsp; 
-</div>
-
 # 😎&nbsp;Contributing
 
-Contributing is more than just coding. You can help the project in many ways, and we will be very
-happy to accept your contribution to our project.
+Contributing is more than just coding. You can support the project in many ways. We will be happy to collaborate with you and we are looking forward to commonly making semantics and knowledge graph technologies available for your projects.
 
 Details of how you can help the project are described in the [CONTRIBUTING.md](./CONTRIBUTING.md)
 document.
