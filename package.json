@@ -1,13 +1,13 @@
 {
     "name": "@innotrade/enapso-graphdb-client",
-    "version": "1.8.14",
+    "version": "1.8.15",
     "description": "ENAPSO Graph Database Client for Node.js",
     "main": "index.js",
     "scripts": {
-        "test": "mocha --timeout 10000 --baseURL 'http://localhost:7200' --triplestore 'ontotext-graphDB' --username 'admin' --password 'root'",
+        "test": "mocha --timeout 10000 --baseURL 'http://localhost:7200' --triplestore 'graphdb' --username 'admin' --password 'root'",
         "test:fuseki": "mocha --timeout 10000 --baseURL 'http://localhost:3030' --triplestore 'fuseki' --username 'admin' --password 'admin'",
         "test:stardog": "mocha --timeout 10000 --baseURL 'http://localhost:5820' --triplestore 'stardog' --username 'admin' --password 'admin'",
-        "test:ontotext-graphDB": "mocha --timeout 10000 --baseURL 'http://localhost:7200' --triplestore 'ontotext-graphDB' --username 'admin' --password 'root'"
+        "test:graphdb": "mocha --timeout 10000 --baseURL 'http://localhost:7200' --triplestore 'graphdb' --username 'admin' --password 'root'"
     },
     "repository": {
         "type": "git",
@@ -39,7 +39,7 @@
         "chai-http": "^4.3.0",
         "cross-env": "^7.0.3",
         "lodash": "^4.17.21",
-        "mocha": "^10.0.0",
+        "mocha": "^10.1.0",
         "request-promise": "^4.2.6",
         "sparql-client-2": "^0.6.3"
     },
@@ -50,7 +50,7 @@
         "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-jsx-a11y": "^6.6.1",
         "eslint-plugin-prettier": "^4.2.1",
-        "eslint-plugin-react": "^7.31.9",
+        "eslint-plugin-react": "^7.31.10",
         "eslint-plugin-react-hooks": "^4.6.0",
         "prettier": "^2.7.1"
     }

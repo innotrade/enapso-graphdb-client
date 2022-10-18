@@ -40,8 +40,6 @@ You may also find these tools useful
 -   [**ENAPSO Graph Database Admin**](https://github.com/innotrade/enapso-graphdb-admin): To perform administrative and monitoring operations against your graph databases, such as importing and exporting ontologies/knowledge graphs and utilizing the graph database's special features.
 -   [**ENAPSO Command Line Interface for Graph Databases**](https://github.com/innotrade/enapso-graphdb-admin): To easily perform numerous scriptable convenience operations on graph databases
 
-
-
 # 🛠️&nbsp;Installation
 
 ```
@@ -56,7 +54,7 @@ const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
 let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     baseURL: 'http://localhost:7200',
     repository: 'Test',
-    triplestore: 'ontotext-graphDB', // 'ontotext-graphDB' or 'fuseki' or 'stardog'
+    triplestore: 'graphdb', // 'graphdb' or 'fuseki' or 'stardog'
     prefixes: [
         {
             prefix: 'entest',
@@ -66,25 +64,24 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     transform: 'toCSV'
 });
 ```
+
 ### Parameters
-| Parameter             | Type             | Description                                                                                                                     | Values                                      |
-| --------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| baseURL(required)     | String           | Pass the URL in which graph database is running.                                                                               |                                             |
-| repository(required)  | String           | Pass the name of the repository or database of the graph databases with which you want to create a connection.                        |                                             |
-| prefixes(required)    | Array of objects | Pass the prefix and its IRI as an object which will be used in the SPARQL query to perform crud operations.                        |                                             |
-| triplestore(optional) | String           | Pass the name of the graph database with which you want to create a connection by default it creates a connection with Ontotext GraphDB. | ('ontotext-graphDB' , 'stardog' , 'fuseki') |
-| transform(optional)   | String           | Pass the type in which you want to show the result of SPARQL query by default it shows the result in JSON format.                        | ('toJSON', 'toCSV' , 'toTSV')               |
+
+| Parameter             | Type             | Description                                                                                                                              | Values                             |
+| --------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| baseURL(required)     | String           | Pass the URL in which graph database is running.                                                                                         |                                    |
+| repository(required)  | String           | Pass the name of the repository or database of the graph databases with which you want to create a connection.                           |                                    |
+| prefixes(required)    | Array of objects | Pass the prefix and its IRI as an object which will be used in the SPARQL query to perform crud operations.                              |                                    |
+| triplestore(optional) | String           | Pass the name of the graph database with which you want to create a connection by default it creates a connection with Ontotext GraphDB. | ('graphdb' , 'stardog' , 'fuseki') |
+| transform(optional)   | String           | Pass the type in which you want to show the result of SPARQL query by default it shows the result in JSON format.                        | ('toJSON', 'toCSV' , 'toTSV')      |
 
 # 📋&nbsp;Features
 
-| Feature                                           | Description                                                        | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
-| ------------------------------------------------- | ------------------------------------------------------------------ | ---------------- | ------------------ | ------- |
-| [Login](#login) | Authenticate user against the graph database                            | ✔                | ✘                  | ✔       |
-| [Query](#query)     | To retrieve the information from graph database using SPARQL query | ✔                | ✔                  | ✔       |
-| [Update](#update)     | To update the triples in the graph database                        | ✔                | ✔                  | ✔       |
-
-
-
+| Feature           | Description                                                        | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
+| ----------------- | ------------------------------------------------------------------ | ---------------- | ------------------ | ------- |
+| [Login](#login)   | Authenticate user against the graph database                       | ✔                | ✘                  | ✔       |
+| [Query](#query)   | To retrieve the information from graph database using SPARQL query | ✔                | ✔                  | ✔       |
+| [Update](#update) | To update the triples in the graph database                        | ✔                | ✔                  | ✔       |
 
 <details open>
 <summary>
@@ -134,6 +131,7 @@ where {
         console.log(err);
     });
 ```
+
 </details>
 
 <details open>
@@ -198,7 +196,7 @@ document.
 
 # 💬&nbsp;Bugs and Feature Requests
 
-Do you have a bug report or a feature request? 
+Do you have a bug report or a feature request?
 
 Please feel free to add a [new
 issue](https://github.com/innotrade/enapso-graphdb-client/issues/new) or write to us in [discussion](https://github.com/innotrade/enapso-graphdb-client/discussions): Any questions and suggestions are welcome.
@@ -208,6 +206,6 @@ issue](https://github.com/innotrade/enapso-graphdb-client/issues/new) or write t
 </div>
 
 # 🧾&nbsp;License
+
 This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more
 details.
-
