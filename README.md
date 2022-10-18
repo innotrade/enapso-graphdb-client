@@ -28,7 +28,7 @@ ENAPSO Graph Database client is an easy-to-use tool to perform SPARQL query and 
 As of now, ENAPSO Graph Database Client supports the following graph databases:
 
 -   [Ontotext GraphDB](https://www.ontotext.com/products/graphdb/)
--   [Apache Jena fuseki](https://jena.apache.org/)
+-   [Apache Jena Fuseki](https://jena.apache.org/)
 -   [Stardog](https://www.stardog.com/)
 
 More graph databases will be supported added in the future.
