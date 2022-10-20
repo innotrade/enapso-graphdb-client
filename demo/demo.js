@@ -53,12 +53,7 @@ const EnapsoGraphDBClientDemo = {
     demoQuery: async function () {
         try {
             let query = await this.graphDBEndpoint.query(`
-select * 
-	from <${GRAPHDB_CONTEXT_TEST}>
-where {
-	?class rdf:type owl:Class
-	filter(regex(str(?class), "http://ont.enapso.com/test#TestClass", "i")) .
-}`);
+            SELECT ?caythuoc ?chucnang WHERE { ?chucnang rdf:is_function_of rdf:Ngải_Cứu}`);
             if (query.success) {
                 let resp =
                     await this.graphDBEndpoint.transformBindingsToResultSet(
@@ -184,63 +179,63 @@ where {
 
             enLogger.debug('The initial repository should be empty:');
             await this.demoQuery();
-            await this.demoInsert();
+            // await this.demoInsert();
 
-            enLogger.debug(
-                'The query should return one row with the new TestClass:'
-            );
-            var res = await this.demoQuery();
-            // if query successful, write csv to file
-            if (res.success) {
-                let csv = this.graphDBEndpoint.transformBindingsToCSV(res, {
-                    delimiter: '"',
-                    delimiterOptional: false
-                });
-                enLogger.debug('CSV:\n' + JSON.stringify(csv, null, 2));
-                fs.writeFileSync(
-                    'example1.csv',
-                    // optionally add headers
-                    csv.headers.join('\r\n') +
-                        '\r\n' +
-                        // add the csv records to the file
-                        csv.records.join('\r\n')
-                );
-            }
-            await this.demoUpdate();
-            enLogger.debug(
-                'The query should return one row with TestClassUpdated:'
-            );
-            res = await this.demoQuery();
-            if (res.success) {
-                let csv =
-                    this.graphDBEndpoint.transformBindingsToSeparatedValues(
-                        res,
-                        {
-                            // replace IRIs by prefixes for easier
-                            // resultset readability (optional)
-                            replacePrefixes: true,
-                            // drop the prefixes for easier
-                            // resultset readability (optional)
-                            // "dropPrefixes": true,
-                            separator: ',',
-                            separatorEscape: '\\,',
-                            delimiter: '"',
-                            delimiterEscape: '\\"'
-                        }
-                    );
-                fs.writeFileSync(
-                    'example2.csv',
-                    // optionally add headers
-                    csv.headers.join('\r\n') +
-                        '\r\n' +
-                        // add the csv records to the file
-                        csv.records.join('\r\n')
-                );
-            }
-            await this.demoDelete();
-            enLogger.debug('The query should return no rows anymore:');
-            await this.demoQuery();
-            enLogger.debug('The demo accomplished.');
+            // enLogger.debug(
+            //     'The query should return one row with the new TestClass:'
+            // );
+            // var res = await this.demoQuery();
+            // // if query successful, write csv to file
+            // if (res.success) {
+            //     let csv = this.graphDBEndpoint.transformBindingsToCSV(res, {
+            //         delimiter: '"',
+            //         delimiterOptional: false
+            //     });
+            //     enLogger.debug('CSV:\n' + JSON.stringify(csv, null, 2));
+            //     fs.writeFileSync(
+            //         'example1.csv',
+            //         // optionally add headers
+            //         csv.headers.join('\r\n') +
+            //             '\r\n' +
+            //             // add the csv records to the file
+            //             csv.records.join('\r\n')
+            //     );
+            // }
+            // await this.demoUpdate();
+            // enLogger.debug(
+            //     'The query should return one row with TestClassUpdated:'
+            // );
+            // res = await this.demoQuery();
+            // if (res.success) {
+            //     let csv =
+            //         this.graphDBEndpoint.transformBindingsToSeparatedValues(
+            //             res,
+            //             {
+            //                 // replace IRIs by prefixes for easier
+            //                 // resultset readability (optional)
+            //                 replacePrefixes: true,
+            //                 // drop the prefixes for easier
+            //                 // resultset readability (optional)
+            //                 // "dropPrefixes": true,
+            //                 separator: ',',
+            //                 separatorEscape: '\\,',
+            //                 delimiter: '"',
+            //                 delimiterEscape: '\\"'
+            //             }
+            //         );
+            //     fs.writeFileSync(
+            //         'example2.csv',
+            //         // optionally add headers
+            //         csv.headers.join('\r\n') +
+            //             '\r\n' +
+            //             // add the csv records to the file
+            //             csv.records.join('\r\n')
+            //     );
+            // }
+            // await this.demoDelete();
+            // enLogger.debug('The query should return no rows anymore:');
+            // await this.demoQuery();
+            // enLogger.debug('The demo accomplished.');
         } catch (err) {
             console.log(err);
         }
