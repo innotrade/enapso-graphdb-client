@@ -53,7 +53,12 @@ const EnapsoGraphDBClientDemo = {
     demoQuery: async function () {
         try {
             let query = await this.graphDBEndpoint.query(`
-            SELECT ?caythuoc ?chucnang WHERE { ?chucnang rdf:is_function_of rdf:Ngải_Cứu}`);
+            select * 
+            from <${GRAPHDB_CONTEXT_TEST}>
+        where {
+            ?class rdf:type owl:Class
+            filter(regex(str(?class), "http://ont.enapso.com/test#TestClass", "i")) .
+        }`);
             if (query.success) {
                 let resp =
                     await this.graphDBEndpoint.transformBindingsToResultSet(
