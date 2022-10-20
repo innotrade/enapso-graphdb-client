@@ -6,13 +6,13 @@
 /* eslint-disable one-var */
 /* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
-// Innotrade enapso GraphDB Client Example
-// (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
+// Innotrade ENAPSO Graph Database Client Example
+// (C) Copyright 2021-2022 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author: Alexander Schulze
 require('@innotrade/enapso-config');
 const { EnapsoGraphDBClient } = require('../index');
 
-// connection data to the running GraphDB instance
+// connection data to the running Graph Database instance
 const GRAPHDB_BASE_URL = encfg.getConfig(
         'enapsoDefaultGraphDB.baseUrl',
         'http://localhost:3030'

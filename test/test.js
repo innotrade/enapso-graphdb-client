@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-console, func-names, no-undef */
-// Innotrade Enapso GraphDB Client - Automated Test Suite
-// (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
+// Innotrade ENAPSO Graph Database Client - Automated Test Suite
+// (C) Copyright 2021-2022 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author: Alexander Schulze and Muhammad Yasir
 
 const chai = require('chai');
@@ -21,7 +21,7 @@ const GRAPHDB_CONTEXT_TEST = encfg.getConfig(
 
 chai.use(chaiHttp);
 
-describe('ENAPSO GraphDB Client Automated Test Suite', function () {
+describe('ENAPSO Graph Database Client Automated Test Suite', function () {
     this.timeout(5000);
     this.slow(100);
 
@@ -32,7 +32,7 @@ describe('ENAPSO GraphDB Client Automated Test Suite', function () {
         triplestore
     });
 
-    it('Authenticate against GraphDB instance', function (done) {
+    it('Authenticate against Graph Database instance', function (done) {
         // eslint-disable-next-line eqeqeq
         if (triplestore != 'fuseki') {
             this.slow(80);

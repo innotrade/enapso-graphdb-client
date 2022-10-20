@@ -1,8 +1,8 @@
-// Innotrade enapso GraphDB Client Example
-// (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
+// Innotrade ENAPSO Graph Database Client Example
+// (C) Copyright 2021-2022 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author: Alexander Schulze
 
-// require the enapso GraphDB Client and the enapso Logger package
+// require the ENAPSO Graph Database Client and the ENAPSO Logger package
 require('@innotrade/enapso-config');
 const fs = require('fs'),
     { EnapsoGraphDBClient } = require('../index'),
@@ -10,7 +10,7 @@ const fs = require('fs'),
 EnapsoLoggerFactory.createGlobalLogger('enLogger');
 enLogger.setLevel(EnapsoLogger.ALL);
 
-// connection data to the running GraphDB instance
+// connection data to the running Graph Database instance
 const GRAPHDB_BASE_URL = encfg.getConfig(
         'enapsoDefaultGraphDB.baseUrl',
         'http://localhost:7200'
@@ -248,7 +248,7 @@ where {
 };
 
 enLogger.info(
-    'enapso GraphDB Client Demo\n(C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany\n'
+    'ENAPSO Graph Database Client Demo\n(C) Copyright 2021-2022 Innotrade GmbH, Herzogenrath, NRW, Germany\n'
 );
 
 (async () => {
