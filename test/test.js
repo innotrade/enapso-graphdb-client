@@ -5,7 +5,6 @@
 // Author: Alexander Schulze and Muhammad Yasir
 
 const chai = require('chai');
-const chaiHttp = require('chai-http');
 const { expect } = require('chai');
 
 const { EnapsoGraphDBClient } = require('../index');
@@ -18,8 +17,6 @@ const GRAPHDB_CONTEXT_TEST = encfg.getConfig(
     'enapsoDefaultGraphDB.contextTest',
     'http://ont.enapso.com/test'
 );
-
-chai.use(chaiHttp);
 
 describe('ENAPSO Graph Database Client Automated Test Suite', function () {
     this.timeout(5000);

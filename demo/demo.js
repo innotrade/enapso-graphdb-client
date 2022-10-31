@@ -170,21 +170,22 @@ where {
                 repository: GRAPHDB_REPOSITORY,
                 prefixes: DEFAULT_PREFIXES,
                 version: GRAPHDB_VERSION,
-                apiType: GRAPHDB_API_TYPE
+                apiType: GRAPHDB_API_TYPE,
+                triplestore: 'graphdb'
             });
-            this.authentication = await this.graphDBEndpoint.login(
-                GRAPHDB_USERNAME,
-                GRAPHDB_PASSWORD
-            );
-            enLogger.debug(
-                '\nLogin successful' +
-                    ':\n' +
-                    JSON.stringify(this.authentication, null, 2)
-            );
+            // this.authentication = await this.graphDBEndpoint.login(
+            //     GRAPHDB_USERNAME,
+            //     GRAPHDB_PASSWORD
+            // );
+            // enLogger.debug(
+            //     '\nLogin successful' +
+            //         ':\n' +
+            //         JSON.stringify(this.authentication, null, 2)
+            // );
 
-            enLogger.debug('The initial repository should be empty:');
+            // enLogger.debug('The initial repository should be empty:');
             await this.demoQuery();
-            // await this.demoInsert();
+            await this.demoInsert();
 
             // enLogger.debug(
             //     'The query should return one row with the new TestClass:'
