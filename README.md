@@ -3,7 +3,7 @@
 <div align="center">
   <h1><span style="font-weight:bold; color: #4299E1;">ENAPSO</span> Graph Database Client</h1>
   <a href="https://www.npmjs.com/package/@innotrade/enapso-graphdb-client"><img src="https://img.shields.io/npm/v/@innotrade/enapso-graphdb-client" /></a>
-  <a href="https://github.com/innotrade/enapso-graphdb-client/blob/main/CODE_OF_CONDUCT.md"><img src="https://img.shields.io/badge/connect-Community-brightgreen" /></a>
+  <a href="https://github.com/innotrade/enapso-graphdb-client/discussions"><img src="https://img.shields.io/badge/connect-Community-brightgreen" /></a>
   <a href="https://github.com/innotrade/enapso-graphdb-client/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202-blue" /></a>
   <a href="https://github.com/innotrade/enapso-graphdb-client/blob/main/CODE_OF_CONDUCT.md"><img src="https://img.shields.io/badge/code-Conduct-orange" /></a>
   <br />
@@ -14,11 +14,11 @@
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
   <a href="https://github.com/innotrade/enapso-graphdb-client/discussions">Discussion</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="#">Facebook</a>
+  <a href="https://www.facebook.com/InnotradeGmbH/">Facebook</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="#">Twitter</a>
+  <a href="https://twitter.com/innotrade?lang=en">Twitter</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="#">LinkedIn</a>
+  <a href="https://de.linkedin.com/company/innotrade-gmbh">LinkedIn</a>
   <br />
   <hr />
 </div>
@@ -38,7 +38,7 @@ In addition to authentication (Basic and JWT), the client handles prefixes, hand
 The following tools you also might find useful:
 
 -   [**ENAPSO Graph Database Admin**](https://github.com/innotrade/enapso-graphdb-admin): Enables you to perform administrative and monitoring operations against your graph databases, such as importing and exporting ontologies or knowledge graphs and utilizing the graph database's special features.
--   [**ENAPSO Command Line Interface for Graph Databases**](https://github.com/innotrade/enapso-graphdb-admin): Enables you to perform numerous scriptable operations on graph databases, e.g. for monitoring and testing, CI/CD pipelines or backup and restore.
+-   [**ENAPSO Command Line Interface for Graph Databases**](https://github.com/innotrade/enapso-graphdb-cli): Enables you to perform numerous scriptable operations on graph databases, e.g. for monitoring and testing, CI/CD pipelines or backup and restore.
 
 # 🛠️&nbsp;Installation
 
