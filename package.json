@@ -1,6 +1,6 @@
 {
     "name": "@innotrade/enapso-graphdb-client",
-    "version": "1.8.25",
+    "version": "1.9.0",
     "description": "ENAPSO Graph Database Client for Node.js",
     "main": "index.js",
     "scripts": {
