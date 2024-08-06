@@ -88,7 +88,7 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
   
 ## Authentication
 </summary>
-Authenticate against the graph database:
+Authenticate against the graph database :
 <div>  
   &nbsp; 
 </div>
