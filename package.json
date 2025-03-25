@@ -34,7 +34,6 @@
     "homepage": "https://github.com/innotrade/enapso-graphdb-client#readme",
     "dependencies": {
         "@innotrade/enapso-config": "^1.3.3",
-        "@innotrade/enapso-graphdb-client": "file:",
         "@innotrade/enapso-logger": "1.1.0",
         "@innotrade/enapso-sparql-client": "^1.1.8",
         "axios": "1.1.3",
