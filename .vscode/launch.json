@@ -14,7 +14,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Demo (then/catch)",
-      "program": "${workspaceFolder}/demo/demo2.js"
+      "program": "${workspaceFolder}/demo/qlever-demo.js"
     }
   ]
 }
