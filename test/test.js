@@ -61,7 +61,7 @@ insert data {
         graphDBEndpoint
             .update(lQuery)
             .then((result) => {
-                // console.log("Success: " + result.success);
+                 console.log(`Success: ${  result.success}`);
                 expect(result).to.have.property('success', true);
                 done();
             })
