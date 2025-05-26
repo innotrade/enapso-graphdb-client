@@ -4,9 +4,6 @@
 // (C) Copyright 2021-2022 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author: Alexander Schulze and Muhammad Yasir
 
-const chai = require('chai');
-const { expect } = require('chai');
-
 const { EnapsoGraphDBClient } = require('../index');
 const testConfig = require('./config');
 const baseURL = process.argv[5].replace(/'/g, '');
@@ -21,6 +18,14 @@ const GRAPHDB_CONTEXT_TEST = encfg.getConfig(
 describe('ENAPSO Graph Database Client Automated Test Suite', function () {
     this.timeout(5000);
     this.slow(100);
+    
+    let chai, expect;
+    
+    // Setup - load chai using dynamic import before tests run
+    before(async function() {
+        chai = await import('chai');
+        expect = chai.expect;
+    });
 
     const graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
         baseURL,
