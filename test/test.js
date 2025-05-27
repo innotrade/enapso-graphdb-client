@@ -6,10 +6,11 @@
 
 const { EnapsoGraphDBClient } = require('../index');
 const testConfig = require('./config');
-const baseURL = process.argv[5].replace(/'/g, '');
-const triplestore = process.argv[7].replace(/'/g, '');
-const username = process.argv[9].replace(/'/g, '');
-const password = process.argv[11].replace(/'/g, '');
+const baseURL = process?.argv[5]?.replace(/'/g, '');
+const triplestore = process?.argv[7]?.replace(/'/g, '');
+const username = process?.argv[9]?.replace(/'/g, '');
+const password = process?.argv[11]?.replace(/'/g, '');
+
 const GRAPHDB_CONTEXT_TEST = encfg.getConfig(
     'enapsoDefaultGraphDB.contextTest',
     'http://ont.enapso.com/test'
@@ -34,9 +35,15 @@ describe('ENAPSO Graph Database Client Automated Test Suite', function () {
         triplestore
     });
 
+    if(triplestore=='qlever')
+    {
+        graphDBEndpoint.setAccessToken(testConfig.accessToken);
+    }
+
     it('Authenticate against Graph Database instance', function (done) {
         // eslint-disable-next-line eqeqeq
-        if (triplestore != 'fuseki') {
+        if (triplestore != 'fuseki' && triplestore!= 'qlever') {
+            console.log(triplestore)
             this.slow(80);
             graphDBEndpoint
                 .login(username, password)

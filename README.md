@@ -30,10 +30,20 @@ As of now, ENAPSO Graph Database Client supports the following graph databases:
 -   [Ontotext GraphDB](https://www.ontotext.com/products/graphdb/)
 -   [Apache Jena Fuseki](https://jena.apache.org/)
 -   [Stardog](https://www.stardog.com/)
+-   [QLever](https://github.com/ad-freiburg/qlever) **🆕 First Node.js package to support QLever!**
 
 More graph databases will be supported added in the future.
 
 In addition to authentication (Basic and JWT), the client handles prefixes, handles errors, and transforms SPARQL result bindings into CSV and TSV files as well as JSON result sets that can be easily processed in JavaScript.
+
+## 🚀&nbsp;QLever Support - Industry First!
+
+ENAPSO is proud to be the **first Node.js package** to provide comprehensive support for [QLever](https://github.com/ad-freiburg/qlever), the high-performance SPARQL engine developed at the University of Freiburg. Our QLever integration includes:
+
+- **Advanced Query Features**: Support for QLever's unique `useQleverBinding` option that provides total count information even when using `LIMIT` and `OFFSET` clauses
+- **Dynamic Access Token Management**: Exclusive `setAccessToken()` method for runtime token updates (QLever-only feature)
+- **Access Token Authentication**: Seamless integration with QLever's access token-based authentication system
+- **High Performance**: Optimized for QLever's exceptional query performance capabilities
 
 The following tools you also might find useful:
 
@@ -54,7 +64,7 @@ const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
 let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     baseURL: 'http://localhost:7200',
     repository: 'Test',
-    triplestore: 'graphdb', // 'graphdb' or 'fuseki' or 'stardog'
+    triplestore: 'graphdb', // 'graphdb' or 'fuseki' or 'stardog' or 'qlever'
     prefixes: [
         {
             prefix: 'entest',
@@ -72,16 +82,20 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 | baseURL(required)     | String           | Pass the URL in which graph database is running.                                                                                         |                                    |
 | repository(required)  | String           | Pass the name of the repository or database of the graph databases with which you want to create a connection.                           |                                    |
 | prefixes(required)    | Array of objects | Pass the prefix and its IRI as an object which will be used in the SPARQL query to perform crud operations.                              |                                    |
-| triplestore(optional) | String           | Pass the name of the graph database with which you want to create a connection by default it creates a connection with Ontotext GraphDB. | ('graphdb' , 'stardog' , 'fuseki') |
+| triplestore(optional) | String           | Pass the name of the graph database with which you want to create a connection by default it creates a connection with Ontotext GraphDB. | ('graphdb' , 'stardog' , 'fuseki' , 'qlever') |
 | transform(optional)   | String           | Pass the type in which you want to show the result of SPARQL query by default it shows the result in JSON format.                        | ('toJSON', 'toCSV' , 'toTSV')      |
 
 # 📋&nbsp;Features
 
-| Feature           | Description                                                        | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
-| ----------------- | ------------------------------------------------------------------ | ---------------- | ------------------ | ------- |
-| [Login](#login)   | Authenticate user against the graph database                       | ✔                | ✘                  | ✔       |
-| [Query](#query)   | To retrieve the information from graph database using SPARQL query | ✔                | ✔                  | ✔       |
-| [Update](#update) | To update the triples in the graph database                        | ✔                | ✔                  | ✔       |
+| Feature              | Description                                                        | Ontotext GraphDB | Apache Jena Fuseki | Stardog | QLever |
+| -------------------- | ------------------------------------------------------------------ | ---------------- | ------------------ | ------- | ------ |
+| [Login](#authentication)      | Authenticate user against the graph database                       | ✔                | ✘                  | ✔       | ✘*     |
+| [Query](#query)      | To retrieve the information from graph database using SPARQL query | ✔                | ✔                  | ✔       | ✔      |
+| [Update](#update)    | To update the triples in the graph database                        | ✔                | ✔                  | ✔       | ✔**    |
+| [setAccessToken](#setaccesstoken) | Set access token to perform update.                   | ✘                | ✘                  | ✘       | ✔      |
+
+*QLever uses access tokens instead of traditional login  
+**Requires access token for update operations
 
 <details open>
 <summary>
@@ -157,6 +171,59 @@ graphDBEndpoint
         `console.log(err);
     });
 ```
+
+</details>
+
+<details open>
+<summary>
+  
+## setAccessToken
+</summary>
+
+Set or update access token dynamically (QLever only):
+
+```javascript
+// Set or update access token dynamically
+qleverEndpoint.setAccessToken('your-new-access-token');
+
+// Now you can perform operations with the new token
+qleverEndpoint
+    .query('SELECT * WHERE { ?s ?p ?o } LIMIT 5')
+    .then((result) => {
+        console.log('Query with new token:', JSON.stringify(result, null, 2));
+    });
+```
+
+</details>
+
+<details open>
+<summary>
+  
+
+### QLever Query with Total Count
+
+QLever's unique `useQleverBinding` feature allows you to get the total count of results even when using `LIMIT` and `OFFSET`:
+
+```javascript
+qleverEndpoint
+    .query(
+        `SELECT ?subject ?predicate ?object WHERE {
+            ?subject ?predicate ?object
+        } LIMIT 10 OFFSET 20`,
+        { 
+            transform: 'toJSON',
+            useQleverBinding: true  // Get total count with pagination
+        }
+    )
+    .then((result) => {
+        console.log('Query results:', JSON.stringify(result, null, 2));
+        // Result will include both the limited results and total count
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+```
+
 
 </details>
 

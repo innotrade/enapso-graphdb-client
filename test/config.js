@@ -8,6 +8,7 @@ require('@innotrade/enapso-config');
 
 module.exports = Object.freeze({
     repository: 'Test',
+    accessToken:'data_7643543846_Zs6nw7yi3Z9m',
     prefixes: {
         PREFIX_OWL: {
             prefix: 'owl',
