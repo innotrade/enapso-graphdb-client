@@ -1,6 +1,6 @@
 {
     "name": "@innotrade/enapso-graphdb-client",
-    "version": "1.9.9",
+    "version": "1.9.10",
     "description": "ENAPSO Graph Database Client for Node.js",
     "main": "index.js",
     "scripts": {
@@ -39,7 +39,7 @@
         "@innotrade/enapso-graphdb-client": "file:",
         "@innotrade/enapso-logger": "1.1.0",
         "@innotrade/enapso-sparql-client": "^1.1.9",
-        "axios": "1.9.0",
+        "axios": "^1.9.0",
         "chai": "^5.2.0",
         "lodash": "^4.17.21",
         "mocha": "^11.5.0"
