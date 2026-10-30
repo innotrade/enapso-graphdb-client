@@ -10,8 +10,8 @@ require('@innotrade/enapso-config');
 const { EnapsoGraphDBClient } = require('../index');
 
 // connection data to the running Graph Database instance
-const GRAPHDB_BASE_URL = 'http://localhost:7001';
-let accessToken='data_7643543846_Zs6nw7yi3Z9m'
+const GRAPHDB_BASE_URL = 'http://localhost:8888';
+let accessToken='j7ULHuWV3773'
 
 const DEFAULT_PREFIXES = [
     EnapsoGraphDBClient.PREFIX_OWL,
@@ -32,10 +32,10 @@ graphDBEndpoint.setAccessToken(accessToken);
 // read the class
 graphDBEndpoint
     .query(
-        `SELECT ?iri ?label WHERE {
-           ?iri rdf:type ?type.  
-		   ?type rdfs:subClassOf <http://ont.lego.com/material#MaterialType>.
-           ?iri rdfs:label ?label.
+        `SELECT ?iri ?prefix WHERE {
+           ?prefix_iri rdf:type <http://ont.enapso.com/foundation#Prefix> .
+           ?prefix_iri <http://ont.enapso.com/foundation#prefix> ?prefix.
+           ?prefix_iri <http://ont.enapso.com/foundation#namespace> ?iri.
         } limit 100`,
         { useQleverBindings: true,transform: 'toJSON' }
     )
